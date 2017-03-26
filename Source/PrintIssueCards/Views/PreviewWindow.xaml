@@ -1,0 +1,24 @@
+﻿<Window x:Class="PrintIssueCards.Views.PreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        Title="Issue Card Preview" Height="400" Width="600"  
+        Icon="../Resources/BaseIcon.ico"        
+        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <Grid>
+        <WindowsFormsHost x:Name="ReportViewerHost">
+            <winForms:ReportViewer x:Name="IssuesReportViewer"
+                                   ShowBackButton="False"
+                                   ShowContextMenu="False"
+                                   ShowCredentialPrompts="False"
+                                   ShowDocumentMapButton = "False"
+                                   ShowFindControls = "False"
+                                   ShowPromptAreaButton = "False"
+                                   ShowRefreshButton = "False"
+                                   ShowStopButton = "False"
+                                   Dock="Fill"  />
+        </WindowsFormsHost>
+    </Grid>
+</Window>
+
