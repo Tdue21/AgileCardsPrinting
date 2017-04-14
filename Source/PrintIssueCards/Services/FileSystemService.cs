@@ -21,35 +21,12 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows;
-using PrintIssueCards.Common;
-using PrintIssueCards.ViewModels;
+using PrintIssueCards.Interfaces;
 
-namespace PrintIssueCards.Views
+namespace PrintIssueCards.Services
 {
-    public partial class SettingsWindow : Window
+    public class FileSystemService : IFileSystemService
     {
-        public SettingsWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void OnPasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
-            {
-                vm.Password = PasswordTextBox.SecurePassword;
-            }
-        }
-
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
-            {
-                PasswordTextBox.Password = vm.Password.ConvertToUnsecureString();
-            }
-        }
+        
     }
 }

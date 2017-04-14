@@ -118,8 +118,11 @@
     <Compile Include="Common\CreateWindowMessage.cs" />
     <Compile Include="Common\EncryptionHelper.cs" />
     <Compile Include="Common\IssuesWindowsService.cs" />
-    <Compile Include="Common\JiraHandler.cs" />
-    <Compile Include="Interfaces\IJiraHandler.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Services\FileSystemService.cs" />
+    <Compile Include="Services\JiraService.cs" />
+    <Compile Include="Interfaces\IFileSystemService.cs" />
+    <Compile Include="Interfaces\IJiraService.cs" />
     <Compile Include="Interfaces\ISettingsHandler.cs" />
     <Compile Include="Common\SettingsHandler.cs" />
     <Compile Include="Common\XElementExtension.cs" />

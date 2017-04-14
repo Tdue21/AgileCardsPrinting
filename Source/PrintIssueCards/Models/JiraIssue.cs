@@ -1,9 +1,25 @@
-﻿// ********************************************************************
-// * Copyright © 2014 Scanvaegt Systems A/S
-// *
-// * This file is the property of Scanvaegt Systems A/S and may not be 
-// * distributed without the written consent of the author.    
-// ********************************************************************
+﻿//  ****************************************************************************
+//  * The MIT License(MIT)
+//  * Copyright © 2017 Thomas Due
+//  * 
+//  * Permission is hereby granted, free of charge, to any person obtaining a 
+//  * copy of this software and associated documentation files (the “Software”), 
+//  * to deal in the Software without restriction, including without limitation 
+//  * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//  * and/or sell copies of the Software, and to permit persons to whom the  
+//  * Software is furnished to do so, subject to the following conditions:
+//  * 
+//  * The above copyright notice and this permission notice shall be included in  
+//  * all copies or substantial portions of the Software.
+//  * 
+//  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+//  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL  
+//  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING  
+//  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  * IN THE SOFTWARE.
+//  ****************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -46,8 +62,12 @@ namespace PrintIssueCards.Models
             }
 
             // ReSharper disable AssignNullToNotNullAttribute
-            var orderNoField = issue.CustomFields.FirstOrDefault(i => string.Equals(i.Name, @"ordre nummer", StringComparison.InvariantCultureIgnoreCase));
-            var priorityField = issue.CustomFields.FirstOrDefault(i => string.Equals(i.Name, "Internal priority", StringComparison.InvariantCultureIgnoreCase));
+            var orderNoField =
+                issue.CustomFields.FirstOrDefault(
+                    i => string.Equals(i.Name, @"ordre nummer", StringComparison.InvariantCultureIgnoreCase));
+            var priorityField =
+                issue.CustomFields.FirstOrDefault(
+                    i => string.Equals(i.Name, "Internal priority", StringComparison.InvariantCultureIgnoreCase));
             // ReSharper restore AssignNullToNotNullAttribute
 
             var orderNo = orderNoField != null ? orderNoField.Values.FirstOrDefault() : string.Empty;
@@ -58,24 +78,24 @@ namespace PrintIssueCards.Models
             //                                  : issue.Fields.TimeTracking.OriginalEstimateSeconds);
 
             var item = new JiraIssue
-                       {
-                           Key = issue.Key.Value,
-                           Summary = issue.Summary,
-                           Description = issue.Description,
-                           IssueType = issue.Type.Name,
-                           Assignee = issue.Assignee ?? string.Empty,
-                           Reporter = issue.Reporter ?? string.Empty,
-                           Created = issue.Created.GetValueOrDefault(),
-                           Updated = issue.Updated.GetValueOrDefault(),
-                           DueDate = issue.DueDate.GetValueOrDefault(),
-                           Status = issue.Status != null ? issue.Status.Name : string.Empty,
-                           Severity = issue.Priority != null ? issue.Priority.Name : string.Empty,
-                           //Estimate = estimate,
-                           TypeIconUrl = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
-                           SeverityIconUrl = issue.Priority != null ? LoadImage(issue.Priority.IconUrl) : null,
-                           OrderNo = orderNo,
-                           Priority = priority,
-                       };
+            {
+                Key = issue.Key.Value,
+                Summary = issue.Summary,
+                Description = issue.Description,
+                IssueType = issue.Type.Name,
+                Assignee = issue.Assignee ?? string.Empty,
+                Reporter = issue.Reporter ?? string.Empty,
+                Created = issue.Created.GetValueOrDefault(),
+                Updated = issue.Updated.GetValueOrDefault(),
+                DueDate = issue.DueDate.GetValueOrDefault(),
+                Status = issue.Status != null ? issue.Status.Name : string.Empty,
+                Severity = issue.Priority != null ? issue.Priority.Name : string.Empty,
+                //Estimate = estimate,
+                TypeIconUrl = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
+                SeverityIconUrl = issue.Priority != null ? LoadImage(issue.Priority.IconUrl) : null,
+                OrderNo = orderNo,
+                Priority = priority,
+            };
             return item;
         }
 

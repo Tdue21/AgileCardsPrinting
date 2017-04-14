@@ -23,25 +23,44 @@
 
 using System;
 using System.Linq;
-using System.Xml.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace PrintIssueCards.Common
 {
-    public static class XElementExtension
+    public static class StringExtensions
     {
-        public static T GetDescendantValue<T>(this XElement element, string descendant, T defaultValue)
+        public static string ConvertToUnsecureString(this SecureString securePassword)
         {
+            if (securePassword == null)
+            {
+                throw new ArgumentNullException(nameof(securePassword));
+            }
+
+            var unmanagedString = IntPtr.Zero;
             try
             {
-                var node = element.Descendants(descendant).FirstOrDefault();
-                return node != null
-                    ? (T) Convert.ChangeType(node.Value, typeof(T))
-                    : defaultValue;
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
             }
-            catch
+            finally
             {
-                return defaultValue;
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
             }
+        }
+
+        public static SecureString ConvertToSecureString(this string password)
+        {
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
+            var securePassword = new SecureString();
+            password.ToList().ForEach(c => securePassword.AppendChar(c));
+            securePassword.MakeReadOnly();
+
+            return securePassword;
         }
     }
 }

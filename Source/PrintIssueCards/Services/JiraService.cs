@@ -21,35 +21,52 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Atlassian.Jira;
 using PrintIssueCards.Common;
-using PrintIssueCards.ViewModels;
+using PrintIssueCards.Interfaces;
+using PrintIssueCards.Models;
 
-namespace PrintIssueCards.Views
+namespace PrintIssueCards.Services
 {
-    public partial class SettingsWindow : Window
+    public class JiraService : IJiraService
     {
-        public SettingsWindow()
+        private readonly ISettingsHandler _settingsHandler;
+
+        public JiraService(ISettingsHandler settingsHandler)
         {
-            InitializeComponent();
+            if (settingsHandler == null)
+            {
+                throw new ArgumentNullException(nameof(settingsHandler));
+            }
+            _settingsHandler = settingsHandler;
         }
 
-        private void OnPasswordChanged(object sender, RoutedEventArgs e)
+        public async Task<IList<FilterInformation>> GetFavoriteFiltersAsync()
         {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
+            List<FilterInformation> result = null;
+            var data = _settingsHandler.LoadSettings();
+            if (!string.IsNullOrEmpty(data.HostAddress))
             {
-                vm.Password = PasswordTextBox.SecurePassword;
+                var jira = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString());
+                var filters = await jira.Filters.GetFavouritesAsync();
+
+                result = filters.Select(f => new FilterInformation {Id = f.Id, Name = f.Name}).ToList();
             }
+            return result;
         }
 
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        public Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter)
         {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
-            {
-                PasswordTextBox.Password = vm.Password.ConvertToUnsecureString();
-            }
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string getKeyList)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

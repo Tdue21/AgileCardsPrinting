@@ -21,35 +21,16 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows;
-using PrintIssueCards.Common;
-using PrintIssueCards.ViewModels;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PrintIssueCards.Models;
 
-namespace PrintIssueCards.Views
+namespace PrintIssueCards.Interfaces
 {
-    public partial class SettingsWindow : Window
+    public interface IJiraService
     {
-        public SettingsWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void OnPasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
-            {
-                vm.Password = PasswordTextBox.SecurePassword;
-            }
-        }
-
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
-            {
-                PasswordTextBox.Password = vm.Password.ConvertToUnsecureString();
-            }
-        }
+        Task<IList<FilterInformation>> GetFavoriteFiltersAsync();
+        Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter);
+        Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string getKeyList);
     }
 }

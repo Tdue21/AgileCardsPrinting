@@ -26,14 +26,14 @@ using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.UI;
 using PrintIssueCards.Common;
-using PrintIssueCards.Interfaces;
 
 namespace PrintIssueCards.ViewModels
 {
     [POCOViewModel]
     public class MainViewModel
     {
-        public MainViewModel(FilterSearchViewModel filterSearch, BasicSearchViewModel basicSearch, AdvancedSearchViewModel advancedSearch)
+        public MainViewModel(FilterSearchViewModel filterSearch, BasicSearchViewModel basicSearch,
+            AdvancedSearchViewModel advancedSearch)
         {
             if (filterSearch == null)
             {
