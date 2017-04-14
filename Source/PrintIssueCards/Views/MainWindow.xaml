@@ -10,21 +10,10 @@
         FocusManager.FocusedElement="{Binding ElementName=FilterSelectionTabControl}"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"        
         >
-
-    <Window.Resources>
-        <Style x:Key="GridStyle" TargetType="Grid">
-            <Setter Property="Margin" Value="8" />
-        </Style>
-        
-        <Style x:Key="ButtonStyle" TargetType="ButtonBase">
-            <Setter Property="Padding" Value="4" />
-            <Setter Property="MinWidth" Value="100" />
-        </Style>
-        
-    </Window.Resources>
-    
+   
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:WindowService />
+        <dxmvvm:CurrentWindowService />
         <dxmvvm:MessageBoxService />
     </dxmvvm:Interaction.Behaviors>
 
@@ -37,57 +26,15 @@
         <TabControl x:Name="FilterSelectionTabControl" Grid.Row="0" SelectedIndex="{Binding SelectionIndex}">
 
             <TabItem Header="Filter Selection">
-                <Grid Style="{StaticResource GridStyle}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Label x:Name="FiltersTextBlock" Grid.Column="0" Grid.Row="0" Content="_Filter" />
-                    <ComboBox x:Name="FiltersComboBox" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Filters}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" Margin="0, 0, 8, 0" />
-                    <Button x:Name="RefreshFiltersButton" Grid.Column="2" Grid.Row="0" Content="_Refresh" Command="{Binding PerformRefreshCommand}" Style="{StaticResource ButtonStyle}" />
-                </Grid>
+                <views:FilterSearchView DataContext="{Binding FilterSearchViewModel}" />
             </TabItem>
 
             <TabItem Header="Basic Search">
-                <Grid Style="{StaticResource GridStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    
-                    <Label x:Name="KeyListTextBlock" Grid.Row="0" Content="_Enter one or more keys. Space, Enter, Semi-colon or Comma between keys." />
-
-                    <TextBox x:Name="KeyListTextBox" Grid.Row="1" MinLines="10" Text="{Binding KeyList, Mode=TwoWay}" AcceptsReturn="True"/>
-
-                    <Label x:Name="OrderByBlock" Grid.Row="2" Content="_Order by" />
-
-                    <ComboBox x:Name="OrderByComboBox" Grid.Row="3" ItemsSource="{Binding OrderByItems}" SelectedItem="{Binding SelectedOrderBy, Mode=TwoWay}" Height="22" VerticalAlignment="Bottom" />
-                </Grid>
+                <views:BasicSearchView DataContext="{Binding BasicSearchViewModel}" />
             </TabItem>
 
             <TabItem Header="Advanced Search">
-                <Grid Style="{StaticResource GridStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label x:Name="JqlTextBlock" Grid.Row="0" Content="_Enter Jql expression" />
-                    <TextBox x:Name="JqlTextBox" Grid.Row="1" Text="{Binding Jql, Mode=TwoWay}" 
-                             HorizontalScrollBarVisibility="Auto"
-                             ScrollViewer.CanContentScroll="True"
-                             VerticalScrollBarVisibility="Auto"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap" />
-                </Grid>
+                <views:AdvancedSearchView DataContext="{Binding AdvancedSearchViewModel}" />
             </TabItem>
 
         </TabControl>

@@ -40,3 +40,4 @@ namespace PrintIssueCards.Common
             throw new System.NotImplementedException();
         }
     }
+}

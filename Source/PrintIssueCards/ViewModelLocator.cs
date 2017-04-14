@@ -5,6 +5,8 @@
 // * distributed without the written consent of the author.    
 // ********************************************************************
 
+using System.Windows;
+using DevExpress.Mvvm;
 using Microsoft.Practices.Unity;
 using PrintIssueCards.Common;
 using PrintIssueCards.Interfaces;
@@ -23,8 +25,39 @@ namespace PrintIssueCards
                 .RegisterType<IJiraHandler, JiraHandler>(new ContainerControlledLifetimeManager())
 
                 .RegisterPocoType<MainViewModel>()
+                .RegisterPocoType<FilterSearchViewModel>()
+                .RegisterPocoType<BasicSearchViewModel>()
                 .RegisterPocoType<PreviewViewModel>()
                 .RegisterPocoType<SettingsViewModel>();
+
+            Messenger.Default.Register<CreateWindowMessage>(this, CreateWindow);
+        }
+
+        private void CreateWindow(CreateWindowMessage message)
+        {
+            if (message == null)
+            {
+                return;
+            }
+
+            var window = (Window)_container.Resolve(message.ChildType);
+            window.Owner = message.Owner;
+
+            var vm = window.DataContext as ISupportParameter;
+            if (vm != null)
+            {
+                vm.Parameter = message.Parameters;
+            }
+
+            if (message.Modal)
+            {
+                window.ShowDialog();
+            }
+            else
+            {
+                window.Show();
+            }
+
         }
 
         public MainViewModel MainViewModel => _container.Resolve<MainViewModel>();
