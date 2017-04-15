@@ -52,25 +52,17 @@ namespace PrintIssueCards.ViewModels
             _jiraHandler = jiraHandler;
         }
 
-        /// <summary>
-        ///     Gets or sets the filters.
-        /// </summary>
-        /// <value>
-        ///     The filters.
-        /// </value>
+        /// <summary>Gets or sets the list of favorite filters. </summary>
         public virtual ObservableCollection<FilterInformation> Filters { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the selected filter.
-        /// </summary>
-        /// <value>
-        ///     The selected filter.
-        /// </value>
+        /// <summary>Gets or sets the selected filter.</summary>
         public virtual FilterInformation SelectedFilter { get; set; }
 
-        /// <summary>
-        ///     Performs the refresh.
-        /// </summary>
+
+        /// <summary>Gets or sets the parent view model.</summary>
+        public virtual object ParentViewModel { get; set; }
+
+        /// <summary>Refreshes the list of filters.</summary>
         public async void PerformRefresh()
         {
             var filters = await _jiraHandler.GetFavoriteFiltersAsync();
@@ -78,19 +70,11 @@ namespace PrintIssueCards.ViewModels
             SelectedFilter = filters.FirstOrDefault();
         }
 
+        /// <summary>Fires when <see cref="SelectedFilter"/> changes.</summary>
         protected async void OnSelectedFilterChanged(FilterInformation oldInformation)
         {
             var issues = await _jiraHandler.GetIssuesFromFilterAsync(SelectedFilter);
             ((MainViewModel)ParentViewModel).SetPreviewIssues(issues);
-        }
-
-        private MainViewModel _parentViewModel;
-
-        public virtual object ParentViewModel { get; set; }
-
-        protected virtual void OnParentViewModelChanged()
-        {
-            _parentViewModel = ParentViewModel as MainViewModel;
         }
     }
 }
