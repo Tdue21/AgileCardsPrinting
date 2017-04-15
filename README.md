@@ -1,3 +1,6 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/bmkg2fccgv3uyroe?svg=true)](https://ci.appveyor.com/project/tdue21/printissuecards)
+
+
 # README #
 
 This README would normally document whatever steps are necessary to get your application up and running.
