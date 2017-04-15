@@ -49,7 +49,9 @@ namespace PrintIssueCards
                 .RegisterPocoType<AdvancedSearchViewModel>()
 
                 .RegisterPocoType<PreviewViewModel>()
-                .RegisterPocoType<SettingsViewModel>();
+                .RegisterPocoType<SettingsViewModel>()
+                
+                .RegisterInstance(Messenger.Default);
 
             Messenger.Default.Register<CreateWindowMessage>(this, CreateWindow);
         }
@@ -81,8 +83,11 @@ namespace PrintIssueCards
         }
 
         public MainViewModel MainViewModel => _container.Resolve<MainViewModel>();
+
         public FilterSearchViewModel FilterSearchViewModel => _container.Resolve<FilterSearchViewModel>();
+
         public BasicSearchViewModel BasicSearchViewModel => _container.Resolve<BasicSearchViewModel>();
+
         public AdvancedSearchViewModel AdvancedSearchViewModel => _container.Resolve<AdvancedSearchViewModel>();
 
         public PreviewViewModel PreviewViewModel => _container.Resolve<PreviewViewModel>();

@@ -35,6 +35,16 @@ namespace PrintIssueCards.ViewModels
     [POCOViewModel]
     public class MainViewModel
     {
+        private readonly IMessenger _messenger;
+
+        public MainViewModel(IMessenger messenger)
+        {
+            if (messenger == null)
+            {
+                throw new ArgumentNullException(nameof(messenger));
+            }
+            _messenger = messenger;
+        }
         public virtual int SelectionIndex { get; set; }
 
         protected virtual IWindowService WindowService => null;
@@ -47,7 +57,9 @@ namespace PrintIssueCards.ViewModels
 
         public void SetPreviewIssues(IEnumerable<JiraIssue> issues)
         {
-            PreviewIssues = new ObservableCollection<JiraIssue>(issues);
+            PreviewIssues = issues == null
+                ? new ObservableCollection<JiraIssue>()
+                : new ObservableCollection<JiraIssue>(issues);
         }
 
         public void OpenSettings(Type child) => CreateWindow(child, true);
@@ -116,7 +128,7 @@ namespace PrintIssueCards.ViewModels
                 Modal = modal
             };
 
-            Messenger.Default.Send(message);
+            _messenger.Send(message);
         }
     }
 }
