@@ -21,13 +21,20 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 
 namespace PrintIssueCards.ViewModels
 {
     [POCOViewModel]
-    public class AdvancedSearchViewModel
+    public class AdvancedSearchViewModel : ISupportParentViewModel
     {
         public virtual string Jql { get; set; }
+        public object ParentViewModel { get; set; }
+
+        protected void OnParentViewModelChanged()
+        {
+            
+        }
     }
 }

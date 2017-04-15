@@ -23,6 +23,7 @@
 
 using System;
 using System.Security;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
@@ -52,6 +53,8 @@ namespace PrintIssueCards.ViewModels
 
             LoadSettings();
         }
+
+        protected virtual ICurrentWindowService CurrentWindowService => null;
 
         /// <summary>
         /// Gets or sets the host address.
@@ -88,9 +91,13 @@ namespace PrintIssueCards.ViewModels
         /// <summary>
         /// Closes the settings.
         /// </summary>
-        public void CloseSettings()
+        public void CloseSettings(bool saveBeforeClosing = false)
         {
-            SaveSettings();
+            if (saveBeforeClosing)
+            {
+                SaveSettings();
+            }
+            CurrentWindowService.Close();
         }
 
         /// <summary>

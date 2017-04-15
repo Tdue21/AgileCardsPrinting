@@ -24,6 +24,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
@@ -33,7 +34,7 @@ namespace PrintIssueCards.ViewModels
     /// <summary>
     /// </summary>
     [POCOViewModel]
-    public class FilterSearchViewModel
+    public class FilterSearchViewModel  : ISupportParentViewModel
     {
         private readonly IJiraService _jiraHandler;
 
@@ -75,6 +76,21 @@ namespace PrintIssueCards.ViewModels
             var filters = await _jiraHandler.GetFavoriteFiltersAsync();
             Filters = new ObservableCollection<FilterInformation>(filters);
             SelectedFilter = filters.FirstOrDefault();
+        }
+
+        protected async void OnSelectedFilterChanged(FilterInformation oldInformation)
+        {
+            var issues = await _jiraHandler.GetIssuesFromFilterAsync(SelectedFilter);
+            ((MainViewModel)ParentViewModel).SetPreviewIssues(issues);
+        }
+
+        private MainViewModel _parentViewModel;
+
+        public virtual object ParentViewModel { get; set; }
+
+        protected virtual void OnParentViewModelChanged()
+        {
+            _parentViewModel = ParentViewModel as MainViewModel;
         }
     }
 }

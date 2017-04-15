@@ -22,36 +22,19 @@
 //  ****************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.UI;
 using PrintIssueCards.Common;
+using PrintIssueCards.Models;
 
 namespace PrintIssueCards.ViewModels
 {
     [POCOViewModel]
     public class MainViewModel
     {
-        public MainViewModel(FilterSearchViewModel filterSearch, BasicSearchViewModel basicSearch,
-            AdvancedSearchViewModel advancedSearch)
-        {
-            if (filterSearch == null)
-            {
-                throw new ArgumentNullException(nameof(filterSearch));
-            }
-            if (basicSearch == null)
-            {
-                throw new ArgumentNullException(nameof(basicSearch));
-            }
-            if (advancedSearch == null)
-            {
-                throw new ArgumentNullException(nameof(advancedSearch));
-            }
-            FilterSearchViewModel = filterSearch;
-            BasicSearchViewModel = basicSearch;
-            AdvancedSearchViewModel = advancedSearch;
-        }
-
         public virtual int SelectionIndex { get; set; }
 
         protected virtual IWindowService WindowService => null;
@@ -60,11 +43,12 @@ namespace PrintIssueCards.ViewModels
 
         protected virtual IMessageBoxService MessageBoxService => null;
 
-        public virtual FilterSearchViewModel FilterSearchViewModel { get; protected set; }
+        public virtual ObservableCollection<JiraIssue> PreviewIssues { get; protected set; }
 
-        public virtual BasicSearchViewModel BasicSearchViewModel { get; protected set; }
-
-        public virtual AdvancedSearchViewModel AdvancedSearchViewModel { get; protected set; }
+        public void SetPreviewIssues(IEnumerable<JiraIssue> issues)
+        {
+            PreviewIssues = new ObservableCollection<JiraIssue>(issues);
+        }
 
         public void OpenSettings(Type child) => CreateWindow(child, true);
 

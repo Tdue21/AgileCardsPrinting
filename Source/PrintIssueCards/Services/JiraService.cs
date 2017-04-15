@@ -47,26 +47,71 @@ namespace PrintIssueCards.Services
 
         public async Task<IList<FilterInformation>> GetFavoriteFiltersAsync()
         {
-            List<FilterInformation> result = null;
+            var jira = GetJiraClient();
+            if (jira != null)
+            {
+                var filters = await jira.Filters.GetFavouritesAsync();
+                var result = filters.Select(f => new FilterInformation {Id = f.Id, Name = f.Name}).ToList();
+                return result;
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter)
+        {
+            var jira = GetJiraClient();
+            if (jira != null)
+            {
+                var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name);
+                var result =
+                    issues.Select(i =>
+                            new JiraIssue
+                            {
+                                Key = i.Key.Value,
+                                IssueType = i.Type.Name,
+                                Priority = i.Priority.Name,
+                                Status = i.Status.Name,
+                                Summary = i.Summary,
+                                Reporter = i.Reporter,
+                                Assignee = i.Assignee
+                            }).ToList();
+                return result;
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string query)
+        {
+            var jira = GetJiraClient();
+            if (jira != null)
+            {
+                var issues = await jira.Issues.GetIssuesFromJqlAsync(query);
+                var result =
+                    issues.Select(i =>
+                            new JiraIssue
+                            {
+                                Key = i.Key.Value,
+                                IssueType = i.Type.Name,
+                                Priority = i.Priority.Name,
+                                Status = i.Status.Name,
+                                Summary = i.Summary,
+                                Reporter = i.Reporter,
+                                Assignee = i.Assignee
+                            }).ToList();
+                return result;
+            }
+            return null;
+        }
+
+        private Jira GetJiraClient()
+        {
             var data = _settingsHandler.LoadSettings();
             if (!string.IsNullOrEmpty(data.HostAddress))
             {
-                var jira = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString());
-                var filters = await jira.Filters.GetFavouritesAsync();
-
-                result = filters.Select(f => new FilterInformation {Id = f.Id, Name = f.Name}).ToList();
+                return Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString());
             }
-            return result;
-        }
 
-        public Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string getKeyList)
-        {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

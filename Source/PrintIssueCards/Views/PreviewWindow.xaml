@@ -4,7 +4,7 @@
         xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         Title="Issue Card Preview" Height="400" Width="600"  
         Icon="../Resources/BaseIcon.ico"        
-        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="14">
 
     <Grid>
         <WindowsFormsHost x:Name="ReportViewerHost">

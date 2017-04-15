@@ -1,14 +1,12 @@
 ﻿<Window x:Class="PrintIssueCards.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-        xmlns:vm="clr-namespace:PrintIssueCards.ViewModels"
         xmlns:views="clr-namespace:PrintIssueCards.Views"
-        Title="Print Jira Issue Cards" Width="600" Height="400"
-        WindowStartupLocation="CenterScreen" Icon="../App.ico"
+        Title="Print Jira Issue Cards" Width="960" Height="600"
+        WindowStartupLocation="CenterScreen" Icon="../App.ico" x:Name="MainViewWindow"
         FocusManager.FocusedElement="{Binding ElementName=FilterSelectionTabControl}"
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"        
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}" FontSize="14"        
         >
    
     <dxmvvm:Interaction.Behaviors>
@@ -20,34 +18,53 @@
     <Grid Style="{StaticResource GridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TabControl x:Name="FilterSelectionTabControl" Grid.Row="0" SelectedIndex="{Binding SelectionIndex}">
+        <TabControl x:Name="FilterSelectionTabControl" Grid.Row="0" SelectedIndex="{Binding SelectionIndex}" Margin="0,0,0,4">
 
             <TabItem Header="Filter Selection">
-                <views:FilterSearchView DataContext="{Binding FilterSearchViewModel}" />
+                <views:FilterSearchView dxmvvm:ViewModelExtensions.ParentViewModel="{Binding DataContext, ElementName=MainViewWindow}" />
             </TabItem>
 
             <TabItem Header="Basic Search">
-                <views:BasicSearchView DataContext="{Binding BasicSearchViewModel}" />
+                <views:BasicSearchView dxmvvm:ViewModelExtensions.ParentViewModel="{Binding DataContext, ElementName=MainViewWindow}" />
             </TabItem>
 
             <TabItem Header="Advanced Search">
-                <views:AdvancedSearchView DataContext="{Binding AdvancedSearchViewModel}" />
+                <views:AdvancedSearchView dxmvvm:ViewModelExtensions.ParentViewModel="{Binding DataContext, ElementName=MainViewWindow}" />
             </TabItem>
-
         </TabControl>
 
-        <Grid Grid.Row="1" Margin="0,8,0,0">
+        <DataGrid Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
+                  IsReadOnly="True" AlternatingRowBackground="#FFA2CBDC" ItemsSource="{Binding PreviewIssues}" 
+                  HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Key"      Binding="{Binding Key}"       Width="*" />
+                <DataGridTextColumn Header="Type"     Binding="{Binding IssueType}" Width="*" />
+                <DataGridTextColumn Header="Status"   Binding="{Binding Status}"    Width="*" />
+                <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"  Width="*" />
+                <DataGridTextColumn Header="Summary"  Binding="{Binding Summary}"   Width="2*" />
+                <DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}"  Width="*" />
+                <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}"  Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Grid Grid.Row="2" Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="SettingsButton" Grid.Column="0" Content="_Settings" Command="{Binding OpenSettingsCommand}" CommandParameter="{x:Type views:SettingsWindow}" Style="{StaticResource ButtonStyle}" />
-            <Button x:Name="PrintSearchResultButton" Grid.Column="2" Content="_Execute" Command="{Binding PerformSearchCommand}" CommandParameter="{x:Type views:PreviewWindow}" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="SettingsButton" Grid.Column="0" Content="_Settings" 
+                    Command="{Binding OpenSettingsCommand}" CommandParameter="{x:Type views:SettingsWindow}" 
+                    Style="{StaticResource ButtonStyle}" />
+            
+            <Button x:Name="PrintSearchResultButton" Grid.Column="2" Content="_Execute" 
+                    Command="{Binding PerformSearchCommand}" CommandParameter="{x:Type views:PreviewWindow}" 
+                    Style="{StaticResource ButtonStyle}"/>
         </Grid>
 
     </Grid>

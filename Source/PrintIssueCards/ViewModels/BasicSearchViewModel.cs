@@ -21,17 +21,24 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 
 namespace PrintIssueCards.ViewModels
 {
     [POCOViewModel]
-    public class BasicSearchViewModel
+    public class BasicSearchViewModel   : ISupportParentViewModel
     {
         public virtual string KeyList { get; set; }
 
         public virtual object OrderByItems => new[] {"Key", "Priority", "IssueType", "Assignee", "Reporter", "Status"};
 
         public virtual string SelectedOrderBy { get; set; }
+        public object ParentViewModel { get; set; }
+
+        protected virtual void OnParentViewModelChanged()
+        {
+            
+        }
     }
 }

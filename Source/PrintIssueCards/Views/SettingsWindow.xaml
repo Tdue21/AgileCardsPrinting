@@ -1,9 +1,15 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         x:Class="PrintIssueCards.Views.SettingsWindow"
         x:Name="SettingsView" WindowStartupLocation="CenterOwner"
-        Icon="../App.ico" Title="Settings" Width="350" Height="200" Loaded="OnWindowLoaded"
+        Icon="../App.ico" Title="Settings" Width="400" Height="250" FontSize="14" Loaded="OnWindowLoaded"
         DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}" ResizeMode="NoResize">
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService />
+    </dxmvvm:Interaction.Behaviors>
 
     <Grid Style="{StaticResource GridStyle}">
         <Grid.RowDefinitions>
@@ -73,13 +79,16 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             
-            <Button Grid.Column ="0" x:Name="ApplyButton" Content="_Apply" Command="{Binding SaveSettingsCommand}"
+            <Button Grid.Column ="0" x:Name="ApplyButton" Content="_Apply" 
+                    Command="{Binding SaveSettingsCommand}"
                     Style="{StaticResource ButtonStyle}" />
             
-            <Button Grid.Column ="1" x:Name="AcceptButton" Content="_Ok" Command="{Binding CloseSettingsCommand}"
+            <Button Grid.Column ="1" x:Name="AcceptButton" Content="_Ok" 
+                    Command="{Binding CloseSettingsCommand}" CommandParameter="True"
                     Style="{StaticResource ButtonStyle}" IsDefault="True" />
             
-            <Button Grid.Column ="2" x:Name="CancelButton" Content="_Cancel" Command="{Binding CancelSettingsCommand}"
+            <Button Grid.Column ="2" x:Name="CancelButton" Content="_Cancel" 
+                    Command="{Binding CloseSettingsCommand}" CommandParameter="False"
                     Style="{StaticResource ButtonStyle}" IsCancel="True" />
         </Grid>
     </Grid>
