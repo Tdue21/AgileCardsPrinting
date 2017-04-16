@@ -28,6 +28,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using PrintIssueCards.Common;
+using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
 using PrintIssueCards.ViewModels;
 
@@ -42,10 +43,11 @@ namespace PrintIssueCards.Tests
             CreateWindowMessage message = null;
 
             var messager = new Mock<IMessenger>();
+            var jira = new Mock<IJiraService>();
             messager.Setup(m => m.Send(It.IsAny<CreateWindowMessage>(), It.IsAny<Type>(), It.IsAny<object>()))
                 .Callback<CreateWindowMessage, Type, object>((m, t, o) => message = m);
 
-            var viewModel = new MainViewModel(messager.Object);
+            var viewModel = new MainViewModel(messager.Object, jira.Object);
             viewModel.OpenSettings(typeof(object));
 
             message.Should().NotBeNull();
@@ -55,7 +57,8 @@ namespace PrintIssueCards.Tests
         public void SetPreviewIssues_With_Null_List_Tests()
         {
             var messager = new Mock<IMessenger>();
-            var viewModel = new MainViewModel(messager.Object);
+            var jira = new Mock<IJiraService>();
+            var viewModel = new MainViewModel(messager.Object, jira.Object);
 
             viewModel.SetPreviewIssues(null);
 
@@ -66,7 +69,8 @@ namespace PrintIssueCards.Tests
         public void SetPreviewIssues_With_Empty_List_Tests()
         {
             var messager = new Mock<IMessenger>();
-            var viewModel = new MainViewModel(messager.Object);
+            var jira = new Mock<IJiraService>();
+            var viewModel = new MainViewModel(messager.Object, jira.Object);
 
             var list = new List<JiraIssue>();
             viewModel.SetPreviewIssues(list);
@@ -78,7 +82,8 @@ namespace PrintIssueCards.Tests
         public void SetPreviewIssues_With_List_Tests()
         {
             var messager = new Mock<IMessenger>();
-            var viewModel = new MainViewModel(messager.Object);
+            var jira = new Mock<IJiraService>();
+            var viewModel = new MainViewModel(messager.Object, jira.Object);
 
             var list = new List<JiraIssue> { new JiraIssue(), new JiraIssue()};
             viewModel.SetPreviewIssues(list);

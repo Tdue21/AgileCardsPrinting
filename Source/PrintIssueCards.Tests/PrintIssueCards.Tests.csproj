@@ -69,9 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvancedSearchViewModelTests.cs" />
-    <Compile Include="BasicSearchViewModelTests.cs" />
-    <Compile Include="FilterSearchViewModelTests.cs" />
     <Compile Include="MainViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsViewModelTests.cs" />

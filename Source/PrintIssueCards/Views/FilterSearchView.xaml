@@ -19,7 +19,12 @@
         </Grid.RowDefinitions>
 
         <Label x:Name="FiltersTextBlock" Grid.Column="0" Grid.Row="0" Content="_Filter" />
-        <ComboBox x:Name="FiltersComboBox" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Filters}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" Margin="0, 0, 8, 0" />
-        <Button x:Name="RefreshFiltersButton" Grid.Column="2" Grid.Row="0" Content="_Refresh" Command="{Binding PerformRefreshCommand}" Style="{StaticResource ButtonStyle}" />
+        <ComboBox x:Name="FiltersComboBox" Grid.Column="1" Grid.Row="0" 
+                  ItemsSource="{Binding Filters}" DisplayMemberPath="Name" 
+                  SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" 
+                  Margin="0, 0, 8, 0" />
+        
+        <Button x:Name="RefreshFiltersButton" Grid.Column="2" Grid.Row="0" Content="_Refresh" 
+                Command="{Binding PerformRefreshCommand}" Style="{StaticResource ButtonStyle}" />
     </Grid>
 </UserControl>

@@ -26,6 +26,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.UI;
 using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
 
@@ -50,31 +51,6 @@ namespace PrintIssueCards.ViewModels
                 throw new ArgumentNullException(nameof(jiraHandler));
             }
             _jiraHandler = jiraHandler;
-        }
-
-        /// <summary>Gets or sets the list of favorite filters. </summary>
-        public virtual ObservableCollection<FilterInformation> Filters { get; set; }
-
-        /// <summary>Gets or sets the selected filter.</summary>
-        public virtual FilterInformation SelectedFilter { get; set; }
-
-
-        /// <summary>Gets or sets the parent view model.</summary>
-        public virtual object ParentViewModel { get; set; }
-
-        /// <summary>Refreshes the list of filters.</summary>
-        public async void PerformRefresh()
-        {
-            var filters = await _jiraHandler.GetFavoriteFiltersAsync();
-            Filters = new ObservableCollection<FilterInformation>(filters);
-            SelectedFilter = filters.FirstOrDefault();
-        }
-
-        /// <summary>Fires when <see cref="SelectedFilter"/> changes.</summary>
-        protected async void OnSelectedFilterChanged(FilterInformation oldInformation)
-        {
-            var issues = await _jiraHandler.GetIssuesFromFilterAsync(SelectedFilter);
-            ((MainViewModel)ParentViewModel).SetPreviewIssues(issues);
         }
     }
 }

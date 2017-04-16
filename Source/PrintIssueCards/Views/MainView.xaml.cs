@@ -25,9 +25,9 @@ using System.Windows;
 
 namespace PrintIssueCards.Views
 {
-    public partial class MainWindow : Window
+    public partial class MainView 
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
         }

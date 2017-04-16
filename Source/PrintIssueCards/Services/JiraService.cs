@@ -59,12 +59,14 @@ namespace PrintIssueCards.Services
 
         public async Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter)
         {
-            var jira = GetJiraClient();
-            if (jira != null)
+            if (selectedFilter != null)
             {
-                var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name);
-                var result =
-                    issues.Select(i =>
+                var jira = GetJiraClient();
+                if (jira != null)
+                {
+                    var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name);
+                    var result =
+                        issues.Select(i =>
                             new JiraIssue
                             {
                                 Key = i.Key.Value,
@@ -75,7 +77,8 @@ namespace PrintIssueCards.Services
                                 Reporter = i.Reporter,
                                 Assignee = i.Assignee
                             }).ToList();
-                return result;
+                    return result;
+                }
             }
             return null;
         }

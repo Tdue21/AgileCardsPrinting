@@ -130,36 +130,16 @@
     <Compile Include="Models\JiraIssue.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Common\UnitContainerPocoExtensions.cs" />
-    <Compile Include="ViewModels\AdvancedSearchViewModel.cs" />
-    <Compile Include="ViewModels\BasicSearchViewModel.cs" />
-    <Compile Include="ViewModels\FilterSearchViewModel.cs" />
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\AdvancedSearchView.xaml.cs">
-      <DependentUpon>AdvancedSearchView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FilterSearchView.xaml.cs">
-      <DependentUpon>FilterSearchView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BasicSearchView.xaml.cs">
-      <DependentUpon>BasicSearchView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\AdvancedSearchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FilterSearchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -170,8 +150,8 @@
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\PreviewWindow.xaml">
@@ -179,10 +159,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BasicSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
