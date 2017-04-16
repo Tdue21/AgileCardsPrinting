@@ -9,8 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintIssueCards.Tests", "Pr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{4CE9F6E8-C486-440B-8EA9-3A8194C84DEE}"
 	ProjectSection(SolutionItems) = preProject
+		CoverTests.cmd = CoverTests.cmd
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
+		RunTests.cmd = RunTests.cmd
 	EndProjectSection
 EndProject
 Global
