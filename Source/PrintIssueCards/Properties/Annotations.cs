@@ -32,7 +32,8 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace PrintIssueCards.Properties
+// ReSharper disable once CheckNamespace
+namespace PrintIssueCards.Properties.Annotations
 {
     /// <summary>
     ///     Indicates that the value of the marked element could be <c>null</c> sometimes,

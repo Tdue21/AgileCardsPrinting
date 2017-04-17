@@ -93,7 +93,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -115,9 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\DataGridSortingEventArgsConverter.cs" />
     <Compile Include="Common\CreateWindowMessage.cs" />
     <Compile Include="Common\EncryptionHelper.cs" />
-    <Compile Include="Common\IssuesWindowsService.cs" />
+    <Compile Include="Models\SortingInformation.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\JiraService.cs" />
@@ -133,8 +134,8 @@
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\PreviewWindow.xaml.cs">
-      <DependentUpon>PreviewWindow.xaml</DependentUpon>
+    <Compile Include="Views\PreviewView.xaml.cs">
+      <DependentUpon>PreviewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -147,14 +148,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\PreviewWindow.xaml">
+    <Page Include="Views\PreviewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

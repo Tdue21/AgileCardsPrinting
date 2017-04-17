@@ -21,13 +21,40 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Forms;
+using Microsoft.Reporting.WinForms;
+using PrintIssueCards.Models;
+using PrintIssueCards.ViewModels;
+
 namespace PrintIssueCards.Views
 {
-    public partial class MainView 
+    public partial class PreviewView
     {
-        public MainView()
+        public PreviewView()
         {
             InitializeComponent();
+        }
+
+        private void OnViewLoaded(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as PreviewViewModel;
+            if (vm != null)
+            {
+                var reportDataSource = new ReportDataSource("Issues")
+                {
+                    Value = new BindingSource { DataSource = vm.Issues }
+                };
+
+                IssuesReportViewer.LocalReport.EnableExternalImages = true;
+                IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
+                IssuesReportViewer.LocalReport.ReportPath = @"Reports\\NewIssueCards.rdlc";
+                IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+                IssuesReportViewer.RefreshReport();
+                IssuesReportViewer.ZoomMode = ZoomMode.PageWidth;
+            }
         }
     }
 }

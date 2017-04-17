@@ -32,5 +32,6 @@ namespace PrintIssueCards.Interfaces
         Task<IList<FilterInformation>> GetFavoriteFiltersAsync();
         Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter);
         Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string getKeyList);
+        Task<IEnumerable<JiraIssue>> GetIssuesFromKeyListAsync(IEnumerable<string> keyList);
     }
 }

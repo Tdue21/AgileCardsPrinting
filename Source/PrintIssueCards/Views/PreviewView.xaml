@@ -1,11 +1,13 @@
-﻿<Window x:Class="PrintIssueCards.Views.PreviewWindow"
+﻿<Window x:Class="PrintIssueCards.Views.PreviewView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         Title="Issue Card Preview" Height="400" Width="600"  
-        Icon="../Resources/BaseIcon.ico"        
+        Icon="../Resources/BaseIcon.ico" Loaded="OnViewLoaded"        
+        DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
         WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="14">
-
+    
     <Grid>
         <WindowsFormsHost x:Name="ReportViewerHost">
             <winForms:ReportViewer x:Name="IssuesReportViewer"
@@ -17,8 +19,10 @@
                                    ShowPromptAreaButton = "False"
                                    ShowRefreshButton = "False"
                                    ShowStopButton = "False"
-                                   Dock="Fill"  />
+                                   Dock="Fill" />
         </WindowsFormsHost>
     </Grid>
 </Window>
+
+
 

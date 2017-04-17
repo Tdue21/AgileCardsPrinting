@@ -60,7 +60,7 @@ namespace PrintIssueCards.Tests
             var jira = new Mock<IJiraService>();
             var viewModel = new MainViewModel(messager.Object, jira.Object);
 
-            viewModel.SetPreviewIssues(null);
+            //viewModel.SetPreviewIssues(null);
 
             viewModel.PreviewIssues.Should().BeEmpty();
         }
@@ -73,7 +73,7 @@ namespace PrintIssueCards.Tests
             var viewModel = new MainViewModel(messager.Object, jira.Object);
 
             var list = new List<JiraIssue>();
-            viewModel.SetPreviewIssues(list);
+            //viewModel.SetPreviewIssues(list);
 
             viewModel.PreviewIssues.Should().BeEmpty();
         }
@@ -86,7 +86,7 @@ namespace PrintIssueCards.Tests
             var viewModel = new MainViewModel(messager.Object, jira.Object);
 
             var list = new List<JiraIssue> { new JiraIssue(), new JiraIssue()};
-            viewModel.SetPreviewIssues(list);
+            //viewModel.SetPreviewIssues(list);
 
             viewModel.PreviewIssues.Should().HaveCount(2);
         }

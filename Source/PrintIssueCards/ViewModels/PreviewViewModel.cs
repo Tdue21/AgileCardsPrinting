@@ -21,12 +21,47 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System;
+using System.Collections.Generic;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using PrintIssueCards.Interfaces;
+using PrintIssueCards.Models;
 
 namespace PrintIssueCards.ViewModels
 {
     [POCOViewModel]
-    public class PreviewViewModel
+    public class PreviewViewModel : ISupportParameter
     {
+        private readonly ISettingsHandler _settingsHandler;
+
+        public PreviewViewModel(ISettingsHandler settingsHandler)
+        {
+            if (settingsHandler == null)
+            {
+                throw new ArgumentNullException(nameof(settingsHandler));
+            }
+            _settingsHandler = settingsHandler;
+        }
+
+        /// <summary>Gets or sets the parameter.</summary>
+        [BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
+        public virtual object Parameter { get; set; }
+
+        [BindableProperty(false)]
+        public List<JiraIssue> Issues { get; protected set; }
+
+        [BindableProperty(false)]
+        public string ReportFile { get; protected set; }
+
+        protected void OnParameterChanged()
+        {
+            var parameters = Parameter as object[];
+            var issues = parameters?[0] as IEnumerable<JiraIssue>;
+            if (issues != null)
+            {
+                Issues = new List<JiraIssue>(issues);
+            }
+        }
     }
 }

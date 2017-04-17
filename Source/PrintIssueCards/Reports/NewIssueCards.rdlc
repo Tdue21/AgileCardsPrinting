@@ -6,16 +6,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.625cm</Width>
+              <Width>2.375cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.625cm</Width>
+              <Width>2.375cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.625cm</Width>
+              <Width>2.375cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.625cm</Width>
+              <Width>2.375cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -199,7 +199,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Summary">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -241,7 +240,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>3.2cm</Height>
+              <Height>2.7cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -322,7 +321,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Priority">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -335,7 +333,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Priority</rd:DefaultName>
@@ -354,7 +354,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox18">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -386,7 +385,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Estimate">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -399,7 +397,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Estimate</rd:DefaultName>
@@ -444,6 +444,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -455,7 +456,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Assignee">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -468,7 +468,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Assignee</rd:DefaultName>
@@ -476,6 +478,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -487,7 +490,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox21">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -508,6 +510,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -519,7 +522,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Reporter">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -532,7 +534,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Reporter</rd:DefaultName>
@@ -540,6 +544,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -588,7 +593,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Created">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -601,7 +605,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Created</rd:DefaultName>
@@ -620,7 +626,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox35">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -652,7 +657,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Updated">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -665,7 +669,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Updated</rd:DefaultName>
@@ -695,7 +701,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Affected Version</Value>
+                              <Value>Aff. Version</Value>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -710,6 +716,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -721,7 +728,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="AffectedVersion">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -734,7 +740,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>AffectedVersion</rd:DefaultName>
@@ -742,6 +750,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -753,7 +762,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox39">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -774,6 +782,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -785,7 +794,6 @@
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="FixedVersion">
-                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -798,7 +806,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>FixedVersion</rd:DefaultName>
@@ -806,6 +816,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -840,12 +851,13 @@
                 <TablixMember />
                 <TablixMember />
               </TablixMembers>
+              <KeepTogether>true</KeepTogether>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Issues</DataSetName>
-        <Height>7.4cm</Height>
-        <Width>10.5cm</Width>
+        <Height>6.9cm</Height>
+        <Width>9.5cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -854,7 +866,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>7.4cm</Height>
+    <Height>6.9cm</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -864,14 +876,14 @@
       </RightBorder>
     </Style>
   </Body>
-  <Width>10.5cm</Width>
+  <Width>9.5cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <Columns>2</Columns>
     <ColumnSpacing>0cm</ColumnSpacing>
     <Style />

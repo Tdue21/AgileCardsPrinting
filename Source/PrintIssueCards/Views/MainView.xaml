@@ -1,168 +1,117 @@
-﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:views="clr-namespace:PrintIssueCards.Views"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="PrintIssueCards.Views.MainView"
-        Title="Print Jira Issue Cards" 
-        Width="960" Height="600"
-        WindowStartupLocation="CenterScreen" 
-        Icon="../App.ico"
+        xmlns:common="clr-namespace:PrintIssueCards.Common"
+        x:Class="PrintIssueCards.Views.MainView" FontSize="14"
+        Title="Print Jira Issue Cards" Width="960" Height="600"
+        WindowStartupLocation="CenterScreen" Icon="../App.ico"
         DataContext="{Binding MainViewModel, Source={StaticResource Locator}}" 
-        FontSize="14"
         >
 
     <dxmvvm:Interaction.Behaviors>
+        
         <dxmvvm:CurrentWindowService />
+        <dxmvvm:MessageBoxService />
+
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding RefreshFilterListCommand}" />
+        <dxmvvm:KeyToCommand   KeyGesture="F5"    Command="{Binding RefreshIssuesListCommand}" />
+
     </dxmvvm:Interaction.Behaviors>
 
     <Grid Style="{StaticResource GridStyle}">
+        
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-        <TabControl Grid.Row="0" 
-                    SelectedIndex="{Binding SelectedSearchIndex}"
-                    Margin="0,0,0,4">
+        <TabControl Grid.Row="0" Grid.Column="0" SelectedIndex="{Binding SelectedSearchIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4">
 
             <TabItem Header="Filter Selection">
-
-                <Grid Style="{StaticResource GridStyle}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Column="0" Grid.Row="0" Content="_Filter" />
-
-                    <ComboBox Grid.Column="1" Grid.Row="0"
-                              ItemsSource="{Binding Filters}" DisplayMemberPath="Name"
-                              SelectedItem="{Binding SelectedFilter, Mode=TwoWay}"
-                              Margin="0, 0, 8, 0" />
-
-                    <Button Grid.Column="2" Grid.Row="0"
-                            Content="_Refresh"
-                            Command="{Binding PerformRefreshCommand}"
-                            Style="{StaticResource ButtonStyle}" />
-                </Grid>
-
+                <StackPanel Orientation="Vertical" Margin="6">
+                    <Label Content="Select _Filter" />
+                    <ListBox  ItemsSource="{Binding Filters}" 
+                              DisplayMemberPath="Name" 
+                              MinHeight="76" MaxHeight="76"
+                              ScrollViewer.CanContentScroll="True"
+                              SelectedItem="{Binding SelectedFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
             </TabItem>
 
             <TabItem Header="Basic Search">
-
-                <Grid Style="{StaticResource GridStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" 
-                           Content="_Enter one or more keys. Space, Enter, Semi-colon or Comma between keys." />
-
-                    <TextBox Grid.Row="1" 
-                             Text="{Binding KeyList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             AcceptsReturn="True" />
-
-                    <Grid Grid.Row="2" Margin="0,4,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" MinWidth="100" 
-                           Content="_Order by" />
-
-                        <ComboBox Grid.Column="1" 
-                                  SelectedItem="{Binding SelectedOrderBy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
-                            <System:String>Key</System:String>
-                            <System:String>Priority</System:String>
-                            <System:String>IssueType</System:String>
-                            <System:String>Assignee</System:String>
-                            <System:String>Reporter</System:String>
-                            <System:String>Status</System:String>
-                        </ComboBox>
-
-                        <Button Grid.Column="2" 
-                            Content="_Search"
-                            Command="{Binding PreviewSearchCommand}"
-                            CommandParameter="Basic"
-                            Style="{StaticResource ButtonStyle}" Margin="4, 0, 0, 0" />
-                    </Grid>
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Advanced Search">
-
-                <Grid Style="{StaticResource GridStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition>
-                            <ColumnDefinition.Width>Auto</ColumnDefinition.Width>
-                        </ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0"
-                           Content="_Enter Jql expression" />
-
-                    <TextBox Grid.Row="1" Grid.Column="0"
-                             Text="{Binding Jql, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <StackPanel Orientation="Vertical" Margin="6">
+                    <Label Content="_Enter one or more keys. Space, Enter, Semi-colon or Comma between keys." />
+                    <TextBox Text="{Binding KeyList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             MinLines="4"
                              HorizontalScrollBarVisibility="Auto"
                              ScrollViewer.CanContentScroll="True"
                              VerticalScrollBarVisibility="Auto"
                              AcceptsReturn="True"
                              TextWrapping="Wrap" />
+                </StackPanel>
+            </TabItem>
 
-                    <Button Grid.Row="1" Grid.Column="1"    VerticalAlignment="Top"
-                            Content="_Search"
-                            Command="{Binding PreviewSearchCommand}"
-                            CommandParameter="Advanced"
-                            Style="{StaticResource ButtonStyle}" Margin="4, 0, 0, 0" />
-                </Grid>
+            <TabItem Header="Advanced Search">
+                <StackPanel Orientation="Vertical" Margin="6">
+                    <Label Content="_Enter Jql expression" />
+                    <TextBox Text="{Binding Jql, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             MinLines="4"
+                             HorizontalScrollBarVisibility="Auto"
+                             ScrollViewer.CanContentScroll="True"
+                             VerticalScrollBarVisibility="Auto"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap" />
+                </StackPanel>
             </TabItem>
         </TabControl>
-
+        
         <DataGrid x:Name="PreviewIssuesDataGrid"
-                  Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
+                  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" 
+                  CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
                   IsReadOnly="True" AlternatingRowBackground="#FFA2CBDC" ItemsSource="{Binding PreviewIssues}"
-                  HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" HeadersVisibility="Column"
-                  >
+                  HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" 
+                  HeadersVisibility="Column" CanUserResizeRows="False">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="*" />
-                <DataGridTextColumn Header="Type" Binding="{Binding IssueType}" Width="*" />
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*" />
-                <DataGridTextColumn Header="Priority" Binding="{Binding Priority}" Width="*" />
-                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="2*" />
-                <DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}" Width="*" />
-                <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}" Width="*" />
+                <DataGridTextColumn Header="Key"      Binding="{Binding Key}"       Width="*" />
+                <DataGridTextColumn Header="Type"     Binding="{Binding IssueType}" Width="*" />
+                <DataGridTextColumn Header="Status"   Binding="{Binding Status}"    Width="*" />
+                <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"  Width="*" />
+                <DataGridTextColumn Header="Summary"  Binding="{Binding Summary}"   Width="2*" />
+                <DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}"  Width="*" />
+                <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}"  Width="*" />
+                <DataGridTextColumn Header="Estimate" Binding="{Binding Estimate}"  Width="*" />
             </DataGrid.Columns>
 
             <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="SelectionChanged" 
-                                       Command="{Binding SetSelectedItemsCommand}" 
-                                       CommandParameter="{Binding SelectedItems, ElementName=PreviewIssuesDataGrid}" />
+                
+                <dxmvvm:EventToCommand EventName="Sorting" Command="{Binding SortingChangedCommand}" >
+                    <dxmvvm:EventToCommand.EventArgsConverter>
+                        <common:DataGridSortingEventArgsConverter />
+                    </dxmvvm:EventToCommand.EventArgsConverter>
+                </dxmvvm:EventToCommand>
+
+                <dxmvvm:DependencyPropertyBehavior EventName="SelectionChanged"
+                                                   PropertyName="SelectedItems"
+                                                   Binding="{Binding SelectedIssues, Mode=TwoWay}"
+                                                   />
+                
             </dxmvvm:Interaction.Behaviors>
 
         </DataGrid>
 
-        <Grid Grid.Row="2" Margin="0,8,0,0">
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
@@ -171,11 +120,16 @@
                     CommandParameter="{x:Type views:SettingsWindow}"
                     Style="{StaticResource ButtonStyle}" />
 
-            <Button Grid.Column="2" Content="_Execute"
-                    Command="{Binding PerformSearchCommand}" 
-                    CommandParameter="{x:Type views:PreviewWindow}"
+            <Label Grid.Column="1" Content="{Binding SelectedIssues.Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            
+            <Button Content="_Update Issues List" Grid.Column="2" 
+                    Style="{StaticResource ButtonStyle}" 
+                    VerticalAlignment="Center" Command="{Binding RefreshIssuesListCommand}" />
+
+            <Button Grid.Column="3" Content="_Execute"
+                    Command="{Binding PreparePrintCommand}" 
+                    CommandParameter="{x:Type views:PreviewView}"
                     Style="{StaticResource ButtonStyle}" />
         </Grid>
-
     </Grid>
 </Window>

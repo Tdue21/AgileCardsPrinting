@@ -21,49 +21,30 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Forms;
-using Microsoft.Reporting.WinForms;
+using System.ComponentModel;
+using System.Windows.Controls;
+using DevExpress.Mvvm.UI;
 using PrintIssueCards.Models;
 
-namespace PrintIssueCards.Views
+namespace PrintIssueCards.Common
 {
-    public partial class PreviewWindow : Window
+    public class DataGridSortingEventArgsConverter : EventArgsConverterBase<DataGridSortingEventArgs>
     {
-        public PreviewWindow()
+        protected override object Convert(object sender, DataGridSortingEventArgs args)
         {
-            InitializeComponent();
-        }
-
-        public PreviewWindow(IEnumerable<JiraIssue> issues) : this()
-        {
-            if (issues == null)
+            var parent = sender as DataGrid;
+            var column = args?.Column;
+            if (sender != null && column != null)
             {
-                throw new ArgumentNullException(nameof(issues));
-            }
-
-            PrepareReport(issues);
-        }
-
-        private void PrepareReport(IEnumerable<JiraIssue> issues)
-        {
-            var reportDataSource = new ReportDataSource
-            {
-                Name = "Issues",
-                Value = new BindingSource
+                return new SortingInformation
                 {
-                    DataSource = issues
-                }
-            };
-
-            IssuesReportViewer.LocalReport.EnableExternalImages = true;
-            IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
-            IssuesReportViewer.LocalReport.ReportPath = @"Resources\\IssueCards.rdlc";
-            IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
-            IssuesReportViewer.RefreshReport();
-            IssuesReportViewer.ZoomMode = ZoomMode.PageWidth;
+                    MemberPath = column.SortMemberPath,
+                    Ascending =
+                        column.SortDirection.GetValueOrDefault(ListSortDirection.Ascending) ==
+                        ListSortDirection.Ascending
+                };
+            }
+            return null;
         }
     }
 }

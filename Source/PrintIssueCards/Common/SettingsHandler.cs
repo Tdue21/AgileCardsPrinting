@@ -64,7 +64,7 @@ namespace PrintIssueCards.Common
                 new XElement("Settings",
                     new XElement("HostAddress", settings.HostAddress),
                     new XElement("UserId",      settings.UserId),
-                    new XElement("Password",    EncryptionHelper.Encrypt(settings.Password.ConvertToUnsecureString() ?? string.Empty)),
+                    new XElement("Password",    EncryptionHelper.Encrypt(settings.Password?.ConvertToUnsecureString() ?? string.Empty)),
                     new XElement("MaxResult",   settings.MaxResult)));
 
             data.Save(_settingsFile, SaveOptions.None);

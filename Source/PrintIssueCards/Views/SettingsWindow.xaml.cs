@@ -27,7 +27,7 @@ using PrintIssueCards.ViewModels;
 
 namespace PrintIssueCards.Views
 {
-    public partial class SettingsWindow : Window
+    public partial class SettingsWindow 
     {
         public SettingsWindow()
         {
@@ -48,7 +48,7 @@ namespace PrintIssueCards.Views
             var vm = DataContext as SettingsViewModel;
             if (vm != null)
             {
-                PasswordTextBox.Password = vm.Password.ConvertToUnsecureString();
+                PasswordTextBox.Password = vm.Password?.ConvertToUnsecureString();
             }
         }
     }

@@ -2,3 +2,6 @@
 \bin
 \packages
 \.vs
+\coverage
+results.xml
+TestResult.xml

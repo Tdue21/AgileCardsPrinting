@@ -21,14 +21,10 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows;
-
 namespace PrintIssueCards
 {
     /// <summary>
     ///     Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
-    {
-    }
+    public partial class App {}
 }

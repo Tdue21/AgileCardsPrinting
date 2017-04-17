@@ -64,8 +64,13 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Gets the current window service.</summary>
         protected virtual ICurrentWindowService CurrentWindowService => null;
 
+        /// <summary>Gets the message box service.</summary>
+        protected virtual IMessageBoxService MessageBoxService => null;
+
+
         /// <summary>Gets or sets the index of the selected search view. </summary>
         public virtual int SelectedSearchIndex { get; set; }
+
 
         /// <summary>Gets or sets the list of favorite filters. </summary>
         public virtual ObservableCollection<FilterInformation> Filters { get; set; }
@@ -76,11 +81,9 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Gets or sets the key list.</summary>
         public virtual string KeyList { get; set; }
 
-        /// <summary>Gets or sets the selected order by.</summary>
-        public virtual string SelectedOrderBy { get; set; }
-
         /// <summary>Gets or sets the JQL.</summary>
         public virtual string Jql { get; set; }
+
 
         /// <summary>Gets or sets the preview issues.</summary>
         public virtual ObservableCollection<JiraIssue> PreviewIssues { get; set; }
@@ -88,124 +91,96 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Gets or sets the selected issues.</summary>
         public virtual IList SelectedIssues { get; set; }
 
-        /// <summary>Sets the selected items.</summary>
-        /// <param name="args">The list of selected items.</param>
-        public void SetSelectedItems(IList args)
-        {
-            SelectedIssues = args;
-        }
+        /// <summary>Gets or sets the sorting information.</summary>
+        public virtual SortingInformation SortingInformation { get; set; }
 
         /// <summary>Refreshes the list of filters.</summary>
-        public async void PerformRefresh()
+        public async void RefreshFilterList()
         {
-            var filters = await _jiraService.GetFavoriteFiltersAsync();
-            if (filters != null && filters.Any())
+            try
             {
-                Filters = new ObservableCollection<FilterInformation>(filters);
-                SelectedFilter = filters.FirstOrDefault();
+                var filters = await _jiraService.GetFavoriteFiltersAsync();
+                Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
             }
-            else
+            catch (Exception e)
             {
-                Filters = null;
-                SelectedFilter = null;
+                MessageBoxService.ShowMessage(
+                    $"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}",
+                    "Error",
+                    MessageButton.OK,
+                    MessageIcon.Error);
             }
         }
 
-        public async void PreviewSearch(string tab)
-        {
-            var jql = tab == "Basic" ? GetQueryFromKeyList() : Jql;
-            var issues = await _jiraService.GetIssuesFromQueryAsync(jql);
-            SetPreviewIssues(issues);
-        }
-
-        /// <summary>Fires when <see cref="SelectedFilter"/> changes.</summary>
-        protected async void OnSelectedFilterChanged(FilterInformation oldInformation)
-        {
-            var issues = await _jiraService.GetIssuesFromFilterAsync(SelectedFilter);
-            SetPreviewIssues(issues);
-        }
 
         /// <summary>
-        /// Sets the preview issues.
+        /// Refreshes the issues list.
         /// </summary>
-        /// <param name="issues">The issues.</param>
-        public void SetPreviewIssues(IEnumerable<JiraIssue> issues)
+        public async void RefreshIssuesList()
         {
-            PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
+            try
+            {
+                IEnumerable<JiraIssue> issues;
+
+                switch (SelectedSearchIndex)
+                {
+                    case 0:
+                        issues = await _jiraService.GetIssuesFromFilterAsync(SelectedFilter);
+                        break;
+                    case 1:
+                        issues = await _jiraService.GetIssuesFromKeyListAsync(GetKeyList());
+                        break;
+                    case 2:
+                        issues = await _jiraService.GetIssuesFromQueryAsync(Jql);
+                        break;
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+
+                PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
+            }
+            catch (Exception e)
+            {
+                MessageBoxService.ShowMessage(
+                    $"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}",
+                    "Error",
+                    MessageButton.OK,
+                    MessageIcon.Error);
+            }
         }
 
-        /// <summary>
-        /// Opens the settings.
-        /// </summary>
+        /// <summary>Opens the settings dialog.</summary>
         /// <param name="child">The child.</param>
         public void OpenSettings(Type child) => CreateWindow(child, true);
 
-        //  public bool CanPerformSearch(Type child) => !string.IsNullOrEmpty(Jql);
+        /// <summary>Sortings the changed.</summary>
+        /// <param name="sortingInformation">The sorting information.</param>
+        public void SortingChanged(SortingInformation sortingInformation) => SortingInformation = sortingInformation;
 
         /// <summary>
         /// Performs the search.
         /// </summary>
         /// <param name="child">The child.</param>
-        public void PerformSearch(Type child)
+        public void PreparePrint(Type child)
         {
-            //IEnumerable<JiraIssue> result = null;
+            var list = SelectedIssues != null && SelectedIssues.Count > 0
+                ? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
+                : new List<JiraIssue>(PreviewIssues);
 
-            //switch (SelectionIndex)
-            //{
-            //    case 0:
-            //        result = await _jiraHandler.GetIssuesFromFilterAsync(SelectedFilter);
-            //        break;
-            //    case 1:
-            //        result = await _jiraHandler.GetIssuesFromQueryAsync(GetKeyList());
-            //        break;
-            //    case 2:
-            //        result = await _jiraHandler.GetIssuesFromQueryAsync(Jql);
-            //        break;
-            //    default:
-            //        throw new IndexOutOfRangeException();
-            //}
-
-            //CreateWindow(child, true);
-
-
-            //var handler = new SettingsHandler();
-            //var data = handler.LoadSettings();
-            //var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password);
-            //var searchString = !string.IsNullOrEmpty(KeyList) ? GetKeyList() : null;
-            //var result = await (!string.IsNullOrEmpty(searchString)
-            //                        ? client.SearchAsync(searchString, data.MaxResult)
-            //                        : string.Equals(SelectedFilter.Jql, Jql, StringComparison.InvariantCultureIgnoreCase)
-            //                              ? client.GetIssuesAsync(SelectedFilter.Id, data.MaxResult)
-            //                              : client.SearchAsync(Jql, data.MaxResult)
-            //                   );
-
-            //var issues = result.Select(JiraIssue.CreateFromIssue);
-            //var window = new PreviewWindow(issues);
-            //window.ShowDialog();
+            CreateWindow(child, true, new object[] {list, SortingInformation});
         }
 
-        private string GetQueryFromKeyList()
-        {
-            var keys = KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).OrderBy(i => i);
-            var keyList = keys.Aggregate(string.Empty, (c, n) => c + "," + n).Substring(1);
-
-            var jql = $"Key in ({keyList})";
-            if (!string.IsNullOrEmpty(SelectedOrderBy))
-            {
-                jql += " order by " + SelectedOrderBy;
-            }
-
-            return jql;
-        }
+        private IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).OrderBy(i => i);
 
 
-        private void CreateWindow(Type childType, bool modal = false)
+        private void CreateWindow(Type childType, bool modal = false, object[] parameters = null)
         {
             var message = new CreateWindowMessage
             {
                 Owner = (CurrentWindowService as CurrentWindowService)?.ActualWindow,
                 ChildType = childType,
-                Modal = modal
+                Modal = modal,
+                Parameters = parameters
             };
 
             _messenger.Send(message);
