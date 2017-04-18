@@ -8,10 +8,17 @@
 
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService />
+        <dxmvvm:OpenFileDialogService CheckPathExists="True"
+                                      CheckFileExists="True"
+                                      Filter="Report files (*.rdlc)|*.rdlc|All files (*.*)|*.*" 
+                                      FilterIndex="0" 
+                                      Multiselect="False" 
+                                      Title="Select report file" />
     </dxmvvm:Interaction.Behaviors>
 
     <Grid Style="{StaticResource GridStyle}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -24,34 +31,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Grid.Row="0" 
-                   x:Name="HostAddressLabel" 
-                   Content="_Host Address" />
+        <Label Grid.Column="0" Grid.Row="0" Content="_Host Address" />
+        <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,4" Text="{Binding HostAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBox Grid.Column="1" Grid.Row="0" 
-                     x:Name="HostAddressTextBox"  
-                     Margin="0,0,0,4" 
-                     Text="{Binding HostAddress, Mode=TwoWay}" />
+        <Label Grid.Column="0" Grid.Row="1" Content="_User Id" />
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,4" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Column="0" Grid.Row="1" 
-               x:Name="UserIdLabel" 
-               Content="_User Id" />
+        <Label Grid.Column="0" Grid.Row="2" Content="_Password" />
+        <PasswordBox Grid.Column="1" Grid.Row="2" Margin="0,0,0,4" x:Name="PasswordTextBox" PasswordChanged="OnPasswordChanged" />
 
-        <TextBox Grid.Column="1" Grid.Row="1" 
-                 x:Name="UserIdTextBox"   
-                     Margin="0,0,0,4" 
-                 Text="{Binding UserId, Mode=TwoWay}" />
-
-        <Label Grid.Column="0" Grid.Row="2" 
-               x:Name="PasswordLabel" 
-               Content="_Password" />
-
-        <PasswordBox Grid.Column="1" Grid.Row="2" 
-                     x:Name="PasswordTextBox" 
-                     Visibility="Visible" PasswordChanged="OnPasswordChanged" 
-                     Margin="0,0,0,4" />
-
-        <Label Grid.Column="0" Grid.Row="3" x:Name="MaxResultLabel" Content="_Max. Result" />
+        <Label Grid.Column="0" Grid.Row="3" Content="_Report File" />
 
         <Grid Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -59,36 +48,38 @@
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
 
-            <Slider x:Name="MaxResultTextBox"
-                        Grid.Column="0"
-                        Margin="4"
-                        Minimum="10"
-                        Maximum="200"
-                        LargeChange="10"
-                        SmallChange="1" VerticalAlignment="Center"
-                        Value="{Binding MaxResult, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Grid.Column="1" Text="{Binding ElementName=MaxResultTextBox, Path=Value}"
-                           VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBox Grid.Column="0" Text="{Binding ReportFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            
+            <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4,0,0,0" Command="{Binding OpenFileCommand}">
+                <Image Source="../Assets/folder_document.png" />
+            </Button>
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="-4,4" VerticalAlignment="Bottom">
+        <Label Grid.Column="0" Grid.Row="4" x:Name="MaxResultLabel" Content="_Max. Result" />
+
+        <Grid Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column ="0" x:Name="ApplyButton" Content="_Apply" 
-                    Command="{Binding SaveSettingsCommand}"
-                    Style="{StaticResource ButtonStyle}" />
-            
-            <Button Grid.Column ="1" x:Name="AcceptButton" Content="_Ok" 
-                    Command="{Binding CloseSettingsCommand}" CommandParameter="True"
-                    Style="{StaticResource ButtonStyle}" IsDefault="True" />
-            
-            <Button Grid.Column ="2" x:Name="CancelButton" Content="_Cancel" 
-                    Command="{Binding CloseSettingsCommand}" CommandParameter="False"
-                    Style="{StaticResource ButtonStyle}" IsCancel="True" />
+
+            <Slider Grid.Column="0" Margin="4" Minimum="10" Maximum="200" LargeChange="10" SmallChange="1" VerticalAlignment="Center"
+                    Value="{Binding MaxResult, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Column="1" Text="{Binding MaxResult, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       VerticalAlignment="Center" HorizontalAlignment="Right" />
         </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right" Margin="-4,4" VerticalAlignment="Bottom">
+
+            <Button Content="_Apply" Command="{Binding SaveSettingsCommand}" Style="{StaticResource ButtonStyle}" />
+
+            <Button Content="_Ok" Command="{Binding CloseSettingsCommand}" CommandParameter="True"
+                    Style="{StaticResource ButtonStyle}" IsDefault="True" />
+
+            <Button Content="_Cancel" Command="{Binding CloseSettingsCommand}" CommandParameter="False"
+                    Style="{StaticResource ButtonStyle}" IsCancel="True" />
+        </StackPanel>
     </Grid>
 </Window>

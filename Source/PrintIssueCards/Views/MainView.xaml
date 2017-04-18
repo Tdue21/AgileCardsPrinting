@@ -6,9 +6,13 @@
         x:Class="PrintIssueCards.Views.MainView" FontSize="14"
         Title="Print Jira Issue Cards" Width="960" Height="600"
         WindowStartupLocation="CenterScreen" Icon="../App.ico"
-        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}" 
-        >
+        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
+    <Window.Cursor>
+        <Binding Path="IsBusy" Converter="{StaticResource BooleanToCursorConverter}" Mode="TwoWay"
+                 UpdateSourceTrigger="PropertyChanged" />
+    </Window.Cursor>
+ 
     <dxmvvm:Interaction.Behaviors>
         
         <dxmvvm:CurrentWindowService />
@@ -120,7 +124,7 @@
                     CommandParameter="{x:Type views:SettingsWindow}"
                     Style="{StaticResource ButtonStyle}" />
 
-            <Label Grid.Column="1" Content="{Binding SelectedIssues.Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Column="1" IsChecked="{Binding IsBusy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{Binding SelectedIssues.Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             
             <Button Content="_Update Issues List" Grid.Column="2" 
                     Style="{StaticResource ButtonStyle}" 

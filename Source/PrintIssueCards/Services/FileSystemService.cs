@@ -21,12 +21,21 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System.IO;
 using PrintIssueCards.Interfaces;
 
 namespace PrintIssueCards.Services
 {
     public class FileSystemService : IFileSystemService
     {
-        
+        public string GetFullPath(string path) => Path.GetFullPath(path);
+
+        public bool FileExists(string path) => File.Exists(path);
+
+        public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+        public Stream OpenWriteStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+
+        public string GetFileName(string path) => Path.GetFileName(path);
     }
 }

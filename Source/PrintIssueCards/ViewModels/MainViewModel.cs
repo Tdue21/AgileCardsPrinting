@@ -67,10 +67,8 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Gets the message box service.</summary>
         protected virtual IMessageBoxService MessageBoxService => null;
 
-
         /// <summary>Gets or sets the index of the selected search view. </summary>
         public virtual int SelectedSearchIndex { get; set; }
-
 
         /// <summary>Gets or sets the list of favorite filters. </summary>
         public virtual ObservableCollection<FilterInformation> Filters { get; set; }
@@ -84,12 +82,14 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Gets or sets the JQL.</summary>
         public virtual string Jql { get; set; }
 
-
         /// <summary>Gets or sets the preview issues.</summary>
         public virtual ObservableCollection<JiraIssue> PreviewIssues { get; set; }
 
         /// <summary>Gets or sets the selected issues.</summary>
         public virtual IList SelectedIssues { get; set; }
+
+        /// <summary>Gets or sets a value indicating whether this instance is busy.</summary>
+        public virtual bool IsBusy { get; set; }
 
         /// <summary>Gets or sets the sorting information.</summary>
         public virtual SortingInformation SortingInformation { get; set; }
@@ -97,6 +97,7 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Refreshes the list of filters.</summary>
         public async void RefreshFilterList()
         {
+            IsBusy = true;
             try
             {
                 var filters = await _jiraService.GetFavoriteFiltersAsync();
@@ -110,14 +111,15 @@ namespace PrintIssueCards.ViewModels
                     MessageButton.OK,
                     MessageIcon.Error);
             }
+            IsBusy = false;
         }
-
 
         /// <summary>
         /// Refreshes the issues list.
         /// </summary>
         public async void RefreshIssuesList()
         {
+            IsBusy = true;
             try
             {
                 IEnumerable<JiraIssue> issues;
@@ -147,6 +149,7 @@ namespace PrintIssueCards.ViewModels
                     MessageButton.OK,
                     MessageIcon.Error);
             }
+            IsBusy = false;
         }
 
         /// <summary>Opens the settings dialog.</summary>

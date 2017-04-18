@@ -22,35 +22,21 @@
 //  ****************************************************************************
 
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
-using DevExpress.Mvvm.UI;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Markup;
 
-namespace PrintIssueCards.ViewModels
+namespace PrintIssueCards.Common
 {
-    /// <summary>
-    /// </summary>
-    [POCOViewModel]
-    public class FilterSearchViewModel  : ISupportParentViewModel
+    public class BooleanToCursorConverter : MarkupExtension, IValueConverter
     {
-        private readonly IJiraService _jiraHandler;
+        private static BooleanToCursorConverter _instance; 
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="FilterSearchViewModel" /> class.
-        /// </summary>
-        /// <param name="jiraHandler">The jira handler.</param>
-        /// <exception cref="ArgumentNullException">jiraHandler</exception>
-        public FilterSearchViewModel(IJiraService jiraHandler)
-        {
-            if (jiraHandler == null)
-            {
-                throw new ArgumentNullException(nameof(jiraHandler));
-            }
-            _jiraHandler = jiraHandler;
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value != null && (bool) value ? Cursors.Wait : Cursors.Arrow;
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Cursors.Wait.Equals(value as Cursor ?? Cursors.Wait);
+
+        public override object ProvideValue(IServiceProvider serviceProvider) => _instance ?? (_instance = new BooleanToCursorConverter());
     }
 }

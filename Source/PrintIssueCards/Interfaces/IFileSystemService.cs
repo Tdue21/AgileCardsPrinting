@@ -21,9 +21,20 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System.IO;
+
 namespace PrintIssueCards.Interfaces
 {
     public interface IFileSystemService
     {
+        string GetFullPath(string path);
+
+        bool FileExists(string path);
+
+        Stream OpenReadStream(string path);
+
+        Stream OpenWriteStream(string path);
+
+        string GetFileName(string path);
     }
 }

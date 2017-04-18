@@ -21,12 +21,9 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
-using PrintIssueCards.Models;
 using PrintIssueCards.ViewModels;
 
 namespace PrintIssueCards.Views
@@ -38,22 +35,30 @@ namespace PrintIssueCards.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Called when [view loaded].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnViewLoaded(object sender, RoutedEventArgs e)
         {
+            // This is necessary, as the ReportViewer component does not support MVVM. 
+            // This does not however break MVVM as it is purely related to the UI, and 
+            // the ViewModel does not know the View. 
             var vm = DataContext as PreviewViewModel;
             if (vm != null)
             {
                 var reportDataSource = new ReportDataSource("Issues")
                 {
-                    Value = new BindingSource { DataSource = vm.Issues }
+                    Value = new BindingSource {DataSource = vm.Issues}
                 };
 
                 IssuesReportViewer.LocalReport.EnableExternalImages = true;
                 IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
-                IssuesReportViewer.LocalReport.ReportPath = @"Reports\\NewIssueCards.rdlc";
+                IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
                 IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
                 IssuesReportViewer.RefreshReport();
-                IssuesReportViewer.ZoomMode = ZoomMode.PageWidth;
+                IssuesReportViewer.ZoomMode = ZoomMode.FullPage;
             }
         }
     }

@@ -39,5 +39,6 @@ namespace PrintIssueCards.Models
         public string UserId { get; set; }
         public SecureString Password { get; set; }
         public int MaxResult { get; set; }
+        public string ReportName { get; set; }
     }
 }

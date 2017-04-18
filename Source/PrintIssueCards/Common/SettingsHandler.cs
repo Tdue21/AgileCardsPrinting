@@ -21,7 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.IO;
+using System;
 using System.Xml.Linq;
 using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
@@ -30,28 +30,38 @@ namespace PrintIssueCards.Common
 {
     public class SettingsHandler : ISettingsHandler
     {
+        private readonly IFileSystemService _fileSystem;
         private readonly string _settingsFile;
 
-        public SettingsHandler()
+        public SettingsHandler(IFileSystemService fileSystem)
         {
-            _settingsFile = Path.GetFullPath(".\\Settings.xml");
+            if (fileSystem == null)
+            {
+                throw new ArgumentNullException(nameof(fileSystem));
+            }
+            _fileSystem = fileSystem;
+            _settingsFile = _fileSystem.GetFullPath(".\\Settings.xml");
         }
 
         public SettingsModel LoadSettings()
         {
             var settings = new SettingsModel();
-            if (File.Exists(_settingsFile))
+            if (_fileSystem.FileExists(_settingsFile))
             {
-                var data = XDocument.Load(_settingsFile, LoadOptions.PreserveWhitespace);
-                if (data.Root != null)
+                using (var stream = _fileSystem.OpenReadStream(_settingsFile))
                 {
-                    settings.HostAddress = data.Root.GetDescendantValue("HostAddress", string.Empty);
-                    settings.MaxResult   = data.Root.GetDescendantValue("MaxResult",   50);
-                    settings.UserId      = data.Root.GetDescendantValue("UserId",      string.Empty);
-                    var password         = data.Root.GetDescendantValue("Password",    string.Empty);
-                    settings.Password    = (!string.IsNullOrEmpty(password)
-                                            ? EncryptionHelper.Decrypt(password)
-                                            : password).ConvertToSecureString();
+                    var data = XDocument.Load(stream, LoadOptions.PreserveWhitespace);
+                    if (data.Root != null)
+                    {
+                        settings.HostAddress = data.Root.GetDescendantValue("HostAddress", string.Empty);
+                        settings.MaxResult = data.Root.GetDescendantValue("MaxResult", 50);
+                        settings.UserId = data.Root.GetDescendantValue("UserId", string.Empty);
+                        settings.ReportName = data.Root.GetDescendantValue("ReportName", string.Empty);
+                        var password = data.Root.GetDescendantValue("Password", string.Empty);
+                        settings.Password = (!string.IsNullOrEmpty(password)
+                            ? EncryptionHelper.Decrypt(password)
+                            : password).ConvertToSecureString();
+                    }
                 }
             }
 
@@ -61,13 +71,19 @@ namespace PrintIssueCards.Common
         public void SaveSettings(SettingsModel settings)
         {
             var data = new XDocument(
+                new XDeclaration("1.0", "utf-8", null),
                 new XElement("Settings",
                     new XElement("HostAddress", settings.HostAddress),
                     new XElement("UserId",      settings.UserId),
                     new XElement("Password",    EncryptionHelper.Encrypt(settings.Password?.ConvertToUnsecureString() ?? string.Empty)),
-                    new XElement("MaxResult",   settings.MaxResult)));
+                    new XElement("MaxResult",   settings.MaxResult),
+                    new XElement("ReportName",   settings.ReportName)
+                    ));
 
-            data.Save(_settingsFile, SaveOptions.None);
+            using (var stream = _fileSystem.OpenWriteStream(_settingsFile))
+            {
+                data.Save(stream, SaveOptions.None);
+            }
         }
     }
 }

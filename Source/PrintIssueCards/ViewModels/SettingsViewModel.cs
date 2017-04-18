@@ -37,24 +37,34 @@ namespace PrintIssueCards.ViewModels
     public class SettingsViewModel
     {
         private readonly ISettingsHandler _settingsHandler;
+        private readonly IFileSystemService _fileSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
         /// <param name="settingsHandler">The settings handler.</param>
+        /// <param name="fileSystem"></param>
         /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-        public SettingsViewModel(ISettingsHandler settingsHandler)
+        public SettingsViewModel(ISettingsHandler settingsHandler, IFileSystemService fileSystem)
         {
             if (settingsHandler == null)
             {
                 throw new ArgumentNullException(nameof(settingsHandler));
             }
+            if (fileSystem == null)
+            {
+                throw new ArgumentNullException(nameof(fileSystem));
+            }
+
             _settingsHandler = settingsHandler;
+            _fileSystem = fileSystem;
 
             LoadSettings();
         }
 
         protected virtual ICurrentWindowService CurrentWindowService => null;
+
+        protected virtual IOpenFileDialogService OpenFileDialogService => null;
 
         /// <summary>
         /// Gets or sets the host address.
@@ -89,6 +99,14 @@ namespace PrintIssueCards.ViewModels
         public virtual int MaxResult { get; set; }
 
         /// <summary>
+        /// Gets or sets the report file.
+        /// </summary>
+        /// <value>
+        /// The report file.
+        /// </value>
+        public virtual string ReportFile { get; set; }
+
+        /// <summary>
         /// Closes the settings.
         /// </summary>
         public void CloseSettings(bool saveBeforeClosing = false)
@@ -98,6 +116,15 @@ namespace PrintIssueCards.ViewModels
                 SaveSettings();
             }
             CurrentWindowService.Close();
+        }
+
+
+        public void OpenFile()
+        {
+            if (OpenFileDialogService.ShowDialog(_fileSystem.GetFullPath("Reports")))
+            {
+                ReportFile = _fileSystem.GetFileName(OpenFileDialogService.GetFullFileName());
+            }
         }
 
         /// <summary>
@@ -110,7 +137,8 @@ namespace PrintIssueCards.ViewModels
                 HostAddress = HostAddress,
                 UserId = UserId,
                 Password = Password,
-                MaxResult = MaxResult
+                MaxResult = MaxResult,
+                ReportName = ReportFile
             };
 
             _settingsHandler.SaveSettings(data);
@@ -125,6 +153,7 @@ namespace PrintIssueCards.ViewModels
             HostAddress = data.HostAddress;
             UserId = data.UserId;
             Password = data.Password;
+            ReportFile = data.ReportName;
             MaxResult = data.MaxResult;
         }
     }

@@ -30,30 +30,72 @@ using PrintIssueCards.Models;
 
 namespace PrintIssueCards.ViewModels
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="DevExpress.Mvvm.ISupportParameter" />
     [POCOViewModel]
     public class PreviewViewModel : ISupportParameter
     {
-        private readonly ISettingsHandler _settingsHandler;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
+        /// </summary>
+        /// <param name="settingsHandler">The settings handler.</param>
+        /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
         public PreviewViewModel(ISettingsHandler settingsHandler)
         {
             if (settingsHandler == null)
             {
                 throw new ArgumentNullException(nameof(settingsHandler));
             }
-            _settingsHandler = settingsHandler;
+            var data = settingsHandler.LoadSettings();
+            data.ReportName = "NewIssueCards.rdlc";
+            ReportFile = $"Reports\\{data.ReportName}";
         }
 
-        /// <summary>Gets or sets the parameter.</summary>
+        /// <summary>
+        /// Gets the current window service.
+        /// </summary>
+        /// <value>
+        /// The current window service.
+        /// </value>
+        protected virtual ICurrentWindowService CurrentWindowService => null;
+
+        /// <summary>
+        /// Gets or sets the parameter.
+        /// </summary>
+        /// <value>
+        /// The parameter.
+        /// </value>
         [BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
         public virtual object Parameter { get; set; }
 
+        /// <summary>
+        /// Gets or sets the issues.
+        /// </summary>
+        /// <value>
+        /// The issues.
+        /// </value>
         [BindableProperty(false)]
         public List<JiraIssue> Issues { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the report file.
+        /// </summary>
+        /// <value>
+        /// The report file.
+        /// </value>
         [BindableProperty(false)]
         public string ReportFile { get; protected set; }
 
+        /// <summary>
+        /// Closes the view.
+        /// </summary>
+        public void CloseView() => CurrentWindowService?.Close();
+
+        /// <summary>
+        /// Called when [parameter changed].
+        /// </summary>
         protected void OnParameterChanged()
         {
             var parameters = Parameter as object[];
