@@ -23,8 +23,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Atlassian.Jira;
 using PrintIssueCards.Common;
@@ -36,7 +39,7 @@ namespace PrintIssueCards.Services
 {
     public class JiraService : IJiraService
     {
-        private static readonly Dictionary<string, byte[]> ImageList = new Dictionary<string, byte[]>();
+        private static readonly Dictionary<string, Image> ImageList = new Dictionary<string, Image>();
 
         private readonly ISettingsHandler _settingsHandler;
 
@@ -112,10 +115,11 @@ namespace PrintIssueCards.Services
                 throw new ArgumentNullException(nameof(issue));
             }
 
-            var orderNoField = issue.CustomFields.FirstOrDefault(i => string.Equals(i.Name, @"ordre nummer", StringComparison.InvariantCultureIgnoreCase));
-            var priorityField = issue.CustomFields.FirstOrDefault(i => string.Equals(i.Name, "Internal priority", StringComparison.InvariantCultureIgnoreCase));
-            var orderNo = orderNoField != null ? orderNoField.Values.FirstOrDefault() : string.Empty;
-            var priority = priorityField != null ? priorityField.Values.FirstOrDefault() : string.Empty;
+            var data = _settingsHandler.LoadSettings();
+            var customField1 = GetCustomField(issue.CustomFields, data.CustomField1);
+            var customField2 = GetCustomField(issue.CustomFields, data.CustomField2);
+            var customField3 = GetCustomField(issue.CustomFields, data.CustomField3);
+            var customField4 = GetCustomField(issue.CustomFields, data.CustomField4);
             var timeTrack = await issue.GetTimeTrackingDataAsync();
 
             var item = new JiraIssue
@@ -124,25 +128,46 @@ namespace PrintIssueCards.Services
                 Summary = issue.Summary,
                 Description = issue.Description,
                 IssueType = issue.Type.Name,
-                OrderNo = orderNo,
-                Priority = priority,
                 Estimate = timeTrack.RemainingEstimate,
-                Assignee = issue.Assignee ?? string.Empty,
-                Reporter = issue.Reporter ?? string.Empty,
+                Assignee = issue.Assignee != null ? await GetUserFullName(issue.Jira, issue.Assignee) : string.Empty,
+                Reporter = issue.Reporter != null ? await GetUserFullName(issue.Jira, issue.Reporter) : string.Empty,
                 Created = issue.Created.GetValueOrDefault(),
                 Updated = issue.Updated.GetValueOrDefault(),
                 DueDate = issue.DueDate.GetValueOrDefault(),
                 Status = issue.Status != null ? issue.Status.Name : string.Empty,
-                Severity = issue.Priority != null ? issue.Priority.Name : string.Empty,
-                TypeIconUrl = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
-                SeverityIconUrl = issue.Priority != null ? LoadImage(issue.Priority.IconUrl) : null,
+                Priority = issue.Priority != null ? issue.Priority.Name : string.Empty,
+                TypeIconUrl = issue.Type != null ? issue.Type.IconUrl : null,
+                TypeIconImage = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
+                SeverityIconUrl = issue.Priority != null ? issue.Priority.IconUrl : null,
+                SeverityIconImage = issue.Priority != null ? LoadImage(issue.Priority.IconUrl) : null,
                 AffectedVersion = issue.AffectsVersions.OrderBy(i => i.Name).FirstOrDefault()?.Name ?? string.Empty,
-                FixedVersion = issue.FixVersions.OrderBy(i => i.Name).FirstOrDefault()?.Name ?? string.Empty
+                FixedVersion = issue.FixVersions.OrderBy(i => i.Name).FirstOrDefault()?.Name ?? string.Empty,
+                CustomField1 = customField1,
+                CustomField2 = customField2,
+                CustomField3 = customField3,
+                CustomField4 = customField4,
             };
             return item;
         }
 
-        private byte[] LoadImage([NotNull] string uri)
+        private string GetCustomField(CustomFieldValueCollection issueCustomFields, string fieldName)
+        {
+            if (string.IsNullOrEmpty(fieldName))
+            {
+                return string.Empty;
+            }
+
+            var field = issueCustomFields.FirstOrDefault(i => string.Equals(i.Name, fieldName, StringComparison.InvariantCultureIgnoreCase));
+            return field != null ? field.Values.FirstOrDefault() : string.Empty;
+        }
+
+        private async Task<string> GetUserFullName(Jira jira, string userName)
+        {
+            var user = await jira.Users.GetUserAsync(userName, CancellationToken.None);
+            return user.DisplayName;
+
+        }
+        private Image LoadImage([NotNull] string uri)
         {
             if (uri == null)
             {
@@ -151,10 +176,15 @@ namespace PrintIssueCards.Services
 
             if (!ImageList.ContainsKey(uri))
             {
-                var client = new WebClient();
-                var bytes = client.DownloadData(uri);
-
-                ImageList.Add(uri, bytes);
+                using (var client = new WebClient())
+                {
+                    var bytes = client.DownloadData(uri);
+                    using (var stream = new MemoryStream(bytes))
+                    {
+                        var image = Image.FromStream(stream);
+                        ImageList.Add(uri, image);
+                    }
+                }
             }
 
             return ImageList[uri];

@@ -22,6 +22,7 @@
 //  ****************************************************************************
 
 using System;
+using System.Drawing;
 
 namespace PrintIssueCards.Models
 {
@@ -45,22 +46,30 @@ namespace PrintIssueCards.Models
 
         public DateTime DueDate { get; set; }
 
-        public string OrderNo { get; set; }
-
-        public string Severity { get; set; }
-
         public string Priority { get; set; }
 
         public string Status { get; set; }
 
         public string Estimate { get; set; }
 
-        public byte[] TypeIconUrl { get; set; }
-
-        public byte[] SeverityIconUrl { get; set; }
+        public string TypeIconUrl { get; set; }
+        
+        public Image TypeIconImage { get; set; }
+        
+        public string SeverityIconUrl { get; set; }
+        
+        public Image SeverityIconImage { get; set; }
 
         public string AffectedVersion { get; set; }
 
         public string FixedVersion { get; set; }
+
+        public string CustomField1 { get; set; }
+
+        public string CustomField2 { get; set; }
+        
+        public string CustomField3 { get; set; }
+        
+        public string CustomField4 { get; set; }
     }
 }

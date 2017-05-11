@@ -35,7 +35,6 @@
                           </Paragraphs>
                           <rd:DefaultName>Key1</rd:DefaultName>
                           <Top>0.03528cm</Top>
-                          <Left>0cm</Left>
                           <Height>0.7cm</Height>
                           <Width>4.7cm</Width>
                           <Style>
@@ -48,13 +47,13 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <Textbox Name="OrderNo1">
+                        <Textbox Name="CustomField1">
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!OrderNo.Value</Value>
+                                  <Value>=Fields!CustomField1.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
@@ -66,7 +65,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>OrderNo1</rd:DefaultName>
+                          <rd:DefaultName>CustomField1</rd:DefaultName>
                           <Left>4.8cm</Left>
                           <Height>0.7cm</Height>
                           <Width>4.7cm</Width>
@@ -102,8 +101,8 @@
                     <Rectangle Name="Rectangle4">
                       <ReportItems>
                         <Image Name="Image1">
-                          <Source>External</Source>
-                          <Value>=Fields!TypeIconUrl.Value</Value>
+                          <Source>Database</Source>
+                          <Value>=Fields!TypeIconImage.Value</Value>
                           <MIMEType>image/png</MIMEType>
                           <Sizing>FitProportional</Sizing>
                           <Top>0.1cm</Top>
@@ -148,12 +147,12 @@
                           </Style>
                         </Textbox>
                         <Image Name="Image4">
-                          <Source>External</Source>
-                          <Value>=Fields!SeverityIconUrl.Value</Value>
+                          <Source>Database</Source>
+                          <Value>=Fields!SeverityIconImage.Value</Value>
                           <MIMEType>image/png</MIMEType>
                           <Sizing>FitProportional</Sizing>
                           <Top>0.1cm</Top>
-                          <Left>4.8cm</Left>
+                          <Left>4.82944cm</Left>
                           <Height>0.6cm</Height>
                           <Width>0.6cm</Width>
                           <ZIndex>2</ZIndex>
@@ -169,7 +168,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Severity.Value</Value>
+                                  <Value>=Fields!Priority.Value</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -308,7 +307,7 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value>=Fields!Priority.Value</Value>
+                                  <Value>=Fields!CustomField2.Value</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -357,7 +356,6 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Top>0.6cm</Top>
-                          <Left>0cm</Left>
                           <Height>0.6cm</Height>
                           <Width>4.7cm</Width>
                           <ZIndex>1</ZIndex>
@@ -397,7 +395,6 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Top>1.2cm</Top>
-                          <Left>0cm</Left>
                           <Height>0.6cm</Height>
                           <Width>4.7cm</Width>
                           <ZIndex>2</ZIndex>
@@ -437,7 +434,6 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Top>1.8cm</Top>
-                          <Left>0cm</Left>
                           <Height>0.6cm</Height>
                           <Width>4.7cm</Width>
                           <ZIndex>3</ZIndex>
@@ -695,11 +691,18 @@
       </ConnectionProperties>
       <rd:DataSourceID>d70e8f12-7298-474b-91c5-1f85c1aacf8e</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="PrintIssueCardsModels">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>b1c478d7-b48a-4b3e-8d6c-19028846a9ec</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="Issues">
       <Query>
-        <DataSourceName>RetrieveJiraIssues</DataSourceName>
+        <DataSourceName>PrintIssueCardsModels</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -739,25 +742,37 @@
           <DataField>Key</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="OrderNo">
-          <DataField>OrderNo</DataField>
+        <Field Name="CustomField1">
+          <DataField>CustomField1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
+        <Field Name="CustomField2">
+          <DataField>CustomField2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustomField3">
+          <DataField>CustomField3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustomField4">
+          <DataField>CustomField4</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Reporter">
           <DataField>Reporter</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Severity">
-          <DataField>Severity</DataField>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeverityIconImage">
+          <DataField>SeverityIconImage</DataField>
+          <rd:TypeName>System.Drawing.Image</rd:TypeName>
         </Field>
         <Field Name="SeverityIconUrl">
           <DataField>SeverityIconUrl</DataField>
-          <rd:TypeName>System.Byte[]</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Status">
           <DataField>Status</DataField>
@@ -767,9 +782,13 @@
           <DataField>Summary</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="TypeIconImage">
+          <DataField>TypeIconImage</DataField>
+          <rd:TypeName>System.Drawing.Image</rd:TypeName>
+        </Field>
         <Field Name="TypeIconUrl">
           <DataField>TypeIconUrl</DataField>
-          <rd:TypeName>System.Byte[]</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Updated">
           <DataField>Updated</DataField>

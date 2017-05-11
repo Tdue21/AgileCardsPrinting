@@ -106,6 +106,14 @@ namespace PrintIssueCards.ViewModels
         /// </value>
         public virtual string ReportFile { get; set; }
 
+        public virtual  string CustomField1 { get; set; }
+        
+        public virtual  string CustomField2 { get; set; }
+        
+        public virtual  string CustomField3 { get; set; }
+        
+        public virtual  string CustomField4 { get; set; }
+
         /// <summary>
         /// Closes the settings.
         /// </summary>
@@ -138,7 +146,11 @@ namespace PrintIssueCards.ViewModels
                 UserId = UserId,
                 Password = Password,
                 MaxResult = MaxResult,
-                ReportName = ReportFile
+                ReportName = ReportFile,
+                CustomField1 = CustomField1,
+                CustomField2 = CustomField1,
+                CustomField3 = CustomField1,
+                CustomField4 = CustomField1,
             };
 
             _settingsHandler.SaveSettings(data);
@@ -155,6 +167,10 @@ namespace PrintIssueCards.ViewModels
             Password = data.Password;
             ReportFile = data.ReportName;
             MaxResult = data.MaxResult;
+            CustomField1 = data.CustomField1;
+            CustomField2 = data.CustomField2;
+            CustomField3 = data.CustomField3;
+            CustomField4 = data.CustomField4;
         }
     }
 }

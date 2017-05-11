@@ -22,9 +22,15 @@
 //  ****************************************************************************
 
 using System;
+using System.IO;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
+using RestSharp.Extensions;
 
 namespace PrintIssueCards.Common
 {
@@ -40,7 +46,7 @@ namespace PrintIssueCards.Common
                 throw new ArgumentNullException(nameof(fileSystem));
             }
             _fileSystem = fileSystem;
-            _settingsFile = _fileSystem.GetFullPath(".\\Settings.xml");
+            _settingsFile = _fileSystem.GetFullPath(".\\Settings.json");
         }
 
         public SettingsModel LoadSettings()
@@ -50,18 +56,8 @@ namespace PrintIssueCards.Common
             {
                 using (var stream = _fileSystem.OpenReadStream(_settingsFile))
                 {
-                    var data = XDocument.Load(stream, LoadOptions.PreserveWhitespace);
-                    if (data.Root != null)
-                    {
-                        settings.HostAddress = data.Root.GetDescendantValue("HostAddress", string.Empty);
-                        settings.MaxResult = data.Root.GetDescendantValue("MaxResult", 50);
-                        settings.UserId = data.Root.GetDescendantValue("UserId", string.Empty);
-                        settings.ReportName = data.Root.GetDescendantValue("ReportName", string.Empty);
-                        var password = data.Root.GetDescendantValue("Password", string.Empty);
-                        settings.Password = (!string.IsNullOrEmpty(password)
-                            ? EncryptionHelper.Decrypt(password)
-                            : password).ConvertToSecureString();
-                    }
+                    var text = Encoding.UTF8.GetString(stream.ReadAsBytes());
+                    settings = JsonConvert.DeserializeObject<SettingsModel>(text);
                 }
             }
 
@@ -70,20 +66,33 @@ namespace PrintIssueCards.Common
 
         public void SaveSettings(SettingsModel settings)
         {
-            var data = new XDocument(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("Settings",
-                    new XElement("HostAddress", settings.HostAddress),
-                    new XElement("UserId",      settings.UserId),
-                    new XElement("Password",    EncryptionHelper.Encrypt(settings.Password?.ConvertToUnsecureString() ?? string.Empty)),
-                    new XElement("MaxResult",   settings.MaxResult),
-                    new XElement("ReportName",   settings.ReportName)
-                    ));
-
             using (var stream = _fileSystem.OpenWriteStream(_settingsFile))
             {
-                data.Save(stream, SaveOptions.None);
+                var text = JsonConvert.SerializeObject(settings);
+                var array = Encoding.UTF8.GetBytes(text);
+                stream.Write(array, 0, array.Length);
             }
         }
+    }
+
+    public class JsonEncryptionConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteValue(EncryptionHelper.Encrypt((value as SecureString)?.ConvertToUnsecureString() ?? string.Empty));
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var value = reader.Value as string;
+            if (string.IsNullOrEmpty(value)) 
+            {
+                return reader.Value;
+            }
+
+            return EncryptionHelper.Decrypt(value).ConvertToSecureString();
+        }
+
+        public override bool CanConvert(Type objectType) => objectType == typeof(SecureString);
     }
 }

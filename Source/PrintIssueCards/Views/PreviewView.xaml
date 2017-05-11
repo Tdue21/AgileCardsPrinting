@@ -14,7 +14,7 @@
     </dxmvvm:Interaction.Behaviors>
 
     <Grid>
-        <WindowsFormsHost x:Name="ReportViewerHost">
+        <WindowsFormsHost>
             <winForms:ReportViewer x:Name="IssuesReportViewer"
                                    ShowBackButton="False"
                                    ShowContextMenu="False"
@@ -24,7 +24,9 @@
                                    ShowPromptAreaButton = "False"
                                    ShowRefreshButton = "False"
                                    ShowStopButton = "False"
-                                   Dock="Fill" />
+                                   ZoomMode="FullPage"
+                                   Dock="Fill" 
+                                   ProcessingMode="Local" />
         </WindowsFormsHost>
     </Grid>
 </Window>

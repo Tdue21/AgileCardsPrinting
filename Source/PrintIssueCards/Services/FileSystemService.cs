@@ -34,7 +34,7 @@ namespace PrintIssueCards.Services
 
         public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
-        public Stream OpenWriteStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+        public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
 
         public string GetFileName(string path) => Path.GetFileName(path);
     }

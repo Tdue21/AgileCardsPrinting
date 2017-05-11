@@ -87,7 +87,7 @@
                 <DataGridTextColumn Header="Key"      Binding="{Binding Key}"       Width="*" />
                 <DataGridTextColumn Header="Type"     Binding="{Binding IssueType}" Width="*" />
                 <DataGridTextColumn Header="Status"   Binding="{Binding Status}"    Width="*" />
-                <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"  Width="*" />
+                <DataGridTextColumn Header="Priority" Binding="{Binding CustomField2}"  Width="*" />
                 <DataGridTextColumn Header="Summary"  Binding="{Binding Summary}"   Width="2*" />
                 <DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}"  Width="*" />
                 <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}"  Width="*" />
@@ -123,9 +123,7 @@
                     Command="{Binding OpenSettingsCommand}" 
                     CommandParameter="{x:Type views:SettingsWindow}"
                     Style="{StaticResource ButtonStyle}" />
-
-            <CheckBox Grid.Column="1" IsChecked="{Binding IsBusy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{Binding SelectedIssues.Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            
+           
             <Button Content="_Update Issues List" Grid.Column="2" 
                     Style="{StaticResource ButtonStyle}" 
                     VerticalAlignment="Center" Command="{Binding RefreshIssuesListCommand}" />

@@ -54,11 +54,10 @@ namespace PrintIssueCards.Views
                 };
 
                 IssuesReportViewer.LocalReport.EnableExternalImages = true;
-                IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
                 IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
+                IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
                 IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
                 IssuesReportViewer.RefreshReport();
-                IssuesReportViewer.ZoomMode = ZoomMode.FullPage;
             }
         }
     }

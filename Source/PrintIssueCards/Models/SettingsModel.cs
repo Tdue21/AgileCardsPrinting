@@ -22,6 +22,8 @@
 //  ****************************************************************************
 
 using System.Security;
+using Newtonsoft.Json;
+using PrintIssueCards.Common;
 
 namespace PrintIssueCards.Models
 {
@@ -37,8 +39,13 @@ namespace PrintIssueCards.Models
 
         public string HostAddress { get; set; }
         public string UserId { get; set; }
+        [JsonConverter(typeof(JsonEncryptionConverter))]
         public SecureString Password { get; set; }
         public int MaxResult { get; set; }
         public string ReportName { get; set; }
+        public string CustomField1 { get; set; }
+        public string CustomField2 { get; set; }
+        public string CustomField3 { get; set; }
+        public string CustomField4 { get; set; }
     }
 }

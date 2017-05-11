@@ -173,6 +173,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Properties\DataSources\PrintIssueCards.Models.JiraIssue.datasource" />
     <None Include="Reports\NewIssueCards.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -195,6 +196,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\folder_document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\IssueCard.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

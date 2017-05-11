@@ -49,7 +49,7 @@ namespace PrintIssueCards.ViewModels
                 throw new ArgumentNullException(nameof(settingsHandler));
             }
             var data = settingsHandler.LoadSettings();
-            data.ReportName = "NewIssueCards.rdlc";
+         //   data.ReportName = "NewIssueCards.rdlc";
             ReportFile = $"Reports\\{data.ReportName}";
         }
 
