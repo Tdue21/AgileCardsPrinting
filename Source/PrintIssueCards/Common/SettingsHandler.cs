@@ -22,11 +22,7 @@
 //  ****************************************************************************
 
 using System;
-using System.IO;
-using System.Security;
-using System.Security.Cryptography;
 using System.Text;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 using PrintIssueCards.Interfaces;
 using PrintIssueCards.Models;
@@ -73,26 +69,5 @@ namespace PrintIssueCards.Common
                 stream.Write(array, 0, array.Length);
             }
         }
-    }
-
-    public class JsonEncryptionConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteValue(EncryptionHelper.Encrypt((value as SecureString)?.ConvertToUnsecureString() ?? string.Empty));
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            var value = reader.Value as string;
-            if (string.IsNullOrEmpty(value)) 
-            {
-                return reader.Value;
-            }
-
-            return EncryptionHelper.Decrypt(value).ConvertToSecureString();
-        }
-
-        public override bool CanConvert(Type objectType) => objectType == typeof(SecureString);
     }
 }

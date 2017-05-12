@@ -1,9 +1,9 @@
-Ôªø//  ****************************************************************************
+//  ****************************************************************************
 //  * The MIT License(MIT)
-//  * Copyright ¬© 2017 Thomas Due
+//  * Copyright © 2017 Thomas Due
 //  * 
 //  * Permission is hereby granted, free of charge, to any person obtaining a 
-//  * copy of this software and associated documentation files (the ‚ÄúSoftware‚Äù), 
+//  * copy of this software and associated documentation files (the ìSoftwareî), 
 //  * to deal in the Software without restriction, including without limitation 
 //  * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 //  * and/or sell copies of the Software, and to permit persons to whom the  
@@ -12,7 +12,7 @@
 //  * The above copyright notice and this permission notice shall be included in  
 //  * all copies or substantial portions of the Software.
 //  * 
-//  * THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+//  * THE SOFTWARE IS PROVIDED ìAS ISî, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
 //  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
 //  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL  
 //  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -21,29 +21,30 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.ComponentModel;
-using System.Windows.Controls;
-using DevExpress.Mvvm.UI;
-using PrintIssueCards.Models;
+using System;
+using System.Security;
+using Newtonsoft.Json;
 
 namespace PrintIssueCards.Common
 {
-    public class DataGridSortingEventArgsConverter : EventArgsConverterBase<DataGridSortingEventArgs>
+    public class JsonEncryptionConverter : JsonConverter
     {
-        protected override object Convert(object sender, DataGridSortingEventArgs args)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var column = args?.Column;
-            if (sender != null && column != null)
-            {
-                return new SortingInformation
-                {
-                    MemberPath = column.SortMemberPath,
-                    Ascending =
-                        column.SortDirection.GetValueOrDefault(ListSortDirection.Ascending) ==
-                        ListSortDirection.Ascending
-                };
-            }
-            return null;
+            writer.WriteValue(EncryptionHelper.Encrypt((value as SecureString)?.ConvertToUnsecureString() ?? string.Empty));
         }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var value = reader.Value as string;
+            if (string.IsNullOrEmpty(value))
+            {
+                return reader.Value;
+            }
+
+            return EncryptionHelper.Decrypt(value).ConvertToSecureString();
+        }
+
+        public override bool CanConvert(Type objectType) => objectType == typeof(SecureString);
     }
 }

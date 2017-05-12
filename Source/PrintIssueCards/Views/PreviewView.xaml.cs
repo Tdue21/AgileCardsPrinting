@@ -22,7 +22,6 @@
 //  ****************************************************************************
 
 using System.Windows;
-using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 using PrintIssueCards.ViewModels;
 
@@ -35,9 +34,7 @@ namespace PrintIssueCards.Views
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Called when [view loaded].
-        /// </summary>
+        /// <summary>Called when the view is loaded. Necessary in order to bind the Winforms component.</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnViewLoaded(object sender, RoutedEventArgs e)
@@ -48,11 +45,7 @@ namespace PrintIssueCards.Views
             var vm = DataContext as PreviewViewModel;
             if (vm != null)
             {
-                var reportDataSource = new ReportDataSource("Issues")
-                {
-                    Value = new BindingSource {DataSource = vm.Issues}
-                };
-
+                var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
                 IssuesReportViewer.LocalReport.EnableExternalImages = true;
                 IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
                 IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);

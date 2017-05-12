@@ -21,7 +21,9 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System.Security;
 using System.Windows;
+using System.Windows.Controls;
 using PrintIssueCards.Common;
 using PrintIssueCards.ViewModels;
 
@@ -34,21 +36,30 @@ namespace PrintIssueCards.Views
             InitializeComponent();
         }
 
-        private void OnPasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var vm = DataContext as SettingsViewModel;
-            if (vm != null)
-            {
-                vm.Password = PasswordTextBox.SecurePassword;
-            }
-        }
-
+        /// <summary>Called when the view is loaded. This is necessary in order to pass the 
+        /// <seealso cref="SecureString"/> property <see cref="SettingsViewModel.Password"/> 
+        /// from the view model to the  <see cref="PasswordBox"/> control.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             var vm = DataContext as SettingsViewModel;
             if (vm != null)
             {
                 PasswordTextBox.Password = vm.Password?.ConvertToUnsecureString();
+            }
+        }
+
+        /// <summary>Called when The <seealso cref="PasswordBox.Password"/> property changes.
+        /// Passes the <seealso cref="SecureString"/> property to the view model. </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as SettingsViewModel;
+            if (vm != null)
+            {
+                vm.Password = PasswordTextBox.SecurePassword;
             }
         }
     }

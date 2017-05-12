@@ -30,9 +30,7 @@ using PrintIssueCards.Models;
 
 namespace PrintIssueCards.ViewModels
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <summary>ViewModel for the issue card preview view.</summary>
     /// <seealso cref="DevExpress.Mvvm.ISupportParameter" />
     [POCOViewModel]
     public class PreviewViewModel : ISupportParameter
@@ -49,57 +47,33 @@ namespace PrintIssueCards.ViewModels
                 throw new ArgumentNullException(nameof(settingsHandler));
             }
             var data = settingsHandler.LoadSettings();
-         //   data.ReportName = "NewIssueCards.rdlc";
             ReportFile = $"Reports\\{data.ReportName}";
         }
 
-        /// <summary>
-        /// Gets the current window service.
-        /// </summary>
-        /// <value>
-        /// The current window service.
-        /// </value>
+        /// <summary>Gets the current window service.</summary>
         protected virtual ICurrentWindowService CurrentWindowService => null;
 
-        /// <summary>
-        /// Gets or sets the parameter.
-        /// </summary>
-        /// <value>
-        /// The parameter.
-        /// </value>
+        /// <summary>Used to pass the list of issues to the view model.</summary>
         [BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
         public virtual object Parameter { get; set; }
 
-        /// <summary>
-        /// Gets or sets the issues.
-        /// </summary>
-        /// <value>
-        /// The issues.
-        /// </value>
+        /// <summary>Gets or sets the issue list. </summary>
         [BindableProperty(false)]
         public List<JiraIssue> Issues { get; protected set; }
 
-        /// <summary>
-        /// Gets or sets the report file.
-        /// </summary>
-        /// <value>
-        /// The report file.
-        /// </value>
+        /// <summary>Gets or sets the report file. </summary>
         [BindableProperty(false)]
         public string ReportFile { get; protected set; }
 
-        /// <summary>
-        /// Closes the view.
-        /// </summary>
+        /// <summary>Closes the view. </summary>
         public void CloseView() => CurrentWindowService?.Close();
 
-        /// <summary>
-        /// Called when [parameter changed].
-        /// </summary>
+        /// <summary>Called when the <see cref="Parameter" /> property changes.</summary>
         protected void OnParameterChanged()
         {
             var parameters = Parameter as object[];
             var issues = parameters?[0] as IEnumerable<JiraIssue>;
+
             if (issues != null)
             {
                 Issues = new List<JiraIssue>(issues);

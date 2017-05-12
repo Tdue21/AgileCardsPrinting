@@ -44,10 +44,6 @@ namespace PrintIssueCards
                 .RegisterType<IJiraService, JiraService>(new ContainerControlledLifetimeManager())
 
                 .RegisterPocoType<MainViewModel>()
-                //.RegisterPocoType<FilterSearchViewModel>()
-                //.RegisterPocoType<BasicSearchViewModel>()
-                //.RegisterPocoType<AdvancedSearchViewModel>()
-
                 .RegisterPocoType<PreviewViewModel>()
                 .RegisterPocoType<SettingsViewModel>()
                 
@@ -83,12 +79,6 @@ namespace PrintIssueCards
         }
 
         public MainViewModel MainViewModel => _container.Resolve<MainViewModel>();
-
-        //public FilterSearchViewModel FilterSearchViewModel => _container.Resolve<FilterSearchViewModel>();
-
-        //public BasicSearchViewModel BasicSearchViewModel => _container.Resolve<BasicSearchViewModel>();
-
-        //public AdvancedSearchViewModel AdvancedSearchViewModel => _container.Resolve<AdvancedSearchViewModel>();
 
         public PreviewViewModel PreviewViewModel => _container.Resolve<PreviewViewModel>();
 

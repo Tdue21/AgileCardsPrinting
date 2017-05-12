@@ -119,6 +119,7 @@
     <Compile Include="Common\DataGridSortingEventArgsConverter.cs" />
     <Compile Include="Common\CreateWindowMessage.cs" />
     <Compile Include="Common\EncryptionHelper.cs" />
+    <Compile Include="Common\JsonEncryptionConverter.cs" />
     <Compile Include="Models\SortingInformation.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Services\FileSystemService.cs" />
@@ -196,9 +197,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\folder_document.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\IssueCard.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

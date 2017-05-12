@@ -1,12 +1,13 @@
 ﻿<Window x:Class="PrintIssueCards.Views.PreviewView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-        Title="Issue Card Preview" Height="400" Width="600"  
+        xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        Title="Issue Card Preview" Height="800" Width="600"  
         Icon="../App.ico" Loaded="OnViewLoaded"        
         DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
         WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="14">
+
 
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService />
@@ -30,6 +31,14 @@
         </WindowsFormsHost>
     </Grid>
 </Window>
+
+
+
+
+
+
+
+
 
 
 
