@@ -652,14 +652,11 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>9.9cm</Height>
+    <Height>10cm</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
-      <RightBorder>
-        <Style>Dotted</Style>
-      </RightBorder>
     </Style>
   </Body>
   <Width>9.5cm</Width>
@@ -676,27 +673,17 @@
       <Border>
         <Style>None</Style>
       </Border>
-      <RightBorder>
-        <Style>Dotted</Style>
-      </RightBorder>
     </Style>
   </Page>
   <Author>Scanvaegt Systems</Author>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="RetrieveJiraIssues">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>d70e8f12-7298-474b-91c5-1f85c1aacf8e</rd:DataSourceID>
-    </DataSource>
     <DataSource Name="PrintIssueCardsModels">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>b1c478d7-b48a-4b3e-8d6c-19028846a9ec</rd:DataSourceID>
+      <rd:DataSourceID>e00fc2c3-1394-4207-a7ee-398db05b2cb0</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -717,6 +704,22 @@
         <Field Name="Created">
           <DataField>Created</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CustomField1">
+          <DataField>CustomField1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustomField2">
+          <DataField>CustomField2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustomField3">
+          <DataField>CustomField3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustomField4">
+          <DataField>CustomField4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Description">
           <DataField>Description</DataField>
@@ -742,28 +745,12 @@
           <DataField>Key</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CustomField1">
-          <DataField>CustomField1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CustomField2">
-          <DataField>CustomField2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CustomField3">
-          <DataField>CustomField3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CustomField4">
-          <DataField>CustomField4</DataField>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Reporter">
           <DataField>Reporter</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SeverityIconImage">

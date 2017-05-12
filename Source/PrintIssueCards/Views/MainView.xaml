@@ -44,8 +44,12 @@
                     <ListBox  ItemsSource="{Binding Filters}" 
                               DisplayMemberPath="Name" 
                               MinHeight="76" MaxHeight="76"
-                              ScrollViewer.CanContentScroll="True"
-                              SelectedItem="{Binding SelectedFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                              ScrollViewer.CanContentScroll="True" 
+                              SelectedItem="{Binding SelectedFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding RefreshIssuesListCommand}" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </ListBox>
                 </StackPanel>
             </TabItem>
 
@@ -84,10 +88,41 @@
                   HeadersVisibility="Column" CanUserResizeRows="False">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key"      Binding="{Binding Key}"       Width="*" />
-                <DataGridTextColumn Header="Type"     Binding="{Binding IssueType}" Width="*" />
-                <DataGridTextColumn Header="Status"   Binding="{Binding Status}"    Width="*" />
-                <DataGridTextColumn Header="Priority" Binding="{Binding CustomField2}"  Width="*" />
+                <DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="*" />
+
+                <DataGridTemplateColumn Header="Type" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation=" Horizontal">
+                                <Image Source="{Binding TypeIconImage}" />
+                                <TextBlock Text="{Binding IssueType}" Margin="4, 0, 0, 0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Status" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation=" Horizontal">
+                                <Image Source="{Binding StatusImage}" />
+                                <TextBlock Text="{Binding Status}" Margin="4, 0, 0, 0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Priority" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation=" Horizontal">
+                                <Image Source="{Binding SeverityIconImage}" />
+                                <TextBlock Text="{Binding Priority}" Margin="4, 0, 0, 0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
                 <DataGridTextColumn Header="Summary"  Binding="{Binding Summary}"   Width="2*" />
                 <DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}"  Width="*" />
                 <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}"  Width="*" />
@@ -97,6 +132,7 @@
             <dxmvvm:Interaction.Behaviors>
                 
                 <dxmvvm:EventToCommand EventName="Sorting" Command="{Binding SortingChangedCommand}" >
+                    
                     <dxmvvm:EventToCommand.EventArgsConverter>
                         <common:DataGridSortingEventArgsConverter />
                     </dxmvvm:EventToCommand.EventArgsConverter>

@@ -23,9 +23,25 @@
 
 namespace PrintIssueCards.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SortingInformation
     {
+        /// <summary>
+        /// Gets or sets the member path.
+        /// </summary>
+        /// <value>
+        /// The member path.
+        /// </value>
         public string MemberPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="SortingInformation"/> is ascending.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if ascending; otherwise, <c>false</c>.
+        /// </value>
         public bool Ascending { get; set; }
     }
 }

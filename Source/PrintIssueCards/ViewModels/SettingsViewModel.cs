@@ -38,14 +38,16 @@ namespace PrintIssueCards.ViewModels
     {
         private readonly ISettingsHandler _settingsHandler;
         private readonly IFileSystemService _fileSystem;
+        private readonly IMessenger _messenger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
         /// <param name="settingsHandler">The settings handler.</param>
         /// <param name="fileSystem"></param>
+        /// <param name="messenger"></param>
         /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-        public SettingsViewModel(ISettingsHandler settingsHandler, IFileSystemService fileSystem)
+        public SettingsViewModel(ISettingsHandler settingsHandler, IFileSystemService fileSystem, IMessenger messenger)
         {
             if (settingsHandler == null)
             {
@@ -55,9 +57,14 @@ namespace PrintIssueCards.ViewModels
             {
                 throw new ArgumentNullException(nameof(fileSystem));
             }
+            if (messenger == null)
+            {
+                throw new ArgumentNullException(nameof(messenger));
+            }
 
             _settingsHandler = settingsHandler;
             _fileSystem = fileSystem;
+            _messenger = messenger;
 
             LoadSettings();
         }
@@ -123,6 +130,8 @@ namespace PrintIssueCards.ViewModels
             {
                 SaveSettings();
             }
+            
+            _messenger.Send(saveBeforeClosing);
             CurrentWindowService.Close();
         }
 
@@ -148,9 +157,9 @@ namespace PrintIssueCards.ViewModels
                 MaxResult = MaxResult,
                 ReportName = ReportFile,
                 CustomField1 = CustomField1,
-                CustomField2 = CustomField1,
-                CustomField3 = CustomField1,
-                CustomField4 = CustomField1,
+                CustomField2 = CustomField2,
+                CustomField3 = CustomField3,
+                CustomField4 = CustomField4,
             };
 
             _settingsHandler.SaveSettings(data);

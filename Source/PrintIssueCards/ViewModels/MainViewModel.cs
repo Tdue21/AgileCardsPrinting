@@ -26,7 +26,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Documents;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.UI;
@@ -60,7 +59,10 @@ namespace PrintIssueCards.ViewModels
 
             _messenger = messenger;
             _jiraService = jiraHandler;
+
+            _messenger.Register<bool>(this, SettingsRefreshed);
         }
+
 
         /// <summary>Gets the current window service.</summary>
         protected virtual ICurrentWindowService CurrentWindowService => null;
@@ -188,6 +190,14 @@ namespace PrintIssueCards.ViewModels
             };
 
             _messenger.Send(message);
+        }
+        
+        private void SettingsRefreshed(bool refreshFilters)
+        {
+            if (refreshFilters)
+            {
+                RefreshFilterList();
+            }
         }
     }
 }

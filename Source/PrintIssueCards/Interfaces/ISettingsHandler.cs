@@ -25,9 +25,21 @@ using PrintIssueCards.Models;
 
 namespace PrintIssueCards.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISettingsHandler
     {
+        /// <summary>
+        /// Loads the settings.
+        /// </summary>
+        /// <returns></returns>
         SettingsModel LoadSettings();
+
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
         void SaveSettings(SettingsModel settings);
     }
 }

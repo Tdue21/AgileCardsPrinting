@@ -27,11 +27,36 @@ using PrintIssueCards.Models;
 
 namespace PrintIssueCards.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IJiraService
     {
+        /// <summary>
+        /// Gets the favorite filters asynchronous.
+        /// </summary>
+        /// <returns></returns>
         Task<IList<FilterInformation>> GetFavoriteFiltersAsync();
+
+        /// <summary>
+        /// Gets the issues from filter asynchronous.
+        /// </summary>
+        /// <param name="selectedFilter">The selected filter.</param>
+        /// <returns></returns>
         Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter);
+
+        /// <summary>
+        /// Gets the issues from query asynchronous.
+        /// </summary>
+        /// <param name="getKeyList">The get key list.</param>
+        /// <returns></returns>
         Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string getKeyList);
+
+        /// <summary>
+        /// Gets the issues from key list asynchronous.
+        /// </summary>
+        /// <param name="keyList">The key list.</param>
+        /// <returns></returns>
         Task<IEnumerable<JiraIssue>> GetIssuesFromKeyListAsync(IEnumerable<string> keyList);
     }
 }

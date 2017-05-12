@@ -23,8 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -39,8 +37,7 @@ namespace PrintIssueCards.Services
 {
     public class JiraService : IJiraService
     {
-        private static readonly Dictionary<string, Image> ImageList = new Dictionary<string, Image>();
-
+        private static readonly Dictionary<string, byte[]> ImageList = new Dictionary<string, byte[]>();
         private readonly ISettingsHandler _settingsHandler;
 
         public JiraService(ISettingsHandler settingsHandler)
@@ -125,6 +122,7 @@ namespace PrintIssueCards.Services
             var item = new JiraIssue
             {
                 Key = issue.Key.Value,
+                Url = $"{issue.Jira.Url}browse/{issue.Key.Value}",
                 Summary = issue.Summary,
                 Description = issue.Description,
                 IssueType = issue.Type.Name,
@@ -135,6 +133,8 @@ namespace PrintIssueCards.Services
                 Updated = issue.Updated.GetValueOrDefault(),
                 DueDate = issue.DueDate.GetValueOrDefault(),
                 Status = issue.Status != null ? issue.Status.Name : string.Empty,
+                StatusImage = issue.Status != null ? LoadImage(issue.Status.IconUrl) : null,
+                StatusImageUrl = issue.Status != null ? issue.Status.IconUrl : string.Empty,
                 Priority = issue.Priority != null ? issue.Priority.Name : string.Empty,
                 TypeIconUrl = issue.Type != null ? issue.Type.IconUrl : null,
                 TypeIconImage = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
@@ -167,7 +167,7 @@ namespace PrintIssueCards.Services
             return user.DisplayName;
 
         }
-        private Image LoadImage([NotNull] string uri)
+        private byte[] LoadImage([NotNull] string uri)
         {
             if (uri == null)
             {
@@ -179,11 +179,7 @@ namespace PrintIssueCards.Services
                 using (var client = new WebClient())
                 {
                     var bytes = client.DownloadData(uri);
-                    using (var stream = new MemoryStream(bytes))
-                    {
-                        var image = Image.FromStream(stream);
-                        ImageList.Add(uri, image);
-                    }
+                    return bytes;
                 }
             }
 

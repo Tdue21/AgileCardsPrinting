@@ -25,11 +25,22 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using DevExpress.Mvvm.POCO;
+using Microsoft.Practices.Unity;
 
 namespace PrintIssueCards.Common
 {
-    public static class StringExtensions
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class ExtensionMethods
     {
+        /// <summary>
+        /// Converts to unsecure string.
+        /// </summary>
+        /// <param name="securePassword">The secure password.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">securePassword</exception>
         public static string ConvertToUnsecureString(this SecureString securePassword)
         {
             if (securePassword == null)
@@ -49,6 +60,12 @@ namespace PrintIssueCards.Common
             }
         }
 
+        /// <summary>
+        /// Converts to secure string.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">password</exception>
         public static SecureString ConvertToSecureString(this string password)
         {
             if (password == null)
@@ -62,5 +79,17 @@ namespace PrintIssueCards.Common
 
             return securePassword;
         }
+
+        /// <summary>
+        /// Registers the type of the poco.
+        /// </summary>
+        /// <typeparam name="TType">The type of the type.</typeparam>
+        /// <param name="container">The container.</param>
+        /// <returns></returns>
+        public static IUnityContainer RegisterPocoType<TType>(this IUnityContainer container)
+        {
+            return container.RegisterType(typeof(TType), ViewModelSource.GetPOCOType(typeof(TType)));
+        }
+
     }
 }

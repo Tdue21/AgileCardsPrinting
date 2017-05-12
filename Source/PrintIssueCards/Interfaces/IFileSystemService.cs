@@ -25,16 +25,44 @@ using System.IO;
 
 namespace PrintIssueCards.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IFileSystemService
     {
+        /// <summary>
+        /// Gets the full path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         string GetFullPath(string path);
 
+        /// <summary>
+        /// Files the exists.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         bool FileExists(string path);
 
+        /// <summary>
+        /// Opens the read stream.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         Stream OpenReadStream(string path);
 
+        /// <summary>
+        /// Opens the write stream.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         Stream OpenWriteStream(string path);
 
+        /// <summary>
+        /// Gets the name of the file.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         string GetFileName(string path);
     }
 }

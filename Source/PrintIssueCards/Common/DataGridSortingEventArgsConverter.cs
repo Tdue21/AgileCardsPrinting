@@ -28,8 +28,18 @@ using PrintIssueCards.Models;
 
 namespace PrintIssueCards.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="DevExpress.Mvvm.UI.EventArgsConverterBase{System.Windows.Controls.DataGridSortingEventArgs}" />
     public class DataGridSortingEventArgsConverter : EventArgsConverterBase<DataGridSortingEventArgs>
     {
+        /// <summary>
+        /// Converts the specified sender.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="DataGridSortingEventArgs"/> instance containing the event data.</param>
+        /// <returns></returns>
         protected override object Convert(object sender, DataGridSortingEventArgs args)
         {
             var column = args?.Column;

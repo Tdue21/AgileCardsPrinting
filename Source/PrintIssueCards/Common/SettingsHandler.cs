@@ -30,11 +30,20 @@ using RestSharp.Extensions;
 
 namespace PrintIssueCards.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="PrintIssueCards.Interfaces.ISettingsHandler" />
     public class SettingsHandler : ISettingsHandler
     {
         private readonly IFileSystemService _fileSystem;
         private readonly string _settingsFile;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsHandler"/> class.
+        /// </summary>
+        /// <param name="fileSystem">The file system.</param>
+        /// <exception cref="System.ArgumentNullException">fileSystem</exception>
         public SettingsHandler(IFileSystemService fileSystem)
         {
             if (fileSystem == null)
@@ -45,6 +54,10 @@ namespace PrintIssueCards.Common
             _settingsFile = _fileSystem.GetFullPath(".\\Settings.json");
         }
 
+        /// <summary>
+        /// Loads the settings.
+        /// </summary>
+        /// <returns></returns>
         public SettingsModel LoadSettings()
         {
             var settings = new SettingsModel();
@@ -60,6 +73,10 @@ namespace PrintIssueCards.Common
             return settings;
         }
 
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
         public void SaveSettings(SettingsModel settings)
         {
             using (var stream = _fileSystem.OpenWriteStream(_settingsFile))

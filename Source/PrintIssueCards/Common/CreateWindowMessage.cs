@@ -26,13 +26,41 @@ using System.Windows;
 
 namespace PrintIssueCards.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CreateWindowMessage
     {
+        /// <summary>
+        /// Gets or sets the owner.
+        /// </summary>
+        /// <value>
+        /// The owner.
+        /// </value>
         public Window Owner { get; set; }
 
+        /// <summary>
+        /// Gets or sets the type of the child.
+        /// </summary>
+        /// <value>
+        /// The type of the child.
+        /// </value>
         public Type ChildType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parameters.
+        /// </summary>
+        /// <value>
+        /// The parameters.
+        /// </value>
         public object[] Parameters { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="CreateWindowMessage"/> is modal.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if modal; otherwise, <c>false</c>.
+        /// </value>
         public bool Modal { get; set; }
     }
 }
