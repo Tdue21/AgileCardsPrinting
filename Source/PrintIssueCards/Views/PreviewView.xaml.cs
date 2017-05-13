@@ -21,6 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System;
 using System.Windows;
 using Microsoft.Reporting.WinForms;
 using PrintIssueCards.ViewModels;
@@ -43,14 +44,22 @@ namespace PrintIssueCards.Views
             // This does not however break MVVM as it is purely related to the UI, and 
             // the ViewModel does not know the View. 
             var vm = DataContext as PreviewViewModel;
-            if (vm != null)
+            if(vm != null)
             {
-                var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
-                IssuesReportViewer.LocalReport.EnableExternalImages = true;
-                IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
-                IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
-                IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
-                IssuesReportViewer.RefreshReport();
+                try
+                {
+                    var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
+                    IssuesReportViewer.ReportError += (o, args) => throw args.Exception;
+                    IssuesReportViewer.LocalReport.EnableExternalImages = true;
+                    IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
+                    IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
+                    IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+                    IssuesReportViewer.RefreshReport();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(this, $"An error occurred during report processing.\nException: {ex.Message}.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }
