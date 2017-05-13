@@ -49,7 +49,7 @@ namespace PrintIssueCards.Views
                 try
                 {
                     var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
-                    IssuesReportViewer.ReportError += (o, args) => throw args.Exception;
+                    IssuesReportViewer.ReportError += (o, args) => HandleException(args);
                     IssuesReportViewer.LocalReport.EnableExternalImages = true;
                     IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
                     IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -61,6 +61,12 @@ namespace PrintIssueCards.Views
                     MessageBox.Show(this, $"An error occurred during report processing.\nException: {ex.Message}.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void HandleException(ReportErrorEventArgs args)
+        {
+            args.Handled = true;
+            throw args.Exception;
         }
     }
 }
