@@ -25,7 +25,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using Atlassian.Jira;
 using PrintIssueCards.Common;
@@ -89,7 +88,8 @@ namespace PrintIssueCards.Services
             {
                 throw new NullReferenceException("Host Address is not set.");
             }
-            return Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString());
+            var settings = new JiraRestClientSettings { EnableRequestTrace = true};
+            return Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
         }
 
         private async Task<IEnumerable<JiraIssue>> TransformResult(IEnumerable<Issue> issues)
@@ -117,7 +117,8 @@ namespace PrintIssueCards.Services
             var customField2 = GetCustomField(issue.CustomFields, data.CustomField2);
             var customField3 = GetCustomField(issue.CustomFields, data.CustomField3);
             var customField4 = GetCustomField(issue.CustomFields, data.CustomField4);
-            var timeTrack = await issue.GetTimeTrackingDataAsync();
+
+            var timeTrack = await GetTimeTracking(issue);
 
             var item = new JiraIssue
             {
@@ -126,7 +127,7 @@ namespace PrintIssueCards.Services
                 Summary = issue.Summary,
                 Description = issue.Description,
                 IssueType = issue.Type.Name,
-                Estimate = timeTrack.RemainingEstimate,
+                Estimate = timeTrack,
                 Assignee = issue.Assignee != null ? await GetUserFullName(issue.Jira, issue.Assignee) : string.Empty,
                 Reporter = issue.Reporter != null ? await GetUserFullName(issue.Jira, issue.Reporter) : string.Empty,
                 Created = issue.Created.GetValueOrDefault(),
@@ -150,6 +151,19 @@ namespace PrintIssueCards.Services
             return item;
         }
 
+        private async Task<string> GetTimeTracking(Issue issue)
+        {
+            try
+            {
+                var time = await issue.GetTimeTrackingDataAsync();
+                return time.RemainingEstimate;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
         private string GetCustomField(CustomFieldValueCollection issueCustomFields, string fieldName)
         {
             if (string.IsNullOrEmpty(fieldName))
@@ -163,7 +177,7 @@ namespace PrintIssueCards.Services
 
         private async Task<string> GetUserFullName(Jira jira, string userName)
         {
-            var user = await jira.Users.GetUserAsync(userName, CancellationToken.None);
+            var user = await jira.Users.GetUserAsync(userName);
             return user.DisplayName;
 
         }
@@ -179,6 +193,7 @@ namespace PrintIssueCards.Services
                 using (var client = new WebClient())
                 {
                     var bytes = client.DownloadData(uri);
+                    ImageList.Add(uri, bytes);
                     return bytes;
                 }
             }
