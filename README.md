@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/bmkg2fccgv3uyroe?svg=true)](https://ci.appveyor.com/project/tdue21/printissuecards)
+[![Build status](https://ci.appveyor.com/api/projects/status/1h11leogfgrj17a6?svg=true)](https://ci.appveyor.com/project/tdue21/printissuecards)
 
 
 # README
