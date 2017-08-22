@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintIssueCards", "PrintIssueCards\PrintIssueCards.csproj", "{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintIssueCards.Tests", "PrintIssueCards.Tests\PrintIssueCards.Tests.csproj", "{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCardsPrinting.Tests", "PrintIssueCards.Tests\AgileCardsPrinting.Tests.csproj", "{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{4CE9F6E8-C486-440B-8EA9-3A8194C84DEE}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{4CE9F6E8
 		RunTests.cmd = RunTests.cmd
 	EndProjectSection
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PrintIssueCards.Setup", "PrintIssueCards.Setup\PrintIssueCards.Setup.wixproj", "{962CE144-AA18-480C-867F-6D8103E34E91}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "AgileCardsPrinting.Setup", "PrintIssueCards.Setup\AgileCardsPrinting.Setup.wixproj", "{962CE144-AA18-480C-867F-6D8103E34E91}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3C7ED2C3-143B-4AA5-9490-60829ECA8C45}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,7 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3C7ED2C3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{D254396B-A1DF-4037-A782-D808FF0ADFB8}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PrintIssueCards.BootStrapper", "PrintIssueCards.BootStrapper\PrintIssueCards.BootStrapper.wixproj", "{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "AgileCardsPrinting.BootStrapper", "PrintIssueCards.BootStrapper\AgileCardsPrinting.BootStrapper.wixproj", "{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCardsPrinting", "AgileCardsPrinting\AgileCardsPrinting.csproj", "{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,14 +36,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|x86.Build.0 = Debug|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.ActiveCfg = Release|Any CPU
-		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.Build.0 = Release|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -64,6 +56,14 @@ Global
 		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|Any CPU.ActiveCfg = Release|x86
 		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|x86.ActiveCfg = Release|x86
 		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|x86.Build.0 = Release|x86
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|x86.Build.0 = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.ActiveCfg = Release|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,5 +71,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{962CE144-AA18-480C-867F-6D8103E34E91} = {D254396B-A1DF-4037-A782-D808FF0ADFB8}
 		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A} = {D254396B-A1DF-4037-A782-D808FF0ADFB8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76257B2A-2BC3-4A41-9E41-B8E3902C0140}
 	EndGlobalSection
 EndGlobal

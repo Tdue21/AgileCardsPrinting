@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PrintIssueCards.Tests</RootNamespace>
-    <AssemblyName>PrintIssueCards.Tests</AssemblyName>
+    <AssemblyName>AgileCardsPrinting.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -82,9 +82,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PrintIssueCards\PrintIssueCards.csproj">
+    <ProjectReference Include="..\AgileCardsPrinting\AgileCardsPrinting.csproj">
       <Project>{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}</Project>
-      <Name>PrintIssueCards</Name>
+      <Name>AgileCardsPrinting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

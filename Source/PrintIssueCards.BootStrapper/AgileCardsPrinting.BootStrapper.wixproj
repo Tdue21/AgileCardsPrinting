@@ -8,6 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>PrintIssueCards.BootStrapper</OutputName>
     <OutputType>Bundle</OutputType>
+    <Name>AgileCardsPrinting.BootStrapper</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
