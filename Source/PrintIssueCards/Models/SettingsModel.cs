@@ -24,6 +24,7 @@
 using System.Security;
 using Newtonsoft.Json;
 using PrintIssueCards.Common;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace PrintIssueCards.Models
 {
@@ -115,5 +116,40 @@ namespace PrintIssueCards.Models
         /// The custom field4.
         /// </value>
         public string CustomField4 { get; set; }
+
+        protected bool Equals(SettingsModel other)
+        {
+            return //Equals(Password, other.Password) && 
+                   MaxResult == other.MaxResult &&
+                   string.Equals(HostAddress, other.HostAddress) &&
+                   string.Equals(UserId, other.UserId) && 
+                   string.Equals(ReportName, other.ReportName) && 
+                   string.Equals(CustomField1, other.CustomField1) &&
+                   string.Equals(CustomField2, other.CustomField2) && 
+                   string.Equals(CustomField3, other.CustomField3) &&
+                   string.Equals(CustomField4, other.CustomField4);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return !ReferenceEquals(null, obj) && (ReferenceEquals(this, obj) || obj.GetType() == GetType() && Equals((SettingsModel) obj));
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = HostAddress != null ? HostAddress.GetHashCode() : 0;
+                hashCode = (hashCode * 397) ^ (UserId != null ? UserId.GetHashCode() : 0);
+                //hashCode = (hashCode * 397) ^ (Password != null ? Password.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ MaxResult;
+                hashCode = (hashCode * 397) ^ (ReportName != null ? ReportName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (CustomField1 != null ? CustomField1.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (CustomField2 != null ? CustomField2.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (CustomField3 != null ? CustomField3.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (CustomField4 != null ? CustomField4.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }

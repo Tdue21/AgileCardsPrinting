@@ -1,8 +1,10 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:views="clr-namespace:PrintIssueCards.Views"
         xmlns:common="clr-namespace:PrintIssueCards.Common"
+        xmlns:services="clr-namespace:PrintIssueCards.Services"
         x:Class="PrintIssueCards.Views.MainView" FontSize="14"
         Title="Print Jira Issue Cards" Width="960" Height="600"
         WindowStartupLocation="CenterScreen" Icon="../App.ico"
@@ -18,10 +20,24 @@
         <dxmvvm:CurrentWindowService />
         <dxmvvm:MessageBoxService />
 
+        <services:CustomDialogService>
+            <services:CustomDialogService.ViewTemplate>
+                <DataTemplate>
+                    <views:SettingsWindow />
+                </DataTemplate>
+            </services:CustomDialogService.ViewTemplate>
+        </services:CustomDialogService>
+        
+        <dxmvvm:WindowService Title="Settings" 
+                              AllowSetWindowOwner="True" 
+                              Name="SettingsView" 
+                              WindowShowMode="Dialog"  
+                              WindowStartupLocation="CenterOwner" />
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding RefreshFilterListCommand}" />
         <dxmvvm:KeyToCommand   KeyGesture="F5"    Command="{Binding RefreshIssuesListCommand}" />
 
     </dxmvvm:Interaction.Behaviors>
+    
 
     <Grid Style="{StaticResource GridStyle}">
         
@@ -130,13 +146,6 @@
             </DataGrid.Columns>
 
             <dxmvvm:Interaction.Behaviors>
-                
-                <dxmvvm:EventToCommand EventName="Sorting" Command="{Binding SortingChangedCommand}" >
-                    
-                    <dxmvvm:EventToCommand.EventArgsConverter>
-                        <common:DataGridSortingEventArgsConverter />
-                    </dxmvvm:EventToCommand.EventArgsConverter>
-                </dxmvvm:EventToCommand>
 
                 <dxmvvm:DependencyPropertyBehavior EventName="SelectionChanged"
                                                    PropertyName="SelectedItems"

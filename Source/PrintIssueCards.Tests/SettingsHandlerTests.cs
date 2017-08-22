@@ -1,0 +1,131 @@
+﻿//  ****************************************************************************
+//  * The MIT License(MIT)
+//  * Copyright © 2017 Thomas Due
+//  * 
+//  * Permission is hereby granted, free of charge, to any person obtaining a 
+//  * copy of this software and associated documentation files (the “Software”), 
+//  * to deal in the Software without restriction, including without limitation 
+//  * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//  * and/or sell copies of the Software, and to permit persons to whom the  
+//  * Software is furnished to do so, subject to the following conditions:
+//  * 
+//  * The above copyright notice and this permission notice shall be included in  
+//  * all copies or substantial portions of the Software.
+//  * 
+//  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+//  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL  
+//  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING  
+//  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  * IN THE SOFTWARE.
+//  ****************************************************************************
+
+using System.IO;
+using System.Text;
+using FluentAssertions;
+using Moq;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PrintIssueCards.Common;
+using PrintIssueCards.Interfaces;
+using PrintIssueCards.Models;
+
+namespace PrintIssueCards.Tests
+{
+    [TestFixture]
+    public class SettingsHandlerTests
+    {
+        private ISettingsHandler _handler;
+        private Mock<IFileSystemService> _fileSystem;
+
+        [SetUp]
+        public void SetUpTest()
+        {
+            _fileSystem = new Mock<IFileSystemService>();
+            _fileSystem.Setup(f => f.GetFullPath(It.IsAny<string>())).Returns(@"C:\Temp\Settings.json");
+            _handler = new SettingsHandler(_fileSystem.Object);
+        }
+
+        [Test]
+        public void LoadSettings_Settings_File_Does_Not_Exist_Return_Empty_Settings_Test()
+        {
+            // Arrange
+            _fileSystem.Setup(f => f.FileExists(It.IsAny<string>())).Returns(false);
+            
+            // Act
+            var expected = new SettingsModel();
+            var actual = _handler.LoadSettings();
+
+            // Assert
+            actual.Should()
+                  .NotBeNull()
+                  .And
+                  .Be(expected);
+        }
+
+        [Test]
+        public void LoadSettings_Settings_File_Exists_Return_Valid_Settings_Test()
+        {
+            // Arrange
+            _fileSystem.Setup(f => f.FileExists(It.IsAny<string>())).Returns(true);
+            _fileSystem.Setup(f => f.OpenReadStream(It.IsAny<string>()))
+                       .Returns(new MemoryStream(Encoding.UTF8.GetBytes(GetSettingsString())));
+
+            // Act
+            var expected = GetSettingsModel();
+            var actual = _handler.LoadSettings();
+
+            // Assert
+            actual.Should()
+                  .NotBeNull()
+                  .And
+                  .Be(expected);
+        }
+
+        [Test]
+        public void SaveSettings_Test()
+        {
+            string actual = null;
+
+            // Arrange
+            var stream = new Mock<Stream>();
+            stream.Setup(s => s.Write(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()))
+                  .Callback<byte[], int, int>((a, i, l) => actual = Encoding.UTF8.GetString(a));
+
+            _fileSystem.Setup(f => f.OpenWriteStream(It.IsAny<string>()))
+                       .Returns(stream.Object);
+
+            // Act
+            var expected = GetSettingsString();
+            var settings = GetSettingsModel();
+            _handler.SaveSettings(settings);
+
+
+            // Assert
+            actual.Should()
+                  .NotBeNull()
+                  .And
+                  .BeEquivalentTo(expected);
+        }
+
+        private static string GetSettingsString()
+        {
+            return JsonConvert.SerializeObject(GetSettingsModel());
+        }
+        
+        private static SettingsModel GetSettingsModel()
+        {
+            return new SettingsModel
+                   {
+                       HostAddress = "https://bugs.mojang.com",
+                       MaxResult = 100,
+                       CustomField1 = "ThisIsATest",
+                       ReportName = "SimpleReport.rdlc",
+                       UserId = "user",
+                       Password = string.Empty.ConvertToSecureString()
+                   };
+        }
+    }
+}
+

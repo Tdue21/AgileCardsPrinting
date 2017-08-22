@@ -22,14 +22,12 @@
 //  ****************************************************************************
 
 using System;
-using System.Collections.Generic;
 using DevExpress.Mvvm;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using PrintIssueCards.Common;
 using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
 using PrintIssueCards.ViewModels;
 
 namespace PrintIssueCards.Tests
@@ -52,43 +50,66 @@ namespace PrintIssueCards.Tests
 
             message.Should().NotBeNull();
         }
-
+         
         [Test]
-        public void SetPreviewIssues_With_Null_List_Tests()
+        public void RefreshFilterListTest()
         {
-            var messager = new Mock<IMessenger>();
-            var jira = new Mock<IJiraService>();
-            var viewModel = new MainViewModel(messager.Object, jira.Object);
-
-            //viewModel.SetPreviewIssues(null);
-
-            viewModel.PreviewIssues.Should().BeEmpty();
+            Assert.Fail();
         }
 
         [Test]
-        public void SetPreviewIssues_With_Empty_List_Tests()
+        public void RefreshIssuesListTest()
         {
-            var messager = new Mock<IMessenger>();
-            var jira = new Mock<IJiraService>();
-            var viewModel = new MainViewModel(messager.Object, jira.Object);
-
-            var list = new List<JiraIssue>();
-            //viewModel.SetPreviewIssues(list);
-
-            viewModel.PreviewIssues.Should().BeEmpty();
+            Assert.Fail();
         }
 
         [Test]
-        public void SetPreviewIssues_With_List_Tests()
+        public void PreparePrintTest()
         {
-            var messager = new Mock<IMessenger>();
-            var jira = new Mock<IJiraService>();
-            var viewModel = new MainViewModel(messager.Object, jira.Object);
-
-            var list = new List<JiraIssue> { new JiraIssue(), new JiraIssue()};
-            //viewModel.SetPreviewIssues(list);
-
-            viewModel.PreviewIssues.Should().HaveCount(2);
+            Assert.Fail();
         }
+
+
+
+
+
+
+        //[Test]
+        //public void SetPreviewIssues_With_Null_List_Tests()
+        //{
+        //    var messager = new Mock<IMessenger>();
+        //    var jira = new Mock<IJiraService>();
+        //    var viewModel = new MainViewModel(messager.Object, jira.Object);
+
+        //    //viewModel.SetPreviewIssues(null);
+
+        //    viewModel.PreviewIssues.Should().BeEmpty();
+        //}
+
+        //[Test]
+        //public void SetPreviewIssues_With_Empty_List_Tests()
+        //{
+        //    var messager = new Mock<IMessenger>();
+        //    var jira = new Mock<IJiraService>();
+        //    var viewModel = new MainViewModel(messager.Object, jira.Object);
+
+        //    var list = new List<JiraIssue>();
+        //    //viewModel.SetPreviewIssues(list);
+
+        //    viewModel.PreviewIssues.Should().BeEmpty();
+        //}
+
+        //[Test]
+        //public void SetPreviewIssues_With_List_Tests()
+        //{
+        //    var messager = new Mock<IMessenger>();
+        //    var jira = new Mock<IJiraService>();
+        //    var viewModel = new MainViewModel(messager.Object, jira.Object);
+
+        //    var list = new List<JiraIssue> { new JiraIssue(), new JiraIssue()};
+        //    //viewModel.SetPreviewIssues(list);
+
+        //    viewModel.PreviewIssues.Should().HaveCount(2);
+        //}
     }
 }

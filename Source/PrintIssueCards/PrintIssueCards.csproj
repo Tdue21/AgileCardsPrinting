@@ -116,12 +116,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\BooleanToCursorConverter.cs" />
-    <Compile Include="Common\DataGridSortingEventArgsConverter.cs" />
     <Compile Include="Common\CreateWindowMessage.cs" />
     <Compile Include="Common\EncryptionHelper.cs" />
     <Compile Include="Common\JsonEncryptionConverter.cs" />
-    <Compile Include="Models\SortingInformation.cs" />
     <Compile Include="Common\ExtensionMethods.cs" />
+    <Compile Include="Services\CustomDialogService.cs" />
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\JiraService.cs" />
     <Compile Include="Interfaces\IFileSystemService.cs" />
@@ -134,12 +133,19 @@
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\CustomDialogWindow.xaml.cs">
+      <DependentUpon>CustomDialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PreviewView.xaml.cs">
       <DependentUpon>PreviewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CustomDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

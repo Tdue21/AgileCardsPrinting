@@ -59,7 +59,7 @@ namespace PrintIssueCards.Common
             var value = reader.Value as string;
             if (string.IsNullOrEmpty(value))
             {
-                return reader.Value;
+                value = EncryptionHelper.Encrypt(string.Empty);
             }
 
             return EncryptionHelper.Decrypt(value).ConvertToSecureString();

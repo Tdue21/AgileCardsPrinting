@@ -675,7 +675,6 @@
       </Border>
     </Style>
   </Page>
-  <Author>Scanvaegt Systems</Author>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="PrintIssueCardsModels">

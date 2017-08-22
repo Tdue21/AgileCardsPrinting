@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintIssueCards", "PrintIssueCards\PrintIssueCards.csproj", "{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintIssueCards.Tests", "PrintIssueCards.Tests\PrintIssueCards.Tests.csproj", "{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{4CE9F6E8-C486-440B-8EA9-3A8194C84DEE}"
+	ProjectSection(SolutionItems) = preProject
+		CoverTests.cmd = CoverTests.cmd
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+		RunTests.cmd = RunTests.cmd
+	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PrintIssueCards.Setup", "PrintIssueCards.Setup\PrintIssueCards.Setup.wixproj", "{962CE144-AA18-480C-867F-6D8103E34E91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3C7ED2C3-143B-4AA5-9490-60829ECA8C45}"
+	ProjectSection(SolutionItems) = preProject
+		..\Build\Build.ps1 = ..\Build\Build.ps1
+		..\Build\Invoke-MsBuild.psm1 = ..\Build\Invoke-MsBuild.psm1
+		..\Build\nuget.exe = ..\Build\nuget.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{D254396B-A1DF-4037-A782-D808FF0ADFB8}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PrintIssueCards.BootStrapper", "PrintIssueCards.BootStrapper\PrintIssueCards.BootStrapper.wixproj", "{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Debug|x86.Build.0 = Debug|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.ActiveCfg = Release|Any CPU
+		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.Build.0 = Release|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|x86.Build.0 = Debug|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|x86.Build.0 = Release|Any CPU
+		{962CE144-AA18-480C-867F-6D8103E34E91}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{962CE144-AA18-480C-867F-6D8103E34E91}.Debug|x86.ActiveCfg = Debug|x86
+		{962CE144-AA18-480C-867F-6D8103E34E91}.Debug|x86.Build.0 = Debug|x86
+		{962CE144-AA18-480C-867F-6D8103E34E91}.Release|Any CPU.ActiveCfg = Release|x86
+		{962CE144-AA18-480C-867F-6D8103E34E91}.Release|x86.ActiveCfg = Release|x86
+		{962CE144-AA18-480C-867F-6D8103E34E91}.Release|x86.Build.0 = Release|x86
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Debug|x86.ActiveCfg = Debug|x86
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Debug|x86.Build.0 = Debug|x86
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|Any CPU.ActiveCfg = Release|x86
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|x86.ActiveCfg = Release|x86
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{962CE144-AA18-480C-867F-6D8103E34E91} = {D254396B-A1DF-4037-A782-D808FF0ADFB8}
+		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A} = {D254396B-A1DF-4037-A782-D808FF0ADFB8}
+	EndGlobalSection
+EndGlobal

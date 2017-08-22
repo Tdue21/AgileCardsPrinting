@@ -581,7 +581,6 @@
     <ColumnSpacing>0cm</ColumnSpacing>
     <Style />
   </Page>
-  <Author>Scanvaegt Systems</Author>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="RetrieveJiraIssues">

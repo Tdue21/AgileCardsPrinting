@@ -71,8 +71,7 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Called when the <see cref="Parameter" /> property changes.</summary>
         protected void OnParameterChanged()
         {
-            var parameters = Parameter as object[];
-            var issues = parameters?[0] as IEnumerable<JiraIssue>;
+            var issues = Parameter as IEnumerable<JiraIssue>;
 
             if (issues != null)
             {

@@ -25,7 +25,9 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.POCO;
+using DevExpress.Mvvm.UI;
 using Microsoft.Practices.Unity;
 
 namespace PrintIssueCards.Common
@@ -89,6 +91,11 @@ namespace PrintIssueCards.Common
         public static IUnityContainer RegisterPocoType<TType>(this IUnityContainer container)
         {
             return container.RegisterType(typeof(TType), ViewModelSource.GetPOCOType(typeof(TType)));
+        }
+
+        public static bool ShowDialog(this IDialogService dialogService, Type viewType)
+        {
+            throw new NotImplementedException();
         }
 
     }

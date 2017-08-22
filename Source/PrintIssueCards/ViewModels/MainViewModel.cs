@@ -28,6 +28,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.Native;
+using DevExpress.Mvvm.POCO;
 using DevExpress.Mvvm.UI;
 using PrintIssueCards.Common;
 using PrintIssueCards.Interfaces;
@@ -39,8 +41,8 @@ namespace PrintIssueCards.ViewModels
     [POCOViewModel]
     public class MainViewModel
     {
-        private readonly IMessenger _messenger;
         private readonly IJiraService _jiraService;
+        private readonly IMessenger _messenger;
 
         /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
         /// <param name="messenger">The messenger service instance..</param>
@@ -48,27 +50,22 @@ namespace PrintIssueCards.ViewModels
         /// <exception cref="System.ArgumentNullException">messenger</exception>
         public MainViewModel(IMessenger messenger, IJiraService jiraHandler)
         {
-            if (messenger == null)
-            {
-                throw new ArgumentNullException(nameof(messenger));
-            }
-            if (jiraHandler == null)
-            {
-                throw new ArgumentNullException(nameof(jiraHandler));
-            }
+            _messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
+            _jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 
-            _messenger = messenger;
-            _jiraService = jiraHandler;
-
-            _messenger.Register<bool>(this, SettingsRefreshed);
+            // This sucks a bit, but I can't think of another way right now. 
+            _messenger.Register<bool>(this, doRefresh => { if(doRefresh) { RefreshFilterList(); } });
         }
 
-
-        /// <summary>Gets the current window service.</summary>
+        /// <summary>Gets the <see cref="ICurrentWindowService"/> instance.</summary>
         protected virtual ICurrentWindowService CurrentWindowService => null;
 
-        /// <summary>Gets the message box service.</summary>
+        /// <summary>Gets the <see cref="IWindowService"/> instance.</summary>
+        protected virtual IWindowService WindowService => null;
+
+        /// <summary>Gets the <see cref="IMessageBoxService"/> instance.</summary>
         protected virtual IMessageBoxService MessageBoxService => null;
+        protected virtual IDialogService CustomeDialogService => null;
 
         /// <summary>Gets or sets the index of the selected search view. </summary>
         public virtual int SelectedSearchIndex { get; set; }
@@ -94,10 +91,8 @@ namespace PrintIssueCards.ViewModels
         /// <summary>Gets or sets a value indicating whether this instance is busy.</summary>
         public virtual bool IsBusy { get; set; }
 
-        /// <summary>Gets or sets the sorting information.</summary>
-        public virtual SortingInformation SortingInformation { get; set; }
-
         /// <summary>Refreshes the list of filters.</summary>
+        /// <remarks>Implementation of RefreshFilterListCommand.</remarks>
         public async void RefreshFilterList()
         {
             IsBusy = true;
@@ -106,62 +101,53 @@ namespace PrintIssueCards.ViewModels
                 var filters = await _jiraService.GetFavoriteFiltersAsync();
                 Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                MessageBoxService.ShowMessage(
-                    $"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}",
-                    "Error",
-                    MessageButton.OK,
-                    MessageIcon.Error);
+                MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}", 
+                    "Error", MessageButton.OK, MessageIcon.Error);
             }
             IsBusy = false;
         }
 
-        /// <summary>
-        /// Refreshes the issues list.
-        /// </summary>
+        /// <summary>Refreshes the issues list.</summary>
+        /// <remarks>Implementation of RefreshIssuesListCommand.</remarks>
         public async void RefreshIssuesList()
         {
             IsBusy = true;
             try
             {
-                IEnumerable<JiraIssue> issues;
-
-                switch (SelectedSearchIndex)
-                {
-                    case 0:
-                        issues = await _jiraService.GetIssuesFromFilterAsync(SelectedFilter);
-                        break;
-                    case 1:
-                        issues = await _jiraService.GetIssuesFromKeyListAsync(GetKeyList());
-                        break;
-                    case 2:
-                        issues = await _jiraService.GetIssuesFromQueryAsync(Jql);
-                        break;
-                    default:
-                        throw new IndexOutOfRangeException();
-                }
+                var issues = 
+                    SelectedSearchIndex == 0 ? await _jiraService.GetIssuesFromFilterAsync(SelectedFilter) :
+                    SelectedSearchIndex == 1 ? await _jiraService.GetIssuesFromKeyListAsync(GetKeyList()) :
+                    SelectedSearchIndex == 2 ? await _jiraService.GetIssuesFromQueryAsync(Jql) :
+                    throw new IndexOutOfRangeException();
 
                 PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 MessageBoxService.ShowMessage(
                     $"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}",
-                    "Error",
-                    MessageButton.OK,
-                    MessageIcon.Error);
+                    "Error", MessageButton.OK, MessageIcon.Error);
             }
             IsBusy = false;
         }
 
         /// <summary>Opens the settings dialog.</summary>
         /// <param name="child">The child.</param>
-        public void OpenSettings(Type child) => CreateWindow(child, true);
-
-        /// <summary>Sortings the changed.</summary>
-        /// <param name="sortingInformation">The sorting information.</param>
-        public void SortingChanged(SortingInformation sortingInformation) => SortingInformation = sortingInformation;
+        /// <remarks>Implementation of OpenSettingsCommand.</remarks>
+        public void OpenSettings(Type child)
+        {
+            
+            var result = CustomeDialogService.ShowDialog(MessageButton.OKCancel, "Settings", child.Name);
+            if (result == MessageResult.OK)
+            {
+                RefreshFilterList();
+            }
+            //var result = CustomeDialogService.ShowDialog(MessageButton.OKCancel, "Settings", child.Name, null);
+            //WindowService.Show(child.Name, null);
+            //CreateWindow(child, true);
+        }
 
         /// <summary>
         /// Performs the search.
@@ -173,14 +159,20 @@ namespace PrintIssueCards.ViewModels
                 ? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
                 : new List<JiraIssue>(PreviewIssues);
 
-            CreateWindow(child, true, new object[] {list, SortingInformation});
+            CreateWindow(child, true, list);
         }
 
-        private IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).OrderBy(i => i);
-
-
-        private void CreateWindow(Type childType, bool modal = false, object[] parameters = null)
+        /// <summary>Creates a child window by using the <seealso cref="IMessenger"/> 
+        /// implementation. 
+        /// I would prefer to find a way of using a more direct way so I can get a 
+        /// return value from the child window.</summary>
+        /// <param name="childType">Type of the child.</param>
+        /// <param name="modal"><c>true</c> if the child window should be modal.</param>
+        /// <param name="parameters">Parameters passed to the child window.</param>
+        private void CreateWindow(Type childType, bool modal = false, object parameters = null)
         {
+            var obj = ViewLocator.Default.ResolveView(childType.Name);
+
             var message = new CreateWindowMessage
             {
                 Owner = (CurrentWindowService as CurrentWindowService)?.ActualWindow,
@@ -190,14 +182,8 @@ namespace PrintIssueCards.ViewModels
             };
 
             _messenger.Send(message);
-        }
-        
-        private void SettingsRefreshed(bool refreshFilters)
-        {
-            if (refreshFilters)
-            {
-                RefreshFilterList();
-            }
-        }
+        }     
+
+        private IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).OrderBy(i => i);
     }
 }

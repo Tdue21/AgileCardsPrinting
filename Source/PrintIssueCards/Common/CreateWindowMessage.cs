@@ -53,7 +53,7 @@ namespace PrintIssueCards.Common
         /// <value>
         /// The parameters.
         /// </value>
-        public object[] Parameters { get; set; }
+        public object Parameters { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="CreateWindowMessage"/> is modal.

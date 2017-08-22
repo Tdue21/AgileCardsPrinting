@@ -23,6 +23,7 @@
 
 using System.Windows;
 using DevExpress.Mvvm;
+using DevExpress.Mvvm.UI;
 using Microsoft.Practices.Unity;
 using PrintIssueCards.Common;
 using PrintIssueCards.Interfaces;
