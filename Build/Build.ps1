@@ -13,7 +13,7 @@ $coverTarget    ="..\Source\AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrintin
 
 $result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln `
                          -ShowBuildOutputInCurrentWindow `
-                         -BuildLogDirectoryPath . `
+                         -BuildLogDirectoryPath $PSScriptRoot `
                          -KeepBuildLogOnSuccessfulBuilds `
                          -BypassVisualStudioDeveloperCommandPrompt
 
@@ -26,7 +26,6 @@ if($result.BuildSucceeded -eq $true) {
     
     "$(Get-Date -f o) Starting ReportGenerator."
     & $reportGenerator "-reports:results.xml" "-targetdir:.\coverage" "-reporttypes:HtmlSummary"
-
 }
 
 "$(Get-Date -f o) All done."
