@@ -28,6 +28,8 @@ $result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln `
 
 "$(Get-Date -f o) MSBuild finished."
 
+Write-Host $result.CommandUsedToBuild
+
 if($result.BuildSucceeded -eq $true) {
 
     "$(Get-Date -f o) Starting OpenCover."
