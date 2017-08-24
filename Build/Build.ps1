@@ -24,6 +24,7 @@ $result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln `
                          -ShowBuildOutputInCurrentWindow `
                          -KeepBuildLogOnSuccessfulBuilds `
                          -BypassVisualStudioDeveloperCommandPrompt `
+                         -BuildLogDirectoryPath $PSScriptRoot `
                          -P $msBuildParameters
 
 "$(Get-Date -f o) MSBuild finished."
