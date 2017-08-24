@@ -24,9 +24,9 @@
 using System.Collections.Generic;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.UI;
-using PrintIssueCards.Views;
+using AgileCardsPrinting.Views;
 
-namespace PrintIssueCards.Services
+namespace AgileCardsPrinting.Services
 {
     public class CustomDialogService : ViewServiceBase, IDialogService
     {

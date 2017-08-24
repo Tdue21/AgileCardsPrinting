@@ -27,11 +27,11 @@ using FluentAssertions;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using PrintIssueCards.Common;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Common;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Models;
 
-namespace PrintIssueCards.Tests
+namespace AgileCardsPrinting.Tests
 {
     [TestFixture]
     public class SettingsHandlerTests

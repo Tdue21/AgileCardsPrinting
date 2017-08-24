@@ -24,10 +24,10 @@
 using System.Security;
 using System.Windows;
 using System.Windows.Controls;
-using PrintIssueCards.Common;
-using PrintIssueCards.ViewModels;
+using AgileCardsPrinting.Common;
+using AgileCardsPrinting.ViewModels;
 
-namespace PrintIssueCards.Views
+namespace AgileCardsPrinting.Views
 {
     public partial class SettingsWindow 
     {

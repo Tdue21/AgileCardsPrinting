@@ -1,8 +1,8 @@
-﻿<Application x:Class="PrintIssueCards.App"
+﻿<Application x:Class="AgileCardsPrinting.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:pi="clr-namespace:PrintIssueCards"
-             xmlns:common="clr-namespace:PrintIssueCards.Common"
+             xmlns:pi="clr-namespace:AgileCardsPrinting"
+             xmlns:common="clr-namespace:AgileCardsPrinting.Common"
              StartupUri="Views/MainView.xaml">
     <Application.Resources>
 

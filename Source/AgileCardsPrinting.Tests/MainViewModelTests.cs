@@ -26,11 +26,11 @@ using DevExpress.Mvvm;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using PrintIssueCards.Common;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.ViewModels;
+using AgileCardsPrinting.Common;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.ViewModels;
 
-namespace PrintIssueCards.Tests
+namespace AgileCardsPrinting.Tests
 {
     [TestFixture]
     public class MainViewModelTests

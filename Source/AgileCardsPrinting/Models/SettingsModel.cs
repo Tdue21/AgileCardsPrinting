@@ -23,10 +23,10 @@
 
 using System.Security;
 using Newtonsoft.Json;
-using PrintIssueCards.Common;
+using AgileCardsPrinting.Common;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
-namespace PrintIssueCards.Models
+namespace AgileCardsPrinting.Models
 {
     /// <summary>
     /// 

@@ -21,7 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-namespace PrintIssueCards
+namespace AgileCardsPrinting
 {
     /// <summary>
     ///     Interaction logic for App.xaml

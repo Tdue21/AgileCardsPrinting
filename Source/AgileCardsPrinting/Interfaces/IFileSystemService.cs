@@ -23,7 +23,7 @@
 
 using System.IO;
 
-namespace PrintIssueCards.Interfaces
+namespace AgileCardsPrinting.Interfaces
 {
     /// <summary>
     /// 

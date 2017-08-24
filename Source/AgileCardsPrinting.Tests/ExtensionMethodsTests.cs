@@ -23,9 +23,9 @@
 
 using FluentAssertions;
 using NUnit.Framework;
-using PrintIssueCards.Common;
+using AgileCardsPrinting.Common;
 
-namespace PrintIssueCards.Tests
+namespace AgileCardsPrinting.Tests
 {
     [TestFixture]
     public class ExtensionMethodsTests

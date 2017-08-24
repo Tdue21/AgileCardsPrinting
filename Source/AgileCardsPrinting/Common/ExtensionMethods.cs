@@ -27,10 +27,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.POCO;
-using DevExpress.Mvvm.UI;
-using Microsoft.Practices.Unity;
 
-namespace PrintIssueCards.Common
+namespace AgileCardsPrinting.Common
 {
     /// <summary>
     /// 
@@ -88,9 +86,19 @@ namespace PrintIssueCards.Common
         /// <typeparam name="TType">The type of the type.</typeparam>
         /// <param name="container">The container.</param>
         /// <returns></returns>
-        public static IUnityContainer RegisterPocoType<TType>(this IUnityContainer container)
+        public static SimpleInjector.Container RegisterPocoType<TType>(this SimpleInjector.Container container)
         {
-            return container.RegisterType(typeof(TType), ViewModelSource.GetPOCOType(typeof(TType)));
+            container.Register(typeof(TType), ViewModelSource.GetPOCOType(typeof(TType)));
+            return container;
+        }
+
+        public static SimpleInjector.Container RegisterType<TSource, TImplementation>(this SimpleInjector.Container container, SimpleInjector.Lifestyle lifestyle)
+            where TSource : class
+            where TImplementation : class, TSource
+        {
+            container.Register<TSource, TImplementation>(lifestyle);
+            return container;
+
         }
 
         public static bool ShowDialog(this IDialogService dialogService, Type viewType)

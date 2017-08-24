@@ -6,3 +6,4 @@ Wiki\
 \coverage
 results.xml
 TestResult.xml
+*.user

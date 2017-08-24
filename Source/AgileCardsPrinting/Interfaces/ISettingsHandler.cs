@@ -21,9 +21,9 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Models;
 
-namespace PrintIssueCards.Interfaces
+namespace AgileCardsPrinting.Interfaces
 {
     /// <summary>
     /// 

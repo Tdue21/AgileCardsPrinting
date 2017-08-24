@@ -23,7 +23,7 @@
 
 using System;            
 
-namespace PrintIssueCards.Models
+namespace AgileCardsPrinting.Models
 {
     /// <summary>
     /// 

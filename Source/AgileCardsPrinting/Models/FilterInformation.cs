@@ -21,7 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-namespace PrintIssueCards.Models
+namespace AgileCardsPrinting.Models
 {
     /// <summary>
     /// 

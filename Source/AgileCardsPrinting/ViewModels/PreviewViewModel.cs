@@ -25,10 +25,10 @@ using System;
 using System.Collections.Generic;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Models;
 
-namespace PrintIssueCards.ViewModels
+namespace AgileCardsPrinting.ViewModels
 {
     /// <summary>ViewModel for the issue card preview view.</summary>
     /// <seealso cref="DevExpress.Mvvm.ISupportParameter" />

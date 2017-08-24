@@ -23,7 +23,7 @@
 
 using NUnit.Framework;
 
-namespace PrintIssueCards.Tests
+namespace AgileCardsPrinting.Tests
 {
     [TestFixture]
     public class SettingsViewModelTests

@@ -24,9 +24,9 @@
 using System;
 using System.Windows;
 using Microsoft.Reporting.WinForms;
-using PrintIssueCards.ViewModels;
+using AgileCardsPrinting.ViewModels;
 
-namespace PrintIssueCards.Views
+namespace AgileCardsPrinting.Views
 {
     public partial class PreviewView
     {

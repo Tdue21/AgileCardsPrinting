@@ -31,11 +31,11 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.Native;
 using DevExpress.Mvvm.POCO;
 using DevExpress.Mvvm.UI;
-using PrintIssueCards.Common;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Common;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Models;
 
-namespace PrintIssueCards.ViewModels
+namespace AgileCardsPrinting.ViewModels
 {
     /// <summary>Main view model. This is the entry point of the view model.</summary>
     [POCOViewModel]

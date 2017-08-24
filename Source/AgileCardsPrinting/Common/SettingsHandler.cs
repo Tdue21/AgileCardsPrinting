@@ -24,16 +24,16 @@
 using System;
 using System.Text;
 using Newtonsoft.Json;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Models;
 using RestSharp.Extensions;
 
-namespace PrintIssueCards.Common
+namespace AgileCardsPrinting.Common
 {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="PrintIssueCards.Interfaces.ISettingsHandler" />
+    /// <seealso cref="AgileCardsPrinting.Interfaces.ISettingsHandler" />
     public class SettingsHandler : ISettingsHandler
     {
         private readonly IFileSystemService _fileSystem;

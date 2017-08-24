@@ -27,12 +27,12 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Atlassian.Jira;
-using PrintIssueCards.Common;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
-using PrintIssueCards.Properties.Annotations;
+using AgileCardsPrinting.Common;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Models;
+using AgileCardsPrinting.Properties.Annotations;
 
-namespace PrintIssueCards.Services
+namespace AgileCardsPrinting.Services
 {
     public class JiraService : IJiraService
     {

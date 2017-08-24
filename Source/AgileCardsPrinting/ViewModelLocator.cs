@@ -24,31 +24,29 @@
 using System.Windows;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.UI;
-using Microsoft.Practices.Unity;
-using PrintIssueCards.Common;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Services;
-using PrintIssueCards.ViewModels;
+using AgileCardsPrinting.Common;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Services;
+using AgileCardsPrinting.ViewModels;
+using SimpleInjector;
 
-namespace PrintIssueCards
+namespace AgileCardsPrinting
 {
     public class ViewModelLocator
     {
-        private readonly IUnityContainer _container;
+        private readonly Container _container;
 
         public ViewModelLocator()
         {
-            _container = new UnityContainer()
+            _container = new Container();
 
-                .RegisterType<IFileSystemService, FileSystemService>(new ContainerControlledLifetimeManager())
-                .RegisterType<ISettingsHandler, SettingsHandler>(new ContainerControlledLifetimeManager())
-                .RegisterType<IJiraService, JiraService>(new ContainerControlledLifetimeManager())
-
-                .RegisterPocoType<MainViewModel>()
-                .RegisterPocoType<PreviewViewModel>()
-                .RegisterPocoType<SettingsViewModel>()
-                
-                .RegisterInstance(Messenger.Default);
+            _container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
+                      .RegisterType<ISettingsHandler, SettingsHandler>(Lifestyle.Singleton)
+                      .RegisterType<IJiraService, JiraService>(Lifestyle.Singleton)
+                      .RegisterPocoType<MainViewModel>()
+                      .RegisterPocoType<PreviewViewModel>()
+                      .RegisterPocoType<SettingsViewModel>()
+                      .RegisterSingleton(Messenger.Default);
 
             Messenger.Default.Register<CreateWindowMessage>(this, CreateWindow);
         }
@@ -60,7 +58,7 @@ namespace PrintIssueCards
                 return;
             }
 
-            var window = (Window) _container.Resolve(message.ChildType);
+            var window = (Window) _container.GetInstance(message.ChildType);
             window.Owner = message.Owner;
 
             var vm = window.DataContext as ISupportParameter;
@@ -79,10 +77,10 @@ namespace PrintIssueCards
             }
         }
 
-        public MainViewModel MainViewModel => _container.Resolve<MainViewModel>();
+        public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();
 
-        public PreviewViewModel PreviewViewModel => _container.Resolve<PreviewViewModel>();
+        public PreviewViewModel PreviewViewModel => _container.GetInstance<PreviewViewModel>();
 
-        public SettingsViewModel SettingsViewModel => _container.Resolve<SettingsViewModel>();
+        public SettingsViewModel SettingsViewModel => _container.GetInstance<SettingsViewModel>();
     }
 }

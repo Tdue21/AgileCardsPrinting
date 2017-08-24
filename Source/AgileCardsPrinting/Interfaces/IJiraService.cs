@@ -23,9 +23,9 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Models;
 
-namespace PrintIssueCards.Interfaces
+namespace AgileCardsPrinting.Interfaces
 {
     /// <summary>
     /// 

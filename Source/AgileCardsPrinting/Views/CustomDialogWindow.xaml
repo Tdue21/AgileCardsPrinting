@@ -1,9 +1,10 @@
-﻿<Window x:Class="PrintIssueCards.Views.CustomDialogWindow"
+﻿<Window x:Class="AgileCardsPrinting.Views.CustomDialogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PrintIssueCards.Views"
+        xmlns:local="clr-namespace:AgileCardsPrinting.Views"
+        xmlns:dxBinding="clr-namespace:DevExpress.Xpf.DXBinding;assembly=DevExpress.Mvvm.UI"
         mc:Ignorable="d"
         Title="CustomDialogWindow" Height="300" Width="300">
     <Window.ContentTemplate>
@@ -16,13 +17,13 @@
                 
                 <ContentPresenter Content="{Binding}" />
                 
-                <ItemsControl Grid.Row="1" ItemsSource="{DXBinding '@a($Window).CommandsSource'}">
+                <ItemsControl Grid.Row="1" ItemsSource="{dxBinding:DXBinding '@a($Window).CommandsSource'}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Button Content="{Binding Caption}" Command="{Binding Command}" 
                                     IsDefault="{Binding IsDefault}"
                                     IsCancel="{Binding IsCancel}" 
-                                    Click="{DXEvent '@a($Window).OnDialogCommand(@sender, @args)'}">
+                                    Click="{dxBinding:DXEvent '@a($Window).OnDialogCommand(@sender, @args)'}">
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

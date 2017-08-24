@@ -21,7 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-namespace PrintIssueCards.Views
+namespace AgileCardsPrinting.Views
 {
     public partial class MainView 
     {

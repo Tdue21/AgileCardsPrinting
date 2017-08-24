@@ -27,7 +27,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DevExpress.Mvvm;
 
-namespace PrintIssueCards.Views
+namespace AgileCardsPrinting.Views
 {
      public partial class CustomDialogWindow 
     {

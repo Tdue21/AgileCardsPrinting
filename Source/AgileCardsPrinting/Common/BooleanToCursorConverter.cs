@@ -27,7 +27,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 
-namespace PrintIssueCards.Common
+namespace AgileCardsPrinting.Common
 {
     /// <summary>
     /// 

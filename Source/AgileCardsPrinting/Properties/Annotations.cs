@@ -33,7 +33,7 @@ using System;
 // ReSharper disable InconsistentNaming
 
 // ReSharper disable once CheckNamespace
-namespace PrintIssueCards.Properties.Annotations
+namespace AgileCardsPrinting.Properties.Annotations
 {
     /// <summary>
     ///     Indicates that the value of the marked element could be <c>null</c> sometimes,

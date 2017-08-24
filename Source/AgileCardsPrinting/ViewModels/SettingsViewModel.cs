@@ -25,10 +25,10 @@ using System;
 using System.Security;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using PrintIssueCards.Interfaces;
-using PrintIssueCards.Models;
+using AgileCardsPrinting.Interfaces;
+using AgileCardsPrinting.Models;
 
-namespace PrintIssueCards.ViewModels
+namespace AgileCardsPrinting.ViewModels
 {
     /// <summary>
     /// 

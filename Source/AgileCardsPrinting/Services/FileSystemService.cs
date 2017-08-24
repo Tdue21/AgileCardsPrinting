@@ -22,9 +22,9 @@
 //  ****************************************************************************
 
 using System.IO;
-using PrintIssueCards.Interfaces;
+using AgileCardsPrinting.Interfaces;
 
-namespace PrintIssueCards.Services
+namespace AgileCardsPrinting.Services
 {
     public class FileSystemService : IFileSystemService
     {
