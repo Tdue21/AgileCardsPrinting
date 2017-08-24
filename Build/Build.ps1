@@ -13,19 +13,20 @@ $token          ="6b363d7c-f86e-4ad2-b806-75c3bf5420e4"
 
 "$(Get-Date -f o) Starting MSBuild."
 
+$msBuildParameters = ""
+if(Test-Path -Path "env:APPVEYOR")
+{
+    $msBuildParameters = "/logger:""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" 
+
+}
+
 $result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln `
                          -ShowBuildOutputInCurrentWindow `
                          -KeepBuildLogOnSuccessfulBuilds `
                          -BypassVisualStudioDeveloperCommandPrompt `
-                         -P "/logger:""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" 
-
-Write-Host $result.CommandUsedToBuild
-
-# -BuildLogDirectoryPath $PSScriptRoot 
+                         -P $msBuildParameters
 
 "$(Get-Date -f o) MSBuild finished."
-
-exit
 
 if($result.BuildSucceeded -eq $true) {
 
