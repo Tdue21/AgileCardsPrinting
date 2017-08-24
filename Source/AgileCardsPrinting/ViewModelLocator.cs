@@ -23,7 +23,6 @@
 
 using System.Windows;
 using DevExpress.Mvvm;
-using DevExpress.Mvvm.UI;
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Services;

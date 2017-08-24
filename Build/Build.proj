@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" InitialTargets="All" DefaultTargets="All">
+    
+    <PropertyGroup>
+        <SourceRootPath Condition="'$(SourceRootPath)' == ''">..\Source\</SourceRootPath>
+        <OpenCoverPath Condition="'$(OpenCoverPath)' == ''">$(SourceRootPath)packages\OpenCover.4.6.519\</OpenCoverPath>
+        <ReportGeneratorPath Condition="'$(ReportGeneratorPath)' == ''">$(SourceRootPath)packages\ReportGenerator.2.5.10\</ReportGeneratorPath>
+        <NunitConsolePath Condition="'$(NunitConsolePath)' == ''">$(SourceRootPath)packages\NUnit.ConsoleRunner.3.7.0\</NunitConsolePath>
+        <CoverTargetPath Condition="'$(CoverTargetPath)' == ''">AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrinting.Tests.dll</CoverTargetPath>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <
+    </PropertyGroup>
+
+    <Import Project="$(SourceRootPath)packages\MSBuildTasks.1.5.0.235\tools\MSBuild.Community.Tasks.Targets" />
+    <Import Project="$(OpenCoverPath)MSBuild\OpenCover.targets" />
+
+    
+    <Target Name="All" AfterTargets="restore">
+        
+    </Target>
+</Projects>

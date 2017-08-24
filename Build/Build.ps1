@@ -1,8 +1,8 @@
 Import-Module -Name .\Invoke-MsBuild.psm1
 
 $openCover      ="..\Source\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
-$reportGenerator="..\Source\packages\ReportGenerator.2.5.6\tools\ReportGenerator.exe" 
-$nunitConsole   ="..\Source\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe" 
+$reportGenerator="..\Source\packages\ReportGenerator.2.5.10\tools\ReportGenerator.exe" 
+$nunitConsole   ="..\Source\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" 
 $coverTarget    ="..\Source\AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrinting.Tests.dll"
 
 "$(Get-Date -f o) Restoring nuget packages."
@@ -11,7 +11,11 @@ $coverTarget    ="..\Source\AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrintin
 
 "$(Get-Date -f o) Starting MSBuild."
 
-$result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln -ShowBuildOutputInCurrentWindow -BuildLogDirectoryPath . -KeepBuildLogOnSuccessfulBuilds -BypassVisualStudioDeveloperCommandPrompt
+$result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln `
+                         -ShowBuildOutputInCurrentWindow `
+                         -BuildLogDirectoryPath . `
+                         -KeepBuildLogOnSuccessfulBuilds `
+                         -BypassVisualStudioDeveloperCommandPrompt
 
 "$(Get-Date -f o) MSBuild finished."
 

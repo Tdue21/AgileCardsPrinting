@@ -7,3 +7,5 @@ Wiki\
 results.xml
 TestResult.xml
 *.user
+*.log
+/Build/ReservedProperties01.proj
