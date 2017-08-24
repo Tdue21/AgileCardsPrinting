@@ -1,5 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/1h11leogfgrj17a6?svg=true)](https://ci.appveyor.com/project/tdue21/printissuecards)
 
+[![codecov](https://codecov.io/gh/DoveSoftConsult/AgileCardsPrinting/branch/master/graph/badge.svg)](https://codecov.io/gh/DoveSoftConsult/AgileCardsPrinting)
 
 # README
 
