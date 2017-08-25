@@ -1,5 +1,13 @@
-Import-Module -Name .\Invoke-MsBuild.psm1
+if (Get-Module -ListAvailable -Name VSSetup) {
+    "Importing module VSSetup"
+    Import-Module VSSetup
+} else {
+    "Installing module VSSetup"
+    Install-Module VSSetup -Scope CurrentUser -Force
+}
 
+$vsInstance     = Get-VSSetupInstance | Select-VSSetupInstance -Version '[15.0,16.0)' -Latest
+$msbuild        =$vsInstance.InstallationPath+"\MsBuild\15.0\Bin\MSBuild.exe"
 $openCover      ="..\Source\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
 $reportGenerator="..\Source\packages\ReportGenerator.2.5.10\tools\ReportGenerator.exe" 
 $nunitConsole   ="..\Source\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" 
@@ -13,25 +21,20 @@ $token          ="6b363d7c-f86e-4ad2-b806-75c3bf5420e4"
 
 "$(Get-Date -f o) Starting MSBuild."
 
-$msBuildParameters = ""
 if(Test-Path -Path "env:APPVEYOR")
 {
-    $msBuildParameters = "/logger:""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" 
-
+    & $msbuild "..\Source\AgileCardsPrinting.sln"  /nologo /v:n /ds /p:UseSharedCompilation=false `
+             /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 }
-
-$result = Invoke-MsBuild -Path ..\Source\AgileCardsPrinting.sln `
-                         -ShowBuildOutputInCurrentWindow `
-                         -KeepBuildLogOnSuccessfulBuilds `
-                         -BypassVisualStudioDeveloperCommandPrompt `
-                         -BuildLogDirectoryPath $PSScriptRoot `
-                         -P $msBuildParameters
+else 
+{
+    & $msbuild "..\Source\AgileCardsPrinting.sln" /nologo /v:n /ds /p:UseSharedCompilation=false
+}
 
 "$(Get-Date -f o) MSBuild finished."
 
-Write-Host $result.CommandUsedToBuild
 
-if($result.BuildSucceeded -eq $true) {
+if($LASTEXITCODE -eq 0) {
 
     "$(Get-Date -f o) Starting OpenCover."
     & $openCover -register:user -returntargetcode "-filter:+[AgileCardsPrinting]* -[*Test]* -[AgileCardsPrinting]*Annotations.*" -target:$nunitConsole -targetargs:$coverTarget
