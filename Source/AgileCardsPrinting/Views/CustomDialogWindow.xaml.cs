@@ -55,6 +55,7 @@ namespace AgileCardsPrinting.Views
         {
             var bt = (Button) sender;
             Result = (UICommand) bt.DataContext;
+			Close();
         }
     }
 }

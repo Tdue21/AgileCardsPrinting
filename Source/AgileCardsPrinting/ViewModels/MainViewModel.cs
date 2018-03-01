@@ -153,8 +153,12 @@ namespace AgileCardsPrinting.ViewModels
         /// <remarks>Implementation of OpenSettingsCommand.</remarks>
         public void OpenSettings(Type child)
         {
-            var result = SettingsDialog.ShowDialog(MessageButton.OKCancel, "Settings", child.Name, null, this);
-            if (result == MessageResult.OK)
+            var result = SettingsDialog.ShowDialog(
+	            UICommand.GenerateFromMessageButton(MessageButton.OKCancel, 
+	                                                new DefaultMessageButtonLocalizer(), 
+	                                                MessageResult.OK, 
+	                                                MessageResult.Cancel), "Settings", child.Name, null, this);
+            if ((MessageResult) result.Tag == MessageResult.OK)
             {
                 RefreshFilters();
             }
