@@ -100,11 +100,5 @@ namespace AgileCardsPrinting.Common
             return container;
 
         }
-
-        public static bool ShowDialog(this IDialogService dialogService, Type viewType)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

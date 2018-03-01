@@ -100,10 +100,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\BooleanToCursorConverter.cs" />
-    <Compile Include="Common\CreateWindowMessage.cs" />
+    <Compile Include="Common\DataGridSortingEventArgsConverter.cs" />
     <Compile Include="Common\EncryptionHelper.cs" />
     <Compile Include="Common\JsonEncryptionConverter.cs" />
     <Compile Include="Common\ExtensionMethods.cs" />
+    <Compile Include="Models\ReportItem.cs" />
+    <Compile Include="Models\SortingInformation.cs" />
     <Compile Include="Services\CustomDialogService.cs" />
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\JiraService.cs" />

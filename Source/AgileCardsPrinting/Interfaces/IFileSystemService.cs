@@ -21,6 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System.Collections.Generic;
 using System.IO;
 
 namespace AgileCardsPrinting.Interfaces
@@ -64,5 +65,20 @@ namespace AgileCardsPrinting.Interfaces
         /// <param name="path">The path.</param>
         /// <returns></returns>
         string GetFileName(string path);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+	    string GetFileNameWithoutExtension(string path);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reportPath"></param>
+		/// <param name="mask"></param>
+		/// <returns></returns>
+	    IEnumerable<string> GetFilesFrom(string reportPath, string mask);
     }
 }

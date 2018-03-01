@@ -1,8 +1,9 @@
 ﻿<Application x:Class="AgileCardsPrinting.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:pi="clr-namespace:AgileCardsPrinting"
+             xmlns:root="clr-namespace:AgileCardsPrinting"
              xmlns:common="clr-namespace:AgileCardsPrinting.Common"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="Views/MainView.xaml">
     <Application.Resources>
 
@@ -15,8 +16,11 @@
                 <ResourceDictionary>
 
                     <common:BooleanToCursorConverter x:Key="BooleanToCursorConverter" />
+	                
+	                <system:Boolean x:Key="TrueValue">True</system:Boolean>
+	                <system:Boolean x:Key="FalseValue">False</system:Boolean>
 
-                    <pi:ViewModelLocator x:Key="Locator" />
+					<root:ViewModelLocator x:Key="Locator" />
 
                     <Style x:Key="GridStyle" TargetType="Grid">
                         <Setter Property="Margin" Value="8" />
@@ -32,20 +36,7 @@
                         <Setter Property="Margin" Value="0,4" />
                     </Style>
 
-                    <!--<LinearGradientBrush x:Key="WindowsBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="135" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFDCDCDC"/>
-                        <GradientStop Color="#FFFFFFFF" Offset="1"/>
-                    </LinearGradientBrush>-->
-
-                </ResourceDictionary>
+				</ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

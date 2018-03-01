@@ -3,32 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AgileCardsPrinting.Views"
         xmlns:dxBinding="clr-namespace:DevExpress.Xpf.DXBinding;assembly=DevExpress.Mvvm.UI"
         mc:Ignorable="d"
-        Title="CustomDialogWindow" Height="300" Width="300">
-    <Window.ContentTemplate>
-        <DataTemplate>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <ContentPresenter Content="{Binding}" />
-                
-                <ItemsControl Grid.Row="1" ItemsSource="{dxBinding:DXBinding '@a($Window).CommandsSource'}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Content="{Binding Caption}" Command="{Binding Command}" 
+        Title="CustomDialogWindow" Height="300" Width="300" 
+        >
+
+	<Window.ContentTemplate>
+		<DataTemplate>
+			<DockPanel>
+
+				<Grid DockPanel.Dock="Bottom">
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+
+					<ItemsControl Grid.Column="1" ItemsSource="{dxBinding:DXBinding '@a($Window).CommandsSource'}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal" Height="40"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Button Content="{Binding Caption}" 
+							        Command="{Binding Command}" 
+									MinWidth="100"
+									Margin="6"
                                     IsDefault="{Binding IsDefault}"
                                     IsCancel="{Binding IsCancel}" 
                                     Click="{dxBinding:DXEvent '@a($Window).OnDialogCommand(@sender, @args)'}">
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
-        </DataTemplate>
-    </Window.ContentTemplate>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Grid>
+
+				<ContentPresenter Content="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+			</DockPanel>
+		</DataTemplate>
+	</Window.ContentTemplate>
 </Window>
+

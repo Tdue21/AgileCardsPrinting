@@ -46,34 +46,6 @@ namespace AgileCardsPrinting
                       .RegisterPocoType<PreviewViewModel>()
                       .RegisterPocoType<SettingsViewModel>()
                       .RegisterSingleton(Messenger.Default);
-
-            Messenger.Default.Register<CreateWindowMessage>(this, CreateWindow);
-        }
-
-        private void CreateWindow(CreateWindowMessage message)
-        {
-            if (message == null)
-            {
-                return;
-            }
-
-            var window = (Window) _container.GetInstance(message.ChildType);
-            window.Owner = message.Owner;
-
-            var vm = window.DataContext as ISupportParameter;
-            if (vm != null)
-            {
-                vm.Parameter = message.Parameters;
-            }
-
-            if (message.Modal)
-            {
-                window.ShowDialog();
-            }
-            else
-            {
-                window.Show();
-            }
         }
 
         public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();

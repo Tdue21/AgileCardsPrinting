@@ -28,7 +28,7 @@ using System.Security.Cryptography;
 namespace AgileCardsPrinting.Common
 {
     /// <summary>
-    /// 
+    /// A static helper class for encrypting and decrypt text strings. 
     /// </summary>
     internal static class EncryptionHelper
     {

@@ -22,6 +22,8 @@
 //  ****************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using AgileCardsPrinting.Interfaces;
@@ -46,11 +48,7 @@ namespace AgileCardsPrinting.Common
         /// <exception cref="System.ArgumentNullException">fileSystem</exception>
         public SettingsHandler(IFileSystemService fileSystem)
         {
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            _fileSystem = fileSystem;
+	        _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             _settingsFile = _fileSystem.GetFullPath(".\\Settings.json");
         }
 
@@ -86,5 +84,17 @@ namespace AgileCardsPrinting.Common
                 stream.Write(array, 0, array.Length);
             }
         }
-    }
+
+	    public IEnumerable<ReportItem> GetReports()
+	    {
+		    var data = LoadSettings();
+		    var reports = _fileSystem.GetFilesFrom(data.ReportPath, "*.rdlc")
+		                             .Select(s => new ReportItem
+		                                          {
+			                                          Name = _fileSystem.GetFileNameWithoutExtension(s),
+			                                          Path = s
+		                                          });
+		    return reports;
+	    }
+	}
 }

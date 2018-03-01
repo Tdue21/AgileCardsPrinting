@@ -39,15 +39,15 @@ namespace AgileCardsPrinting.Views
 
         public IEnumerable<UICommand> CommandsSource
         {
-            get { return (IEnumerable<UICommand>) GetValue(CommandsSourceProperty); }
-            set { SetValue(CommandsSourceProperty, value); }
+            get => (IEnumerable<UICommand>) GetValue(CommandsSourceProperty);
+	        set => SetValue(CommandsSourceProperty, value);
         }
 
-        public static readonly DependencyProperty CommandsSourceProperty =
-                DependencyProperty.Register("CommandsSource",
-                                            typeof(IEnumerable<UICommand>),
-                                            typeof(CustomDialogWindow),
-                                            new PropertyMetadata(null));
+		public static readonly DependencyProperty CommandsSourceProperty =
+		    DependencyProperty.Register("CommandsSource",
+		                                typeof(IEnumerable<UICommand>),
+		                                typeof(CustomDialogWindow),
+		                                new PropertyMetadata(null));
 
         public UICommand Result { get; private set; }
 

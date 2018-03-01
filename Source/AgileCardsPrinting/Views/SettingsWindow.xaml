@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         x:Class="AgileCardsPrinting.Views.SettingsWindow"
-        x:Name="SettingsView" 
-             
-             Width="400" Height="370" FontSize="14" Loaded="OnWindowLoaded"
+        x:Name="SettingsView"  Background="White"
+        Width="480" Height="270" FontSize="12" 
+        Loaded="OnWindowLoaded"
         DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}" >
 
     <!--WindowStartupLocation="CenterOwner"
@@ -13,12 +13,9 @@
 
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService />
-        <dxmvvm:OpenFileDialogService CheckPathExists="True"
-                                      CheckFileExists="True"
-                                      Filter="Report files (*.rdlc)|*.rdlc|All files (*.*)|*.*" 
-                                      FilterIndex="0" 
-                                      Multiselect="False" 
-                                      Title="Select report file" />
+		<dxmvvm:FolderBrowserDialogService ShowNewFolderButton="False" 
+		                                   Description="Select folder with reports." 
+		                                   RestorePreviouslySelectedDirectory="True"/>
     </dxmvvm:Interaction.Behaviors>
 
     <Grid Style="{StaticResource GridStyle}">
@@ -46,14 +43,14 @@
         <Label Grid.Column="0" Grid.Row="2" Content="_Password" />
         <PasswordBox Grid.Column="1" Grid.Row="2" Margin="0,0,0,4" x:Name="PasswordTextBox" PasswordChanged="OnPasswordChanged" />
 
-        <Label Grid.Column="0" Grid.Row="3" Content="_Report File" />
+        <Label Grid.Column="0" Grid.Row="3" Content="_Report Folder" />
         <Grid Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding ReportFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4,0,0,0" Command="{Binding OpenFileCommand}">
+            <TextBox Grid.Column="0" Text="{Binding ReportPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+			<Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4,0,0,0" Command="{Binding SelectFolderCommand}">
                 <Image Source="../Assets/folder_document.png" />
             </Button>
         </Grid>

@@ -21,6 +21,7 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System.Collections.Generic;
 using System.IO;
 using AgileCardsPrinting.Interfaces;
 
@@ -37,5 +38,9 @@ namespace AgileCardsPrinting.Services
         public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
 
         public string GetFileName(string path) => Path.GetFileName(path);
-    }
+
+	    public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
+
+	    public IEnumerable<string> GetFilesFrom(string reportPath, string mask) => Directory.GetFiles(reportPath, mask, SearchOption.TopDirectoryOnly);
+	}
 }

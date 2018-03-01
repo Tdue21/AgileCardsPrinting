@@ -1,182 +1,244 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:views="clr-namespace:AgileCardsPrinting.Views"
         xmlns:common="clr-namespace:AgileCardsPrinting.Common"
         xmlns:services="clr-namespace:AgileCardsPrinting.Services"
-        x:Class="AgileCardsPrinting.Views.MainView" FontSize="14"
+        x:Class="AgileCardsPrinting.Views.MainView" FontSize="12"
         Title="Print Jira Issue Cards" Width="960" Height="600"
-        WindowStartupLocation="CenterScreen" Icon="../App.ico"
+        WindowStartupLocation="CenterScreen" Icon="../App.ico" x:Name="MainViewWindow"
         DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
-    <Window.Cursor>
-        <Binding Path="IsBusy" Converter="{StaticResource BooleanToCursorConverter}" Mode="TwoWay"
-                 UpdateSourceTrigger="PropertyChanged" />
-    </Window.Cursor>
- 
-    <dxmvvm:Interaction.Behaviors>
-        
-        <dxmvvm:CurrentWindowService />
-        <dxmvvm:MessageBoxService />
+	<Window.Cursor>
+		<Binding Path="IsBusy" 
+		         Mode="TwoWay"
+		         Converter="{StaticResource BooleanToCursorConverter}" 
+		         UpdateSourceTrigger="PropertyChanged" />
+	</Window.Cursor>
 
-        <services:CustomDialogService>
-            <services:CustomDialogService.ViewTemplate>
-                <DataTemplate>
-                    <views:SettingsWindow />
-                </DataTemplate>
-            </services:CustomDialogService.ViewTemplate>
-        </services:CustomDialogService>
-        
-        <dxmvvm:WindowService Title="Settings" 
-                              AllowSetWindowOwner="True" 
-                              Name="SettingsView" 
-                              WindowShowMode="Dialog"  
-                              WindowStartupLocation="CenterOwner" />
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding RefreshFilterListCommand}" />
-        <dxmvvm:KeyToCommand   KeyGesture="F5"    Command="{Binding RefreshIssuesListCommand}" />
+	<dxmvvm:Interaction.Behaviors>
 
-    </dxmvvm:Interaction.Behaviors>
-    
+		<dxmvvm:MessageBoxService />
 
-    <Grid Style="{StaticResource GridStyle}">
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+		<services:CustomDialogService x:Name="SettingsDialog"
+									  DialogStartupLocation="CenterOwner"
+									  OwnerWindow="{x:Reference MainViewWindow}"
+									  Height="300" Width="500" Resizable="False"
+		                              >
 
-        <TabControl Grid.Row="0" Grid.Column="0" SelectedIndex="{Binding SelectedSearchIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4">
+			<services:CustomDialogService.ViewTemplate>
+				<DataTemplate>
+					<views:SettingsWindow />
+				</DataTemplate>
+			</services:CustomDialogService.ViewTemplate>
 
-            <TabItem Header="Filter Selection">
-                <StackPanel Orientation="Vertical" Margin="6">
-                    <Label Content="Select _Filter" />
-                    <ListBox  ItemsSource="{Binding Filters}" 
-                              DisplayMemberPath="Name" 
-                              MinHeight="76" MaxHeight="76"
-                              ScrollViewer.CanContentScroll="True" 
-                              SelectedItem="{Binding SelectedFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <dxmvvm:Interaction.Behaviors>
-                            <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding RefreshIssuesListCommand}" />
-                        </dxmvvm:Interaction.Behaviors>
-                    </ListBox>
-                </StackPanel>
-            </TabItem>
+		</services:CustomDialogService>
+		
+		<services:CustomDialogService x:Name="PreviewDialog"
+		                              DialogStartupLocation="CenterOwner"
+		                              OwnerWindow="{x:Reference MainViewWindow}"
+		                              Width="600" Height="800" Resizable="True">
+			<services:CustomDialogService.ViewTemplate>
+				<DataTemplate>
+					<views:PreviewView />
+				</DataTemplate>
+			</services:CustomDialogService.ViewTemplate>
 
-            <TabItem Header="Basic Search">
-                <StackPanel Orientation="Vertical" Margin="6">
-                    <Label Content="_Enter one or more keys. Space, Enter, Semi-colon or Comma between keys." />
-                    <TextBox Text="{Binding KeyList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             MinLines="4"
-                             HorizontalScrollBarVisibility="Auto"
-                             ScrollViewer.CanContentScroll="True"
-                             VerticalScrollBarVisibility="Auto"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap" />
-                </StackPanel>
-            </TabItem>
+		</services:CustomDialogService>
 
-            <TabItem Header="Advanced Search">
-                <StackPanel Orientation="Vertical" Margin="6">
-                    <Label Content="_Enter Jql expression" />
-                    <TextBox Text="{Binding Jql, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             MinLines="4"
-                             HorizontalScrollBarVisibility="Auto"
-                             ScrollViewer.CanContentScroll="True"
-                             VerticalScrollBarVisibility="Auto"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap" />
-                </StackPanel>
-            </TabItem>
-        </TabControl>
-        
-        <DataGrid x:Name="PreviewIssuesDataGrid"
-                  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" 
-                  CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
-                  IsReadOnly="True" AlternatingRowBackground="#FFA2CBDC" ItemsSource="{Binding PreviewIssues}"
-                  HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" 
-                  HeadersVisibility="Column" CanUserResizeRows="False">
+		<dxmvvm:EventToCommand EventName="Loaded" Command="{Binding RefreshFiltersCommand}" CommandParameter="{StaticResource TrueValue}" />
+		<dxmvvm:KeyToCommand KeyGesture="F5" Command="{Binding RefreshIssuesCommand}" />
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="*" />
+	</dxmvvm:Interaction.Behaviors>
 
-                <DataGridTemplateColumn Header="Type" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation=" Horizontal">
-                                <Image Source="{Binding TypeIconImage}" />
-                                <TextBlock Text="{Binding IssueType}" Margin="4, 0, 0, 0" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Status" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation=" Horizontal">
-                                <Image Source="{Binding StatusImage}" />
-                                <TextBlock Text="{Binding Status}" Margin="4, 0, 0, 0" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+	<Grid Style="{StaticResource GridStyle}">
 
-                <DataGridTemplateColumn Header="Priority" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation=" Horizontal">
-                                <Image Source="{Binding SeverityIconImage}" />
-                                <TextBlock Text="{Binding Priority}" Margin="4, 0, 0, 0" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <DataGridTextColumn Header="Summary"  Binding="{Binding Summary}"   Width="2*" />
-                <DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}"  Width="*" />
-                <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}"  Width="*" />
-                <DataGridTextColumn Header="Estimate" Binding="{Binding Estimate}"  Width="*" />
-            </DataGrid.Columns>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" MinHeight="125" />
+			<RowDefinition Height="8" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
-            <dxmvvm:Interaction.Behaviors>
+		<TabControl Grid.Row="0"
+		            SelectedIndex="{Binding SelectedSearchIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+		            Margin="0,0,0,4">
 
-                <dxmvvm:DependencyPropertyBehavior EventName="SelectionChanged"
-                                                   PropertyName="SelectedItems"
-                                                   Binding="{Binding SelectedIssues, Mode=TwoWay}"
-                                                   />
-                
-            </dxmvvm:Interaction.Behaviors>
+			<TabItem Header="Filter Selection">
 
-        </DataGrid>
+				<Grid Margin="6">
 
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
 
-            <Button Grid.Column="0" Content="_Settings"
-                    Command="{Binding OpenSettingsCommand}" 
-                    CommandParameter="{x:Type views:SettingsWindow}"
-                    Style="{StaticResource ButtonStyle}" />
-           
-            <Button Content="_Update Issues List" Grid.Column="2" 
-                    Style="{StaticResource ButtonStyle}" 
-                    VerticalAlignment="Center" Command="{Binding RefreshIssuesListCommand}" />
+					<Label Grid.Row="0" Content="Select _Filter" />
 
-            <Button Grid.Column="3" Content="_Execute"
-                    Command="{Binding PreparePrintCommand}" 
-                    CommandParameter="{x:Type views:PreviewView}"
-                    Style="{StaticResource ButtonStyle}" />
-        </Grid>
-    </Grid>
+					<Border Grid.Row="1" x:Name="FilterListHeightHelper" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+						<ListBox ItemsSource="{Binding Filters}"
+						         DisplayMemberPath="Name"
+						         Height="{Binding ElementName=FilterListHeightHelper, Path=ActualHeight}"
+						         ScrollViewer.CanContentScroll="True"
+						         SelectedItem="{Binding SelectedFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<dxmvvm:Interaction.Behaviors>
+								<dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding RefreshIssuesCommand}" />
+							</dxmvvm:Interaction.Behaviors>
+						</ListBox>
+					</Border>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="Basic Search">
+				<Grid Margin="6">
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Label Grid.Row="0" Content="_Enter one or more keys. Space, Enter, Semi-colon or Comma between keys." />
+					<Border Grid.Row="1" Name="BasicSearchHeightHelper" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+						<TextBox Text="{Binding KeyList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						         MinLines="4"
+						         Height="{Binding ElementName=BasicSearchHeightHelper, Path=ActualHeight}"
+						         HorizontalScrollBarVisibility="Auto"
+						         ScrollViewer.CanContentScroll="True"
+						         VerticalScrollBarVisibility="Auto"
+						         AcceptsReturn="True"
+						         TextWrapping="Wrap" />
+					</Border>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="Advanced Search">
+				<Grid Margin="6">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Label Grid.Row="0" Content="_Enter Jql expression" />
+					<Border Grid.Row="1" Name="AdvancedSearchHeightHelper" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+						<TextBox Text="{Binding Jql, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						         MinLines="4"
+						         Height="{Binding ElementName=AdvancedSearchHeightHelper, Path=ActualHeight}"
+						         HorizontalScrollBarVisibility="Auto"
+						         ScrollViewer.CanContentScroll="True"
+						         VerticalScrollBarVisibility="Auto"
+						         AcceptsReturn="True"
+						         TextWrapping="Wrap" />
+					</Border>
+				</Grid>
+			</TabItem>
+		</TabControl>
+
+		<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+		<DataGrid x:Name="PreviewIssuesDataGrid"
+		          Grid.Row="2"
+		          CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
+		          IsReadOnly="True" AlternatingRowBackground="#FFA2CBDC" ItemsSource="{Binding PreviewIssues}"
+		          HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver"
+		          HeadersVisibility="Column" CanUserResizeRows="False">
+
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="*" />
+
+				<DataGridTemplateColumn Header="Type" Width="*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation=" Horizontal">
+								<Image Source="{Binding TypeIconImage}" />
+								<TextBlock Text="{Binding IssueType}" Margin="4, 0, 0, 0" />
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+
+				<DataGridTemplateColumn Header="Status" Width="*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation=" Horizontal">
+								<Image Source="{Binding StatusImage}" />
+								<TextBlock Text="{Binding Status}" Margin="4, 0, 0, 0" />
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+
+				<DataGridTemplateColumn Header="Priority" Width="*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation=" Horizontal">
+								<Image Source="{Binding SeverityIconImage}" />
+								<TextBlock Text="{Binding Priority}" Margin="4, 0, 0, 0" />
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+
+				<DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="2*" />
+				<DataGridTextColumn Header="Reporter" Binding="{Binding Reporter}" Width="*" />
+				<DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}" Width="*" />
+				<DataGridTextColumn Header="Estimate" Binding="{Binding Estimate}" Width="*" />
+			</DataGrid.Columns>
+
+			<dxmvvm:Interaction.Behaviors>
+
+				<dxmvvm:EventToCommand EventName="Sorting" Command="{Binding SortingChangedCommand}" >
+
+					<dxmvvm:EventToCommand.EventArgsConverter>
+						<common:DataGridSortingEventArgsConverter />
+					</dxmvvm:EventToCommand.EventArgsConverter>
+				</dxmvvm:EventToCommand>
+
+				<dxmvvm:DependencyPropertyBehavior EventName="SelectionChanged"
+				                                   PropertyName="SelectedItems"
+				                                   Binding="{Binding SelectedIssues, Mode=TwoWay}" />
+
+			</dxmvvm:Interaction.Behaviors>
+
+		</DataGrid>
+
+		<Grid Grid.Row="3" Margin="0,8,0,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="0" Content="_Settings"
+			        Command="{Binding OpenSettingsCommand}"
+			        CommandParameter="{x:Type views:SettingsWindow}"
+			        Style="{StaticResource ButtonStyle}" />
+
+			<Grid Grid.Column="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Label Grid.Column="0" Content="Select Report" />
+				<ComboBox Grid.Column="1" 
+				          IsEditable="False" 
+				          DisplayMemberPath="Name" 
+				          SelectedValuePath="Path" 
+				          ItemsSource="{Binding Reports}" 
+				          SelectedItem="{Binding SelectedReport}"/>
+			</Grid>
+
+			<Button Content="_Update Issues List" Grid.Column="2"
+			        Style="{StaticResource ButtonStyle}"
+			        VerticalAlignment="Center" Command="{Binding RefreshIssuesCommand}" />
+
+			<Button Grid.Column="3" Content="_Execute"
+			        Command="{Binding PreparePrintCommand}"
+			        CommandParameter="{x:Type views:PreviewView}"
+			        Style="{StaticResource ButtonStyle}" />
+		</Grid>
+	</Grid>
 </Window>

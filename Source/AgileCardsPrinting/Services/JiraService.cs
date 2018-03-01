@@ -41,17 +41,13 @@ namespace AgileCardsPrinting.Services
 
         public JiraService(ISettingsHandler settingsHandler)
         {
-            if (settingsHandler == null)
-            {
-                throw new ArgumentNullException(nameof(settingsHandler));
-            }
-            _settingsHandler = settingsHandler;
+	        _settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
         }
 
         public async Task<IList<FilterInformation>> GetFavoriteFiltersAsync()
         {
             var jira = GetJiraClient();
-            var filters = await jira.Filters.GetFavouritesAsync();
+            var filters = await jira.Filters.GetFavouritesAsync().ConfigureAwait(true);
             var result = filters.Select(f => new FilterInformation {Id = f.Id, Name = f.Name}).ToList();
             return result;
         }
@@ -61,8 +57,8 @@ namespace AgileCardsPrinting.Services
             if (selectedFilter != null)
             {
                 var jira = GetJiraClient();
-                var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name);
-                return await TransformResult(issues);
+                var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name).ConfigureAwait(true);
+                return await TransformResultAsync(jira, issues).ConfigureAwait(true);
             }
             return null;
         }
@@ -70,100 +66,71 @@ namespace AgileCardsPrinting.Services
         public async Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string query)
         {
             var jira = GetJiraClient();
-            var issues = await jira.Issues.GetIssuesFromJqlAsync(query);
-            return await TransformResult(issues);
+            var issues = await jira.Issues.GetIssuesFromJqlAsync(query).ConfigureAwait(true);
+            return await TransformResultAsync(jira, issues).ConfigureAwait(true);
         }
 
         public async Task<IEnumerable<JiraIssue>> GetIssuesFromKeyListAsync(IEnumerable<string> keyList)
         {
             var jira = GetJiraClient();
-            var issues = await jira.Issues.GetIssuesAsync(keyList);
-            return await TransformResult(issues.Values);
+            var issues = await jira.Issues.GetIssuesAsync(keyList).ConfigureAwait(true);
+            return await TransformResultAsync(jira, issues.Values).ConfigureAwait(true);
         }
 
-        private Jira GetJiraClient()
-        {
-            var data = _settingsHandler.LoadSettings();
-            if (string.IsNullOrEmpty(data.HostAddress))
-            {
-                throw new NullReferenceException("Host Address is not set.");
-            }
-            var settings = new JiraRestClientSettings { EnableRequestTrace = true};
-            return Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
-        }
-
-        private async Task<IEnumerable<JiraIssue>> TransformResult(IEnumerable<Issue> issues)
-        {
-
-            var result = new List<JiraIssue>();
-            foreach (var issue in issues)
-            {
-                var item = await CreateFromIssue(issue);
-                result.Add(item);
-            }
-
-            return result;
-        }
-
-        private async Task<JiraIssue> CreateFromIssue(Issue issue)
-        {
-            if (issue == null)
-            {
-                throw new ArgumentNullException(nameof(issue));
-            }
-
-            var data = _settingsHandler.LoadSettings();
-            var customField1 = GetCustomField(issue.CustomFields, data.CustomField1);
-            var customField2 = GetCustomField(issue.CustomFields, data.CustomField2);
-            var customField3 = GetCustomField(issue.CustomFields, data.CustomField3);
-            var customField4 = GetCustomField(issue.CustomFields, data.CustomField4);
-
-            var timeTrack = await GetTimeTracking(issue);
-
-            var item = new JiraIssue
-            {
-                Key = issue.Key.Value,
-                Url = $"{issue.Jira.Url}browse/{issue.Key.Value}",
-                Summary = issue.Summary,
-                Description = issue.Description,
-                IssueType = issue.Type.Name,
-                Estimate = timeTrack,
-                Assignee = issue.Assignee != null ? await GetUserFullName(issue.Jira, issue.Assignee) : string.Empty,
-                Reporter = issue.Reporter != null ? await GetUserFullName(issue.Jira, issue.Reporter) : string.Empty,
-                Created = issue.Created.GetValueOrDefault(),
-                Updated = issue.Updated.GetValueOrDefault(),
-                DueDate = issue.DueDate.GetValueOrDefault(),
-                Status = issue.Status != null ? issue.Status.Name : string.Empty,
-                StatusImage = issue.Status != null ? LoadImage(issue.Status.IconUrl) : null,
-                StatusImageUrl = issue.Status != null ? issue.Status.IconUrl : string.Empty,
-                Priority = issue.Priority != null ? issue.Priority.Name : string.Empty,
-                TypeIconUrl = issue.Type != null ? issue.Type.IconUrl : null,
-                TypeIconImage = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
-                SeverityIconUrl = issue.Priority != null ? issue.Priority.IconUrl : null,
-                SeverityIconImage = issue.Priority != null ? LoadImage(issue.Priority.IconUrl) : null,
-                AffectedVersion = issue.AffectsVersions.OrderBy(i => i.Name).FirstOrDefault()?.Name ?? string.Empty,
-                FixedVersion = issue.FixVersions.OrderBy(i => i.Name).FirstOrDefault()?.Name ?? string.Empty,
-                CustomField1 = customField1,
-                CustomField2 = customField2,
-                CustomField3 = customField3,
-                CustomField4 = customField4,
-            };
-            return item;
-        }
-
-        private async Task<string> GetTimeTracking(Issue issue)
-        {
-            try
-            {
-                var time = await issue.GetTimeTrackingDataAsync();
-                return time.RemainingEstimate;
-            }
-            catch (Exception)
-            {
-                return string.Empty;
-            }
-        }
-
+		private async Task<IEnumerable<JiraIssue>> TransformResultAsync(Jira jira, IEnumerable<Issue> issues)
+		{
+			var data = _settingsHandler.LoadSettings();
+			var list = new List<JiraIssue>();
+			foreach (var issue in issues)
+			{
+				var customField1 = GetCustomField(issue.CustomFields, data.CustomField1);
+				var customField2 = GetCustomField(issue.CustomFields, data.CustomField2);
+				var customField3 = GetCustomField(issue.CustomFields, data.CustomField3);
+				var customField4 = GetCustomField(issue.CustomFields, data.CustomField4);
+				var timeTrack = await issue.GetTimeTrackingDataAsync().ConfigureAwait(true);
+				var assignee = issue.Assignee != null ? await jira.Users.GetUserAsync(issue.Assignee).ConfigureAwait(true) : null;
+				var reporter = issue.Reporter != null ? await jira.Users.GetUserAsync(issue.Reporter).ConfigureAwait(true) : null;
+				var version = issue.FixVersions.OrderBy(i => i.Id).FirstOrDefault();
+				var item = new JiraIssue
+				{
+					Key = issue.Key.Value,
+					Url = $"{issue.Jira.Url}browse/{issue.Key.Value}",
+					Summary = issue.Summary,
+					Description = issue.Description,
+					IssueType = issue.Type.Name,
+					Estimate = timeTrack.OriginalEstimate,
+					EstimateSeconds = timeTrack.OriginalEstimateInSeconds,
+					Spent = timeTrack.TimeSpent,
+					SpentSeconds = timeTrack.TimeSpentInSeconds,
+					Remaining = timeTrack.RemainingEstimate,
+					RemainingSeconds = timeTrack.RemainingEstimateInSeconds,
+					Assignee = assignee?.DisplayName ?? string.Empty,
+					Reporter = reporter?.DisplayName ?? string.Empty,
+					Created = issue.Created.GetValueOrDefault(),
+					Updated = issue.Updated.GetValueOrDefault(),
+					DueDate = issue.DueDate.GetValueOrDefault(),
+					Status = issue.Status != null ? issue.Status.Name : string.Empty,
+					StatusImage = issue.Status != null ? LoadImage(issue.Status.IconUrl) : null,
+					StatusImageUrl = issue.Status != null ? issue.Status.IconUrl : string.Empty,
+					Priority = issue.Priority != null ? issue.Priority.Name : string.Empty,
+					TypeIconUrl = issue.Type != null ? issue.Type.IconUrl : null,
+					TypeIconImage = issue.Type != null ? LoadImage(issue.Type.IconUrl) : null,
+					PriorityIconUrl = issue.Priority != null ? issue.Priority.IconUrl : null,
+					PriorityIconImage = issue.Priority != null ? LoadImage(issue.Priority.IconUrl) : null,
+					AffectedVersion = issue.AffectsVersions.OrderBy(i => i.Name).FirstOrDefault()?.Name ?? string.Empty,
+					FixedVersion = version?.Name ?? string.Empty,
+					FixedVersionId = version?.Id ?? string.Empty,
+					ReleaseDate = version?.ReleasedDate.GetValueOrDefault() ?? DateTime.MaxValue,
+					CustomField1 = customField1,
+					CustomField2 = customField2,
+					CustomField3 = customField3,
+					CustomField4 = customField4
+				};
+				list.Add(item);
+			}
+			return list;
+		}
+		
         private string GetCustomField(CustomFieldValueCollection issueCustomFields, string fieldName)
         {
             if (string.IsNullOrEmpty(fieldName))
@@ -175,13 +142,20 @@ namespace AgileCardsPrinting.Services
             return field != null ? field.Values.FirstOrDefault() : string.Empty;
         }
 
-        private async Task<string> GetUserFullName(Jira jira, string userName)
-        {
-            var user = await jira.Users.GetUserAsync(userName);
-            return user.DisplayName;
+	    private Jira GetJiraClient()
+	    {
+		    var data = _settingsHandler.LoadSettings();
+		    if (string.IsNullOrEmpty(data.HostAddress))
+		    {
+			    throw new NullReferenceException("Host Address is not set.");
+		    }
+		    var settings = new JiraRestClientSettings { EnableRequestTrace = true};
+		    var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
+		    client.MaxIssuesPerRequest = data.MaxResult;
+		    return client;
+	    }
 
-        }
-        private byte[] LoadImage([NotNull] string uri)
+		private byte[] LoadImage([NotNull] string uri)
         {
             if (uri == null)
             {
@@ -200,6 +174,5 @@ namespace AgileCardsPrinting.Services
 
             return ImageList[uri];
         }
-
     }
 }

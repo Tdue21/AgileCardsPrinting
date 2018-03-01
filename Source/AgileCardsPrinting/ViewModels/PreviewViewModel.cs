@@ -47,7 +47,7 @@ namespace AgileCardsPrinting.ViewModels
                 throw new ArgumentNullException(nameof(settingsHandler));
             }
             var data = settingsHandler.LoadSettings();
-            ReportFile = $"Reports\\{data.ReportName}";
+            ReportFile = $"{data.ReportPath}\\{data.ReportName}.rdlc";
         }
 
         /// <summary>Gets the current window service.</summary>
@@ -71,9 +71,7 @@ namespace AgileCardsPrinting.ViewModels
         /// <summary>Called when the <see cref="Parameter" /> property changes.</summary>
         protected void OnParameterChanged()
         {
-            var issues = Parameter as IEnumerable<JiraIssue>;
-
-            if (issues != null)
+	        if (Parameter is IEnumerable<JiraIssue> issues)
             {
                 Issues = new List<JiraIssue>(issues);
             }

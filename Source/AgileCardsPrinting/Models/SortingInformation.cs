@@ -1,9 +1,9 @@
-Ôªø//  ****************************************************************************
+//  ****************************************************************************
 //  * The MIT License(MIT)
-//  * Copyright ¬© 2017 Thomas Due
+//  * Copyright © 2017 Thomas Due
 //  * 
 //  * Permission is hereby granted, free of charge, to any person obtaining a 
-//  * copy of this software and associated documentation files (the ‚ÄúSoftware‚Äù), 
+//  * copy of this software and associated documentation files (the ìSoftwareî), 
 //  * to deal in the Software without restriction, including without limitation 
 //  * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 //  * and/or sell copies of the Software, and to permit persons to whom the  
@@ -12,7 +12,7 @@
 //  * The above copyright notice and this permission notice shall be included in  
 //  * all copies or substantial portions of the Software.
 //  * 
-//  * THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+//  * THE SOFTWARE IS PROVIDED ìAS ISî, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
 //  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
 //  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL  
 //  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -21,30 +21,15 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Collections.Generic;
-using AgileCardsPrinting.Models;
-
-namespace AgileCardsPrinting.Interfaces
+namespace AgileCardsPrinting.Models
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface ISettingsHandler
+    /// <summary>Information about the sorting of a list of jira issues.</summary>
+    public class SortingInformation
     {
-        /// <summary>
-        /// Loads the settings.
-        /// </summary>
-        /// <returns></returns>
-        SettingsModel LoadSettings();
+        /// <summary>Gets or sets the member path.</summary>
+        public string MemberPath { get; set; }
 
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        /// <param name="settings">The settings.</param>
-        void SaveSettings(SettingsModel settings);
-	  
-	    /// <summary>Returns a list of <see cref="ReportItem"/> objects.</summary>
-	    /// <returns>List of objects</returns>
-	    IEnumerable<ReportItem> GetReports();
+        /// <summary>Gets or sets a value indicating whether this <see cref="SortingInformation"/> is ascending.</summary>
+        public bool Ascending { get; set; }
     }
 }

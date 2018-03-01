@@ -48,9 +48,9 @@ namespace AgileCardsPrinting.Interfaces
         /// <summary>
         /// Gets the issues from query asynchronous.
         /// </summary>
-        /// <param name="getKeyList">The get key list.</param>
+        /// <param name="query">The get key list.</param>
         /// <returns></returns>
-        Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string getKeyList);
+        Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string query);
 
         /// <summary>
         /// Gets the issues from key list asynchronous.

@@ -30,204 +30,100 @@ namespace AgileCardsPrinting.Models
     /// </summary>
     public class JiraIssue
     {
-        /// <summary>
-        /// Gets or sets the key.
-        /// </summary>
-        /// <value>
-        /// The key.
-        /// </value>
+        /// <summary>Gets or sets the key.</summary>
         public string Key { get; set; }
 
-        /// <summary>
-        /// Gets or sets the URL.
-        /// </summary>
-        /// <value>
-        /// The URL.
-        /// </value>
+        /// <summary>Gets or sets the URL.</summary>
         public string Url { get; set; }
 
-        /// <summary>
-        /// Gets or sets the summary.
-        /// </summary>
-        /// <value>
-        /// The summary.
-        /// </value>
+        /// <summary>Gets or sets the summary.</summary>
         public string Summary { get; set; }
 
-        /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
+        /// <summary>Gets or sets the description.</summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// Gets or sets the type of the issue.
-        /// </summary>
-        /// <value>
-        /// The type of the issue.
-        /// </value>
+        /// <summary>Gets or sets the type of the issue.</summary>
         public string IssueType { get; set; }
 
-        /// <summary>
-        /// Gets or sets the assignee.
-        /// </summary>
-        /// <value>
-        /// The assignee.
-        /// </value>
+        /// <summary>Gets or sets the assignee.</summary>
         public string Assignee { get; set; }
 
-        /// <summary>
-        /// Gets or sets the reporter.
-        /// </summary>
-        /// <value>
-        /// The reporter.
-        /// </value>
+        /// <summary>Gets or sets the reporter.</summary>
         public string Reporter { get; set; }
 
-        /// <summary>
-        /// Gets or sets the created.
-        /// </summary>
-        /// <value>
-        /// The created.
-        /// </value>
+        /// <summary>Gets or sets the created.</summary>
         public DateTime Created { get; set; }
 
-        /// <summary>
-        /// Gets or sets the updated.
-        /// </summary>
-        /// <value>
-        /// The updated.
-        /// </value>
+        /// <summary>Gets or sets the updated.</summary>
         public DateTime Updated { get; set; }
 
-        /// <summary>
-        /// Gets or sets the due date.
-        /// </summary>
-        /// <value>
-        /// The due date.
-        /// </value>
+        /// <summary>Gets or sets the due date.</summary>
         public DateTime DueDate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the priority.
-        /// </summary>
-        /// <value>
-        /// The priority.
-        /// </value>
+        /// <summary>Gets or sets the priority.</summary>
         public string Priority { get; set; }
 
-        /// <summary>
-        /// Gets or sets the status.
-        /// </summary>
-        /// <value>
-        /// The status.
-        /// </value>
+        /// <summary>Gets or sets the status.</summary>
         public string Status { get; set; }
 
-        /// <summary>
-        /// Gets or sets the status image.
-        /// </summary>
-        /// <value>
-        /// The status image.
-        /// </value>
+        /// <summary>Gets or sets the status image.</summary>
         public byte[] StatusImage { get; set; }
 
-        /// <summary>
-        /// Gets or sets the status image URL.
-        /// </summary>
-        /// <value>
-        /// The status image URL.
-        /// </value>
+        /// <summary>Gets or sets the status image URL.</summary>
         public string StatusImageUrl { get; set; }
 
-        /// <summary>
-        /// Gets or sets the estimate.
-        /// </summary>
-        /// <value>
-        /// The estimate.
-        /// </value>
+        /// <summary>Gets or sets the estimate.</summary>
         public string Estimate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the type icon URL.
-        /// </summary>
-        /// <value>
-        /// The type icon URL.
-        /// </value>
+		/// <summary>Gets or sets the estimated time to complete.</summary>
+        public int EstimateSeconds { get; set; }
+
+	    /// <summary>Gets or sets the time spent.</summary>
+	    public string Spent { get; set; }
+
+		/// <summary>Gets or sets the time spent.</summary>
+	    public int SpentSeconds { get; set; }
+		
+	    /// <summary>Gets or sets time spent.</summary>
+	    public string Remaining { get; set; }
+		
+	    /// <summary>Gets or sets time spent.</summary>
+	    public int RemainingSeconds { get; set; }
+
+        /// <summary>Gets or sets the type icon URL.</summary>
         public string TypeIconUrl { get; set; }
 
-        /// <summary>
-        /// Gets or sets the type icon image.
-        /// </summary>
-        /// <value>
-        /// The type icon image.
-        /// </value>
+        /// <summary>Gets or sets the type icon image.</summary>
         public byte[] TypeIconImage { get; set; }
 
-        /// <summary>
-        /// Gets or sets the severity icon URL.
-        /// </summary>
-        /// <value>
-        /// The severity icon URL.
-        /// </value>
-        public string SeverityIconUrl { get; set; }
+        /// <summary>Gets or sets the severity icon URL.</summary>
+        public string PriorityIconUrl { get; set; }
 
-        /// <summary>
-        /// Gets or sets the severity icon image.
-        /// </summary>
-        /// <value>
-        /// The severity icon image.
-        /// </value>
-        public byte[] SeverityIconImage { get; set; }
+        /// <summary>Gets or sets the severity icon image.</summary>
+        public byte[] PriorityIconImage { get; set; }
 
-        /// <summary>
-        /// Gets or sets the affected version.
-        /// </summary>
-        /// <value>
-        /// The affected version.
-        /// </value>
+        /// <summary>Gets or sets the affected version.</summary>
         public string AffectedVersion { get; set; }
 
-        /// <summary>
-        /// Gets or sets the fixed version.
-        /// </summary>
-        /// <value>
-        /// The fixed version.
-        /// </value>
-        public string FixedVersion { get; set; }
+		/// <summary>Gets of sets the Id of the Fixed Version item.</summary>
+		public string FixedVersionId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the custom field1.
-        /// </summary>
-        /// <value>
-        /// The custom field1.
-        /// </value>
+	    /// <summary>Gets or sets the fixed version.</summary>
+		public string FixedVersion { get; set; }
+
+		/// <summary></summary>
+		public DateTime ReleaseDate { get; set; } 
+
+        /// <summary>Gets or sets the custom field1.</summary>
         public string CustomField1 { get; set; }
 
-        /// <summary>
-        /// Gets or sets the custom field2.
-        /// </summary>
-        /// <value>
-        /// The custom field2.
-        /// </value>
+        /// <summary>Gets or sets the custom field2.</summary>
         public string CustomField2 { get; set; }
 
-        /// <summary>
-        /// Gets or sets the custom field3.
-        /// </summary>
-        /// <value>
-        /// The custom field3.
-        /// </value>
+        /// <summary>Gets or sets the custom field3.</summary>
         public string CustomField3 { get; set; }
 
-        /// <summary>
-        /// Gets or sets the custom field4.
-        /// </summary>
-        /// <value>
-        /// The custom field4.
-        /// </value>
+        /// <summary>Gets or sets the custom field4.</summary>
         public string CustomField4 { get; set; }
     }
 }

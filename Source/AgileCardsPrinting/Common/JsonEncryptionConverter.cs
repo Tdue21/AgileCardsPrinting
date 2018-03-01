@@ -57,12 +57,7 @@ namespace AgileCardsPrinting.Common
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var value = reader.Value as string;
-            if (string.IsNullOrEmpty(value))
-            {
-                value = EncryptionHelper.Encrypt(string.Empty);
-            }
-
-            return EncryptionHelper.Decrypt(value).ConvertToSecureString();
+			return string.IsNullOrEmpty(value) ? reader.Value : EncryptionHelper.Decrypt(value).ConvertToSecureString();
         }
 
         /// <summary>

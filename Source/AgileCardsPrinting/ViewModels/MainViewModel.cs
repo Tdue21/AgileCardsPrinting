@@ -26,12 +26,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using DevExpress.Mvvm.Native;
-using DevExpress.Mvvm.POCO;
-using DevExpress.Mvvm.UI;
-using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
 
@@ -42,42 +39,42 @@ namespace AgileCardsPrinting.ViewModels
     public class MainViewModel
     {
         private readonly IJiraService _jiraService;
-        private readonly IMessenger _messenger;
+	    private readonly ISettingsHandler _settingsHandler;
+	    private SettingsModel _settingsData;
 
-        /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
-        /// <param name="messenger">The messenger service instance..</param>
-        /// <param name="jiraHandler">The service for querying Jira.</param>
-        /// <exception cref="System.ArgumentNullException">messenger</exception>
-        public MainViewModel(IMessenger messenger, IJiraService jiraHandler)
+	    /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
+	    /// <param name="jiraHandler">The service for querying Jira.</param>
+	    /// <param name="settingsHandler"></param>
+	    /// <exception cref="System.ArgumentNullException">messenger</exception>
+	    public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler)
         {
-            _messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
             _jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
-
-            // This sucks a bit, but I can't think of another way right now. 
-            _messenger.Register<bool>(this, doRefresh => { if(doRefresh) { RefreshFilterList(); } });
+	        _settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
         }
-
-        /// <summary>Gets the <see cref="ICurrentWindowService"/> instance.</summary>
-        protected virtual ICurrentWindowService CurrentWindowService => null;
-
-        /// <summary>Gets the <see cref="IWindowService"/> instance.</summary>
-        protected virtual IWindowService WindowService => null;
 
         /// <summary>Gets the <see cref="IMessageBoxService"/> instance.</summary>
         protected virtual IMessageBoxService MessageBoxService => null;
-        protected virtual IDialogService CustomeDialogService => null;
 
-        /// <summary>Gets or sets the index of the selected search view. </summary>
-        public virtual int SelectedSearchIndex { get; set; }
+	    [ServiceProperty(Key = "SettingsDialog")]
+	    public virtual IDialogService SettingsDialog => null;
+
+		[ServiceProperty(Key = "PreviewDialog")]
+		public virtual IDialogService PreviewDialog => null;
+
+		/// <summary>Gets or sets the index of the selected search view. </summary>
+		public virtual int SelectedSearchIndex { get; set; }
 
         /// <summary>Gets or sets the list of favorite filters. </summary>
         public virtual ObservableCollection<FilterInformation> Filters { get; set; }
 
-        /// <summary>Gets or sets the selected filter.</summary>
-        public virtual FilterInformation SelectedFilter { get; set; }
+	    /// <summary>Gets or sets the list of reports available.</summary>
+	    public virtual ObservableCollection<ReportItem> Reports { get; set; }
+        
+	    /// <summary>Gets or sets the selected filter.</summary>
+		public virtual FilterInformation SelectedFilter { get; set; }
 
-        /// <summary>Gets or sets the key list.</summary>
-        public virtual string KeyList { get; set; }
+		/// <summary>Gets or sets the key list.</summary>
+		public virtual string KeyList { get; set; }
 
         /// <summary>Gets or sets the JQL.</summary>
         public virtual string Jql { get; set; }
@@ -91,29 +88,49 @@ namespace AgileCardsPrinting.ViewModels
         /// <summary>Gets or sets a value indicating whether this instance is busy.</summary>
         public virtual bool IsBusy { get; set; }
 
-        /// <summary>Refreshes the list of filters.</summary>
-        /// <remarks>Implementation of RefreshFilterListCommand.</remarks>
-        public async void RefreshFilterList()
-        {
-            IsBusy = true;
-            try
-            {
-                var filters = await _jiraService.GetFavoriteFiltersAsync();
-                Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
-            }
-            catch(Exception e)
-            {
-                MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}", 
-                    "Error", MessageButton.OK, MessageIcon.Error);
-            }
-            IsBusy = false;
-        }
+	    /// <summary>Gets or sets the selected report. </summary>
+	    public virtual ReportItem SelectedReport { get; set; }
 
-        /// <summary>Refreshes the issues list.</summary>
-        /// <remarks>Implementation of RefreshIssuesListCommand.</remarks>
-        public async void RefreshIssuesList()
+	    /// <summary>Gets or sets the sorting information.</summary>
+	    public virtual SortingInformation SortingInformation { get; set; }
+
+		/// <summary>Sortings the changed.</summary>
+		/// <param name="sortingInformation">The sorting information.</param>
+		public void SortingChanged(SortingInformation sortingInformation) => SortingInformation = sortingInformation;
+
+	    /// <summary>Refreshes the list of filters.</summary>
+	    /// <remarks>Implementation of RefreshFilterListCommand.</remarks>
+	    public async void RefreshFilters(bool refreshFilters = true)
+	    {
+		    if (refreshFilters)
+		    {
+				IsBusy = true;
+				try
+				{
+					_settingsData = _settingsHandler.LoadSettings();
+
+					Reports = new ObservableCollection<ReportItem>(_settingsHandler.GetReports());
+					SelectedReport = Reports.FirstOrDefault(r => r.Name == _settingsData.ReportName);
+
+					var filters = await _jiraService.GetFavoriteFiltersAsync().ConfigureAwait(true);
+					Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
+				}
+				catch (Exception e)
+				{
+					HandleJiraException(e);
+				}
+				IsBusy = false;
+			}
+	    }
+
+		/// <summary>Refreshes the issues list.</summary>
+		/// <remarks>Implementation of RefreshIssuesListCommand.</remarks>
+		public async void RefreshIssues()
         {
-            IsBusy = true;
+	        IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), 
+	                                                          StringSplitOptions.RemoveEmptyEntries)
+	                                                   .OrderBy(i => i);
+			IsBusy = true;
             try
             {
                 var issues = 
@@ -126,9 +143,7 @@ namespace AgileCardsPrinting.ViewModels
             }
             catch(Exception e)
             {
-                MessageBoxService.ShowMessage(
-                    $"It was not possible to connect to Jira. Check your settings.\nException: {e.Message}",
-                    "Error", MessageButton.OK, MessageIcon.Error);
+				HandleJiraException(e);
             }
             IsBusy = false;
         }
@@ -138,15 +153,11 @@ namespace AgileCardsPrinting.ViewModels
         /// <remarks>Implementation of OpenSettingsCommand.</remarks>
         public void OpenSettings(Type child)
         {
-            
-            var result = CustomeDialogService.ShowDialog(MessageButton.OKCancel, "Settings", child.Name);
+            var result = SettingsDialog.ShowDialog(MessageButton.OKCancel, "Settings", child.Name, null, this);
             if (result == MessageResult.OK)
             {
-                RefreshFilterList();
+                RefreshFilters();
             }
-            //var result = CustomeDialogService.ShowDialog(MessageButton.OKCancel, "Settings", child.Name, null);
-            //WindowService.Show(child.Name, null);
-            //CreateWindow(child, true);
         }
 
         /// <summary>
@@ -159,31 +170,31 @@ namespace AgileCardsPrinting.ViewModels
                 ? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
                 : new List<JiraIssue>(PreviewIssues);
 
-            CreateWindow(child, true, list);
+	        PreviewDialog.ShowDialog(MessageButton.OK, "Preview", child.Name, list, this);
         }
 
-        /// <summary>Creates a child window by using the <seealso cref="IMessenger"/> 
-        /// implementation. 
-        /// I would prefer to find a way of using a more direct way so I can get a 
-        /// return value from the child window.</summary>
-        /// <param name="childType">Type of the child.</param>
-        /// <param name="modal"><c>true</c> if the child window should be modal.</param>
-        /// <param name="parameters">Parameters passed to the child window.</param>
-        private void CreateWindow(Type childType, bool modal = false, object parameters = null)
-        {
-            var obj = ViewLocator.Default.ResolveView(childType.Name);
+		/// <summary>
+		/// 
+		/// </summary>
+	    protected void OnSelectedReportChanged()
+	    {
+		    var data = _settingsHandler.LoadSettings();
+		    if (data.ReportName != SelectedReport.Name)
+		    {
+			    data.ReportName = SelectedReport.Name;
+			    _settingsHandler.SaveSettings(data);
+		    }
+	    }
 
-            var message = new CreateWindowMessage
-            {
-                Owner = (CurrentWindowService as CurrentWindowService)?.ActualWindow,
-                ChildType = childType,
-                Modal = modal,
-                Parameters = parameters
-            };
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ex"></param>
+	    private void HandleJiraException(Exception ex)
+	    {
+		    MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {ex.Message}",
+			    "Error", MessageButton.OK, MessageIcon.Error);
 
-            _messenger.Send(message);
-        }     
-
-        private IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).OrderBy(i => i);
+	    }
     }
 }

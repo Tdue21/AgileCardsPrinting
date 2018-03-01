@@ -49,77 +49,54 @@ namespace AgileCardsPrinting.ViewModels
         /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
         public SettingsViewModel(ISettingsHandler settingsHandler, IFileSystemService fileSystem, IMessenger messenger)
         {
-            if (settingsHandler == null)
-            {
-                throw new ArgumentNullException(nameof(settingsHandler));
-            }
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (messenger == null)
-            {
-                throw new ArgumentNullException(nameof(messenger));
-            }
-
-            _settingsHandler = settingsHandler;
-            _fileSystem = fileSystem;
-            _messenger = messenger;
+	        _settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+            _messenger = messenger ?? throw new ArgumentNullException(nameof(messenger));
 
             LoadSettings();
         }
 
         protected virtual ICurrentWindowService CurrentWindowService => null;
 
-        protected virtual IOpenFileDialogService OpenFileDialogService => null;
+        protected virtual IFolderBrowserDialogService FolderBrowserDialogService => null;
 
         /// <summary>
         /// Gets or sets the host address.
         /// </summary>
-        /// <value>
-        /// The host address.
-        /// </value>
         public virtual string HostAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the password.
         /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
         public virtual SecureString Password { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier.
         /// </summary>
-        /// <value>
-        /// The user identifier.
-        /// </value>
         public virtual string UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum result.
         /// </summary>
-        /// <value>
-        /// The maximum result.
-        /// </value>
         public virtual int MaxResult { get; set; }
 
         /// <summary>
         /// Gets or sets the report file.
         /// </summary>
-        /// <value>
-        /// The report file.
-        /// </value>
         public virtual string ReportFile { get; set; }
 
-        public virtual  string CustomField1 { get; set; }
+		/// <summary>
+		/// Gets or sets the path to the reports folder.
+		/// </summary>
+		public virtual string ReportPath { get; set; }
+
+        public virtual string CustomField1 { get; set; }
         
-        public virtual  string CustomField2 { get; set; }
+        public virtual string CustomField2 { get; set; }
         
-        public virtual  string CustomField3 { get; set; }
+        public virtual string CustomField3 { get; set; }
         
-        public virtual  string CustomField4 { get; set; }
+        public virtual string CustomField4 { get; set; }
 
         /// <summary>
         /// Closes the settings.
@@ -135,19 +112,41 @@ namespace AgileCardsPrinting.ViewModels
             CurrentWindowService.Close();
         }
 
-
-        public void OpenFile()
+		/// <summary>
+		/// 
+		/// </summary>
+        public void SelectFolder()
         {
-            if (OpenFileDialogService.ShowDialog(_fileSystem.GetFullPath("Reports")))
+	        FolderBrowserDialogService.StartPath = _fileSystem.GetFullPath("Reports");
+
+			if (FolderBrowserDialogService.ShowDialog())
             {
-                ReportFile = _fileSystem.GetFileName(OpenFileDialogService.GetFullFileName());
+                ReportPath = FolderBrowserDialogService.ResultPath;
             }
         }
 
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        public void SaveSettings()
+	    /// <summary>
+	    /// Loads the settings.
+	    /// </summary>
+	    private void LoadSettings()
+	    {
+		    var data = _settingsHandler.LoadSettings();
+		    HostAddress = data.HostAddress;
+		    UserId = data.UserId;
+		    Password = data.Password;
+		    ReportFile = data.ReportName;
+		    ReportPath = data.ReportPath;
+		    MaxResult = data.MaxResult;
+		    CustomField1 = data.CustomField1;
+		    CustomField2 = data.CustomField2;
+		    CustomField3 = data.CustomField3;
+		    CustomField4 = data.CustomField4;
+	    }
+
+		/// <summary>
+		/// Saves the settings.
+		/// </summary>
+		public void SaveSettings()
         {
             var data = new SettingsModel
             {
@@ -156,30 +155,14 @@ namespace AgileCardsPrinting.ViewModels
                 Password = Password,
                 MaxResult = MaxResult,
                 ReportName = ReportFile,
+				ReportPath = ReportPath,
                 CustomField1 = CustomField1,
                 CustomField2 = CustomField2,
                 CustomField3 = CustomField3,
-                CustomField4 = CustomField4,
+                CustomField4 = CustomField4
             };
 
             _settingsHandler.SaveSettings(data);
-        }
-
-        /// <summary>
-        /// Loads the settings.
-        /// </summary>
-        private void LoadSettings()
-        {
-            var data = _settingsHandler.LoadSettings();
-            HostAddress = data.HostAddress;
-            UserId = data.UserId;
-            Password = data.Password;
-            ReportFile = data.ReportName;
-            MaxResult = data.MaxResult;
-            CustomField1 = data.CustomField1;
-            CustomField2 = data.CustomField2;
-            CustomField3 = data.CustomField3;
-            CustomField4 = data.CustomField4;
         }
     }
 }

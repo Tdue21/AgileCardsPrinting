@@ -22,6 +22,7 @@
 //  ****************************************************************************
 
 using System;
+// ReSharper disable All
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global

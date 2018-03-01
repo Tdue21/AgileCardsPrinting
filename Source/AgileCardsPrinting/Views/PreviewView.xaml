@@ -1,22 +1,20 @@
-﻿<Window x:Class="AgileCardsPrinting.Views.PreviewView"
+﻿<UserControl x:Class="AgileCardsPrinting.Views.PreviewView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-        Title="Issue Card Preview" Height="800" Width="600"  
-        Icon="../App.ico" Loaded="OnViewLoaded"        
+        Height="800" Width="600"  Loaded="OnViewLoaded"
         DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="14">
+        FontSize="12">
 
+	<dxmvvm:Interaction.Behaviors>
+		<dxmvvm:CurrentWindowService />
+		<dxmvvm:KeyToCommand KeyGesture="Esc" Command="{Binding CloseViewCommand}" />
+	</dxmvvm:Interaction.Behaviors>
 
-    <dxmvvm:Interaction.Behaviors>
-        <dxmvvm:CurrentWindowService />
-        <dxmvvm:KeyToCommand KeyGesture="Esc" Command="{Binding CloseViewCommand}" />
-    </dxmvvm:Interaction.Behaviors>
-
-    <Grid>
-        <WindowsFormsHost>
-            <winForms:ReportViewer x:Name="IssuesReportViewer"
+	<DockPanel>
+		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<winForms:ReportViewer x:Name="IssuesReportViewer"
                                    ShowBackButton="False"
                                    ShowContextMenu="False"
                                    ShowCredentialPrompts="False"
@@ -28,9 +26,57 @@
                                    ZoomMode="FullPage"
                                    Dock="Fill" 
                                    ProcessingMode="Local" />
-        </WindowsFormsHost>
-    </Grid>
-</Window>
+		</WindowsFormsHost>
+	</DockPanel>
+</UserControl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

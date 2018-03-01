@@ -25,11 +25,18 @@ using System;
 using System.Windows;
 using Microsoft.Reporting.WinForms;
 using AgileCardsPrinting.ViewModels;
+using DevExpress.Mvvm;
 
 namespace AgileCardsPrinting.Views
 {
+	/// <summary>
+	/// 
+	/// </summary>
     public partial class PreviewView
     {
+		/// <summary>
+		/// 
+		/// </summary>
         public PreviewView()
         {
             InitializeComponent();
@@ -43,13 +50,16 @@ namespace AgileCardsPrinting.Views
             // This is necessary, as the ReportViewer component does not support MVVM. 
             // This does not however break MVVM as it is purely related to the UI, and 
             // the ViewModel does not know the View. 
-            var vm = DataContext as PreviewViewModel;
-            if(vm != null)
+	        if(DataContext is PreviewViewModel vm)
             {
                 try
                 {
                     var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
-                    IssuesReportViewer.ReportError += (o, args) => HandleException(args);
+	                IssuesReportViewer.ReportError += (o, args) => 
+	                                                  {
+		                                                  args.Handled = true;
+		                                                  throw args.Exception;
+	                                                  };
                     IssuesReportViewer.LocalReport.EnableExternalImages = true;
                     IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
                     IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -58,15 +68,10 @@ namespace AgileCardsPrinting.Views
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(this, $"An error occurred during report processing.\nException: {ex.Message}.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show($"An error occurred during report processing.\nException: {ex.Message}.", 
+					                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        private void HandleException(ReportErrorEventArgs args)
-        {
-            args.Handled = true;
-            throw args.Exception;
         }
     }
 }

@@ -21,44 +21,39 @@
 // * IN THE SOFTWARE.
 // ****************************************************************************
 
-using System.Security;
-using System.Windows;
+using System.ComponentModel;
 using System.Windows.Controls;
-using AgileCardsPrinting.Common;
-using AgileCardsPrinting.ViewModels;
+using AgileCardsPrinting.Models;
+using DevExpress.Mvvm.UI;
 
-namespace AgileCardsPrinting.Views
+namespace AgileCardsPrinting.Common
 {
-	public partial class SettingsWindow
+	/// <summary>
+	/// Converts a <see cref="DataGridSortingEventArgs"/> instance to a <see cref="SortingInformation"/> instance. 
+	/// This is done to enable binding the sorting event to a MVVM viewmodel.
+	/// </summary>
+	/// <seealso cref="DevExpress.Mvvm.UI.EventArgsConverterBase{DataGridSortingEventArgs}" />
+	public class DataGridSortingEventArgsConverter : EventArgsConverterBase<DataGridSortingEventArgs>
 	{
-		public SettingsWindow()
-		{
-			InitializeComponent();
-		}
-
-		/// <summary>Called when the view is loaded. This is necessary in order to pass the 
-		/// <seealso cref="SecureString"/> property <see cref="SettingsViewModel.Password"/> 
-		/// from the view model to the  <see cref="PasswordBox"/> control.</summary>
+		/// <summary>
+		/// Converts the specified sender.
+		/// </summary>
 		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-		private void OnWindowLoaded(object sender, RoutedEventArgs e)
+		/// <param name="args">The <see cref="DataGridSortingEventArgs"/> instance containing the event data.</param>
+		/// <returns></returns>
+		protected override object Convert(object sender, DataGridSortingEventArgs args)
 		{
-			if (DataContext is SettingsViewModel vm && vm.Password != null)
+			var column = args?.Column;
+			if (sender != null && column != null)
 			{
-				PasswordTextBox.Password = vm.Password.ConvertToUnsecureString();
+				return new SortingInformation
+				       {
+					       MemberPath = column.SortMemberPath,
+					       Ascending = column.SortDirection.GetValueOrDefault(ListSortDirection.Ascending) == ListSortDirection.Ascending
+				       };
 			}
-		}
 
-		/// <summary>Called when The <seealso cref="PasswordBox.Password"/> property changes.
-		/// Passes the <seealso cref="SecureString"/> property to the view model. </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-		private void OnPasswordChanged(object sender, RoutedEventArgs e)
-		{
-			if (DataContext is SettingsViewModel vm)
-			{
-				vm.Password = PasswordTextBox.SecurePassword;
-			}
+			return null;
 		}
 	}
 }
