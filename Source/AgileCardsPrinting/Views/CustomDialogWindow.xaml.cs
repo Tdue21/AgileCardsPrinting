@@ -29,33 +29,33 @@ using DevExpress.Mvvm;
 
 namespace AgileCardsPrinting.Views
 {
-     public partial class CustomDialogWindow 
-    {
+	 public partial class CustomDialogWindow 
+	{
 
-        public CustomDialogWindow()
-        {
-            InitializeComponent();
-        }
+		public CustomDialogWindow()
+		{
+			InitializeComponent();
+		}
 
-        public IEnumerable<UICommand> CommandsSource
-        {
-            get => (IEnumerable<UICommand>) GetValue(CommandsSourceProperty);
-	        set => SetValue(CommandsSourceProperty, value);
-        }
+		public IEnumerable<UICommand> CommandsSource
+		{
+			get => (IEnumerable<UICommand>) GetValue(CommandsSourceProperty);
+			set => SetValue(CommandsSourceProperty, value);
+		}
 
 		public static readonly DependencyProperty CommandsSourceProperty =
-		    DependencyProperty.Register("CommandsSource",
-		                                typeof(IEnumerable<UICommand>),
-		                                typeof(CustomDialogWindow),
-		                                new PropertyMetadata(null));
+			DependencyProperty.Register("CommandsSource",
+										typeof(IEnumerable<UICommand>),
+										typeof(CustomDialogWindow),
+										new PropertyMetadata(null));
 
-        public UICommand Result { get; private set; }
+		public UICommand Result { get; private set; }
 
-        public void OnDialogCommand(object sender, EventArgs e)
-        {
-            var bt = (Button) sender;
-            Result = (UICommand) bt.DataContext;
+		public void OnDialogCommand(object sender, EventArgs e)
+		{
+			var bt = (Button) sender;
+			Result = (UICommand) bt.DataContext;
 			Close();
-        }
-    }
+		}
+	}
 }

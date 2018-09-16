@@ -26,7 +26,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using AgileCardsPrinting.Interfaces;
@@ -34,29 +33,31 @@ using AgileCardsPrinting.Models;
 
 namespace AgileCardsPrinting.ViewModels
 {
-    /// <summary>Main view model. This is the entry point of the view model.</summary>
-    [POCOViewModel]
-    public class MainViewModel
-    {
-        private readonly IJiraService _jiraService;
-	    private readonly ISettingsHandler _settingsHandler;
-	    private SettingsModel _settingsData;
+	/// <summary>Main view model. This is the entry point of the view model.</summary>
+	[POCOViewModel]
+	public class MainViewModel
+	{
+		private readonly IJiraService _jiraService;
+		private readonly ISettingsHandler _settingsHandler;
+		private readonly SettingsViewModel _settingsViewModel;
+		private SettingsModel _settingsData;
 
-	    /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
-	    /// <param name="jiraHandler">The service for querying Jira.</param>
-	    /// <param name="settingsHandler"></param>
-	    /// <exception cref="System.ArgumentNullException">messenger</exception>
-	    public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler)
-        {
-            _jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
-	        _settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
-        }
+		/// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
+		/// <param name="jiraHandler">The service for querying Jira.</param>
+		/// <param name="settingsHandler"></param>
+		/// <exception cref="System.ArgumentNullException">messenger</exception>
+		public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
+		{
+			_jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
+			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+			_settingsViewModel = settingsViewModel ?? throw new ArgumentNullException(nameof(settingsViewModel));
+		}
 
-        /// <summary>Gets the <see cref="IMessageBoxService"/> instance.</summary>
-        protected virtual IMessageBoxService MessageBoxService => null;
+		/// <summary>Gets the <see cref="IMessageBoxService"/> instance.</summary>
+		protected virtual IMessageBoxService MessageBoxService => null;
 
-	    [ServiceProperty(Key = "SettingsDialog")]
-	    public virtual IDialogService SettingsDialog => null;
+		[ServiceProperty(Key = "SettingsDialog")]
+		public virtual IDialogService SettingsDialog => null;
 
 		[ServiceProperty(Key = "PreviewDialog")]
 		public virtual IDialogService PreviewDialog => null;
@@ -64,46 +65,46 @@ namespace AgileCardsPrinting.ViewModels
 		/// <summary>Gets or sets the index of the selected search view. </summary>
 		public virtual int SelectedSearchIndex { get; set; }
 
-        /// <summary>Gets or sets the list of favorite filters. </summary>
-        public virtual ObservableCollection<FilterInformation> Filters { get; set; }
+		/// <summary>Gets or sets the list of favorite filters. </summary>
+		public virtual ObservableCollection<FilterInformation> Filters { get; set; }
 
-	    /// <summary>Gets or sets the list of reports available.</summary>
-	    public virtual ObservableCollection<ReportItem> Reports { get; set; }
-        
-	    /// <summary>Gets or sets the selected filter.</summary>
+		/// <summary>Gets or sets the list of reports available.</summary>
+		public virtual ObservableCollection<ReportItem> Reports { get; set; }
+		
+		/// <summary>Gets or sets the selected filter.</summary>
 		public virtual FilterInformation SelectedFilter { get; set; }
 
 		/// <summary>Gets or sets the key list.</summary>
 		public virtual string KeyList { get; set; }
 
-        /// <summary>Gets or sets the JQL.</summary>
-        public virtual string Jql { get; set; }
+		/// <summary>Gets or sets the JQL.</summary>
+		public virtual string Jql { get; set; }
 
-        /// <summary>Gets or sets the preview issues.</summary>
-        public virtual ObservableCollection<JiraIssue> PreviewIssues { get; set; }
+		/// <summary>Gets or sets the preview issues.</summary>
+		public virtual ObservableCollection<JiraIssue> PreviewIssues { get; set; }
 
-        /// <summary>Gets or sets the selected issues.</summary>
-        public virtual IList SelectedIssues { get; set; }
+		/// <summary>Gets or sets the selected issues.</summary>
+		public virtual IList SelectedIssues { get; set; }
 
-        /// <summary>Gets or sets a value indicating whether this instance is busy.</summary>
-        public virtual bool IsBusy { get; set; }
+		/// <summary>Gets or sets a value indicating whether this instance is busy.</summary>
+		public virtual bool IsBusy { get; set; }
 
-	    /// <summary>Gets or sets the selected report. </summary>
-	    public virtual ReportItem SelectedReport { get; set; }
+		/// <summary>Gets or sets the selected report. </summary>
+		public virtual ReportItem SelectedReport { get; set; }
 
-	    /// <summary>Gets or sets the sorting information.</summary>
-	    public virtual SortingInformation SortingInformation { get; set; }
+		/// <summary>Gets or sets the sorting information.</summary>
+		public virtual SortingInformation SortingInformation { get; set; }
 
 		/// <summary>Sortings the changed.</summary>
 		/// <param name="sortingInformation">The sorting information.</param>
 		public void SortingChanged(SortingInformation sortingInformation) => SortingInformation = sortingInformation;
 
-	    /// <summary>Refreshes the list of filters.</summary>
-	    /// <remarks>Implementation of RefreshFilterListCommand.</remarks>
-	    public async void RefreshFilters(bool refreshFilters = true)
-	    {
-		    if (refreshFilters)
-		    {
+		/// <summary>Refreshes the list of filters.</summary>
+		/// <remarks>Implementation of RefreshFilterListCommand.</remarks>
+		public async void RefreshFilters(bool refreshFilters = true)
+		{
+			if (refreshFilters)
+			{
 				IsBusy = true;
 				try
 				{
@@ -121,84 +122,89 @@ namespace AgileCardsPrinting.ViewModels
 				}
 				IsBusy = false;
 			}
-	    }
+		}
 
 		/// <summary>Refreshes the issues list.</summary>
 		/// <remarks>Implementation of RefreshIssuesListCommand.</remarks>
 		public async void RefreshIssues()
-        {
-	        IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), 
-	                                                          StringSplitOptions.RemoveEmptyEntries)
-	                                                   .OrderBy(i => i);
+		{
+			IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+													   .OrderBy(i => i);
 			IsBusy = true;
-            try
-            {
-                var issues = 
-                    SelectedSearchIndex == 0 ? await _jiraService.GetIssuesFromFilterAsync(SelectedFilter) :
-                    SelectedSearchIndex == 1 ? await _jiraService.GetIssuesFromKeyListAsync(GetKeyList()) :
-                    SelectedSearchIndex == 2 ? await _jiraService.GetIssuesFromQueryAsync(Jql) :
-                    throw new IndexOutOfRangeException();
+			try
+			{
+				var issues = 
+					SelectedSearchIndex == 0 ? await _jiraService.GetIssuesFromFilterAsync(SelectedFilter) :
+					SelectedSearchIndex == 1 ? await _jiraService.GetIssuesFromKeyListAsync(GetKeyList()) :
+					SelectedSearchIndex == 2 ? await _jiraService.GetIssuesFromQueryAsync(Jql) :
+					throw new IndexOutOfRangeException();
 
-                PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
-            }
-            catch(Exception e)
-            {
+				PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
+			}
+			catch(Exception e)
+			{
 				HandleJiraException(e);
-            }
-            IsBusy = false;
-        }
+			}
+			IsBusy = false;
+		}
 
-        /// <summary>Opens the settings dialog.</summary>
-        /// <param name="child">The child.</param>
-        /// <remarks>Implementation of OpenSettingsCommand.</remarks>
-        public void OpenSettings(Type child)
-        {
-            var result = SettingsDialog.ShowDialog(
-	            UICommand.GenerateFromMessageButton(MessageButton.OKCancel, 
-	                                                new DefaultMessageButtonLocalizer(), 
-	                                                MessageResult.OK, 
-	                                                MessageResult.Cancel), "Settings", child.Name, null, this);
-            if ((MessageResult) result.Tag == MessageResult.OK)
-            {
-                RefreshFilters();
-            }
-        }
+		/// <summary>Opens the settings dialog.</summary>
+		/// <param name="child">The child.</param>
+		/// <remarks>Implementation of OpenSettingsCommand.</remarks>
+		public void OpenSettings(Type child)
+		{
+			var commands = new List<UICommand>
+			{
+				new UICommand("APPLY", "Apply", null, true, false, MessageResult.None),
+				new UICommand("OK", "OK", null, true, false, MessageResult.OK),
+				new UICommand("CANCEL", "Cancel", null, false, true, MessageResult.Cancel)
+			};
 
-        /// <summary>
-        /// Performs the search.
-        /// </summary>
-        /// <param name="child">The child.</param>
-        public void PreparePrint(Type child)
-        {
-            var list = SelectedIssues != null && SelectedIssues.Count > 0
-                ? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
-                : new List<JiraIssue>(PreviewIssues);
+			_settingsViewModel.Settings = _settingsData.Clone();
+			var result = SettingsDialog.ShowDialog(commands, "Settings", child.Name, _settingsViewModel);
+			if ((MessageResult) result.Tag == MessageResult.OK)
+			{
+				_settingsHandler.SaveSettings(_settingsViewModel.Settings);
+				_settingsData = _settingsHandler.LoadSettings();
+				RefreshFilters();
+			}
+		}
 
-	        PreviewDialog.ShowDialog(MessageButton.OK, "Preview", child.Name, list, this);
-        }
+		/// <summary>
+		/// Performs the search.
+		/// </summary>
+		/// <param name="child">The child.</param>
+		public void PreparePrint(Type child)
+		{
+			var list = SelectedIssues != null && SelectedIssues.Count > 0
+				? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
+				: new List<JiraIssue>(PreviewIssues);
+
+			PreviewDialog.ShowDialog(MessageButton.OK, "Preview", child.Name, list, this);
+		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-	    protected void OnSelectedReportChanged()
-	    {
-		    var data = _settingsHandler.LoadSettings();
-		    if (data.ReportName != SelectedReport.Name)
-		    {
-			    data.ReportName = SelectedReport.Name;
-			    _settingsHandler.SaveSettings(data);
-		    }
-	    }
+		protected void OnSelectedReportChanged()
+		{
+			var data = _settingsHandler.LoadSettings();
+			if (data.ReportName != SelectedReport.Name)
+			{
+				data.ReportName = SelectedReport.Name;
+				_settingsHandler.SaveSettings(data);
+			}
+		}
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="ex"></param>
-	    private void HandleJiraException(Exception ex)
-	    {
-		    MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {ex.Message}",
-			    "Error", MessageButton.OK, MessageIcon.Error);
+		private void HandleJiraException(Exception ex)
+		{
+			MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {ex.Message}",
+				"Error", MessageButton.OK, MessageIcon.Error);
 
-	    }
-    }
+		}
+	}
 }

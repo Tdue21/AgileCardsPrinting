@@ -28,19 +28,14 @@ using DevExpress.Mvvm.UI;
 
 namespace AgileCardsPrinting.Common
 {
-	/// <summary>
-	/// Converts a <see cref="DataGridSortingEventArgs"/> instance to a <see cref="SortingInformation"/> instance. 
-	/// This is done to enable binding the sorting event to a MVVM viewmodel.
-	/// </summary>
+	/// <summary>Converts a <see cref="DataGridSortingEventArgs"/> instance to a <see cref="SortingInformation"/> instance. 
+	/// This is done to enable binding the sorting event to a MVVM viewmodel.</summary>
 	/// <seealso cref="DevExpress.Mvvm.UI.EventArgsConverterBase{DataGridSortingEventArgs}" />
 	public class DataGridSortingEventArgsConverter : EventArgsConverterBase<DataGridSortingEventArgs>
 	{
-		/// <summary>
-		/// Converts the specified sender.
-		/// </summary>
+		/// <summary>Converts the specified sender.</summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="DataGridSortingEventArgs"/> instance containing the event data.</param>
-		/// <returns></returns>
 		protected override object Convert(object sender, DataGridSortingEventArgs args)
 		{
 			var column = args?.Column;
@@ -52,7 +47,6 @@ namespace AgileCardsPrinting.Common
 					       Ascending = column.SortDirection.GetValueOrDefault(ListSortDirection.Ascending) == ListSortDirection.Ascending
 				       };
 			}
-
 			return null;
 		}
 	}

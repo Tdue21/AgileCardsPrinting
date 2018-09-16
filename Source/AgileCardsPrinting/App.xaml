@@ -20,7 +20,7 @@
 	                <system:Boolean x:Key="TrueValue">True</system:Boolean>
 	                <system:Boolean x:Key="FalseValue">False</system:Boolean>
 
-					<root:ViewModelLocator x:Key="Locator" />
+					<root:DependencyInjector x:Key="Locator" />
 
                     <Style x:Key="GridStyle" TargetType="Grid">
                         <Setter Property="Margin" Value="8" />

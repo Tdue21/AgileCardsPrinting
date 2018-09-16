@@ -27,20 +27,20 @@ using AgileCardsPrinting.Interfaces;
 
 namespace AgileCardsPrinting.Services
 {
-    public class FileSystemService : IFileSystemService
-    {
-        public string GetFullPath(string path) => Path.GetFullPath(path);
+	public class FileSystemService : IFileSystemService
+	{
+		public string GetFullPath(string path) => Path.GetFullPath(path);
 
-        public bool FileExists(string path) => File.Exists(path);
+		public bool FileExists(string path) => File.Exists(path);
 
-        public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+		public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
-        public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
+		public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
 
-        public string GetFileName(string path) => Path.GetFileName(path);
+		public string GetFileName(string path) => Path.GetFileName(path);
 
-	    public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
+		public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
 
-	    public IEnumerable<string> GetFilesFrom(string reportPath, string mask) => Directory.GetFiles(reportPath, mask, SearchOption.TopDirectoryOnly);
+		public IEnumerable<string> GetFilesFrom(string reportPath, string mask) => Directory.GetFiles(reportPath, mask, SearchOption.TopDirectoryOnly);
 	}
 }

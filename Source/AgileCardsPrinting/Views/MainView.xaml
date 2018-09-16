@@ -28,7 +28,9 @@
 
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>
-					<views:SettingsWindow />
+					<views:SettingsWindow>
+						
+					</views:SettingsWindow>
 				</DataTemplate>
 			</services:CustomDialogService.ViewTemplate>
 
