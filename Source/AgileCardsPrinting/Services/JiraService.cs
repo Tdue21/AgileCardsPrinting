@@ -57,6 +57,7 @@ namespace AgileCardsPrinting.Services
             if (selectedFilter != null)
             {
                 var jira = GetJiraClient();
+
                 var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name).ConfigureAwait(true);
                 return await TransformResultAsync(jira, issues).ConfigureAwait(true);
             }
@@ -152,6 +153,7 @@ namespace AgileCardsPrinting.Services
 		    var settings = new JiraRestClientSettings { EnableRequestTrace = true};
 		    var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
 		    client.MaxIssuesPerRequest = data.MaxResult;
+
 		    return client;
 	    }
 

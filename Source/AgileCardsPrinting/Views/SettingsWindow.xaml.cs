@@ -37,19 +37,19 @@ namespace AgileCardsPrinting.Views
 		}
 
 		/// <summary>Called when the view is loaded. This is necessary in order to pass the 
-		/// <seealso cref="SecureString"/> property <see cref="SettingsViewModel.Password"/> 
+		/// <seealso cref="SecureString"/> property <see cref="SettingsViewModel.SettingsData.Password"/> 
 		/// from the view model to the  <see cref="PasswordBox"/> control.</summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
 		private void OnWindowLoaded(object sender, RoutedEventArgs e)
 		{
-			if (DataContext is SettingsViewModel vm && vm.Password != null)
+			if (DataContext is SettingsViewModel vm && vm.SettingsData?.Password != null)
 			{
-				PasswordTextBox.Password = vm.Password.ConvertToUnsecureString();
+				PasswordTextBox.Password = vm.SettingsData.Password.ConvertToUnsecureString();
 			}
 		}
 
-		/// <summary>Called when The <seealso cref="PasswordBox.Password"/> property changes.
+		/// <summary>Called when The <seealso cref="PasswordBox.SettingsData.Password"/> property changes.
 		/// Passes the <seealso cref="SecureString"/> property to the view model. </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
@@ -57,7 +57,7 @@ namespace AgileCardsPrinting.Views
 		{
 			if (DataContext is SettingsViewModel vm)
 			{
-				vm.Password = PasswordTextBox.SecurePassword;
+				vm.SettingsData.Password = PasswordTextBox.SecurePassword;
 			}
 		}
 	}

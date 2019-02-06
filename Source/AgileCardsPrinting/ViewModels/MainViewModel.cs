@@ -26,7 +26,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using AgileCardsPrinting.Interfaces;
@@ -40,16 +40,19 @@ namespace AgileCardsPrinting.ViewModels
     {
         private readonly IJiraService _jiraService;
 	    private readonly ISettingsHandler _settingsHandler;
+	    private readonly SettingsViewModel _settingsVm;
 	    private SettingsModel _settingsData;
 
 	    /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
 	    /// <param name="jiraHandler">The service for querying Jira.</param>
 	    /// <param name="settingsHandler"></param>
+	    /// <param name="settingsVm"></param>
 	    /// <exception cref="System.ArgumentNullException">messenger</exception>
-	    public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler)
+	    public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsVm)
         {
             _jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 	        _settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+	        _settingsVm = settingsVm ?? throw new ArgumentNullException(nameof(settingsVm));
         }
 
         /// <summary>Gets the <see cref="IMessageBoxService"/> instance.</summary>
@@ -97,6 +100,23 @@ namespace AgileCardsPrinting.ViewModels
 		/// <summary>Sortings the changed.</summary>
 		/// <param name="sortingInformation">The sorting information.</param>
 		public void SortingChanged(SortingInformation sortingInformation) => SortingInformation = sortingInformation;
+
+	    public void Initialization()
+	    {
+		    _settingsData = _settingsHandler.LoadSettings();
+		    if (string.IsNullOrEmpty(_settingsData.HostAddress))
+		    {
+			    var result = MessageBoxService.ShowMessage(
+				    "The application does not appear to be configured correctly.\nDo you wish to open the Settings dialog?",
+				    "Warning",
+				    MessageButton.YesNo,
+				    MessageIcon.Question);
+			    if (result == MessageResult.Yes)
+			    {	
+					OpenSettings(null);
+			    }
+		    }
+	    }
 
 	    /// <summary>Refreshes the list of filters.</summary>
 	    /// <remarks>Implementation of RefreshFilterListCommand.</remarks>
@@ -153,16 +173,21 @@ namespace AgileCardsPrinting.ViewModels
         /// <remarks>Implementation of OpenSettingsCommand.</remarks>
         public void OpenSettings(Type child)
         {
-            var result = SettingsDialog.ShowDialog(
-	            UICommand.GenerateFromMessageButton(MessageButton.OKCancel, 
-	                                                new DefaultMessageButtonLocalizer(), 
-	                                                MessageResult.OK, 
-	                                                MessageResult.Cancel), "Settings", child.Name, null, this);
-            if ((MessageResult) result.Tag == MessageResult.OK)
+	        var commands = new List<UICommand>
+	                             {
+		                             new UICommand("OK", "OK", SaveSettingsCommand, true, false),
+		                             new UICommand("CANCEL", "Cancel", null, false, true)
+	                             };
+	        _settingsVm.SettingsData = _settingsHandler.LoadSettings();
+			var result = SettingsDialog.ShowDialog(commands, "Settings", "SettingsWindow", _settingsVm, null, this);
+            if ((string)result.Id == "OK")
             {
+				_settingsHandler.SaveSettings(_settingsVm.SettingsData);
                 RefreshFilters();
             }
         }
+
+        public ICommand SaveSettingsCommand => new DelegateCommand(() => {});
 
         /// <summary>
         /// Performs the search.

@@ -24,6 +24,9 @@
 using System.Security;
 using Newtonsoft.Json;
 using AgileCardsPrinting.Common;
+using DevExpress.Mvvm;
+using System.Runtime.Serialization;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace AgileCardsPrinting.Models
@@ -31,7 +34,7 @@ namespace AgileCardsPrinting.Models
     /// <summary>
     /// 
     /// </summary>
-    public class SettingsModel
+    public class SettingsModel : BindableBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsModel"/> class.
@@ -47,55 +50,110 @@ namespace AgileCardsPrinting.Models
         /// <summary>
         /// Gets or sets the host address.
         /// </summary>
-        public string HostAddress { get; set; }
+        [DataMember]
+        public string HostAddress
+        {
+	        get => GetProperty(() => HostAddress);
+	        set => SetProperty(() => HostAddress, value);
+        }
 
-        /// <summary>
-        /// Gets or sets the user identifier.
-        /// </summary>
-        public string UserId { get; set; }
+
+		/// <summary>
+		/// Gets or sets the user identifier.
+		/// </summary>
+		[DataMember]
+        public string UserId
+        {
+	        get => GetProperty(() => UserId);
+	        set => SetProperty(() => UserId, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the password.
         /// </summary>
         [JsonConverter(typeof(JsonEncryptionConverter))]
+        [DataMember]
         public SecureString Password { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum result.
         /// </summary>
-        public int MaxResult { get; set; }
+        [DataMember]
+        public int MaxResult
+        {
+	        get => GetProperty(() => MaxResult);
+	        set => SetProperty(() => MaxResult, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the name of the report.
         /// </summary>
-        public string ReportName { get; set; }
+        [DataMember]
+        public string ReportName
+        {
+	        get => GetProperty(() => ReportName);
+	        set => SetProperty(() => ReportName, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the custom field1.
         /// </summary>
-        public string CustomField1 { get; set; }
+        [DataMember]
+        public string CustomField1
+        {
+	        get => GetProperty(() => CustomField1);
+	        set => SetProperty(() => CustomField1, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the custom field2.
         /// </summary>
-        public string CustomField2 { get; set; }
+        [DataMember]
+        public string CustomField2
+        {
+	        get => GetProperty(() => CustomField2);
+	        set => SetProperty(() => CustomField2, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the custom field3.
         /// </summary>
-        public string CustomField3 { get; set; }
+        [DataMember]
+        public string CustomField3
+        {
+	        get => GetProperty(() => CustomField3);
+	        set => SetProperty(() => CustomField3, value);
+        }
+
 
         /// <summary>
         /// Gets or sets the custom field4.
         /// </summary>
-        public string CustomField4 { get; set; }
+        [DataMember]
+        public string CustomField4
+        {
+	        get => GetProperty(() => CustomField4);
+	        set => SetProperty(() => CustomField4, value);
+        }
 
-		/// <summary>
-		/// Gets or sets the path to the reports folder.
-		/// </summary>
-	    public string ReportPath { get; set; }
 
-	    protected bool Equals(SettingsModel other)
+        /// <summary>
+        /// Gets or sets the path to the reports folder.
+        /// </summary>
+        [DataMember]
+        public string ReportPath
+        {
+	        get => GetProperty(() => ReportPath);
+	        set => SetProperty(() => ReportPath, value);
+        }
+
+
+        protected bool Equals(SettingsModel other)
         {
             return //Equals(Password, other.Password) && 
                    MaxResult == other.MaxResult &&

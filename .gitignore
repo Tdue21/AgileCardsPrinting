@@ -3,6 +3,7 @@ Wiki\
 \bin
 \packages
 \.vs
+\_ReSharper.Caches 
 \coverage
 results.xml
 TestResult.xml

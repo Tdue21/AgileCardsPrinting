@@ -25,28 +25,26 @@
 									  OwnerWindow="{x:Reference MainViewWindow}"
 									  Height="300" Width="500" Resizable="False"
 		                              >
-
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>
 					<views:SettingsWindow />
 				</DataTemplate>
 			</services:CustomDialogService.ViewTemplate>
-
 		</services:CustomDialogService>
 		
 		<services:CustomDialogService x:Name="PreviewDialog"
 		                              DialogStartupLocation="CenterOwner"
 		                              OwnerWindow="{x:Reference MainViewWindow}"
-		                              Width="600" Height="800" Resizable="True">
+		                              Width="600" Height="800" Resizable="True"
+		                              >
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>
 					<views:PreviewView />
 				</DataTemplate>
 			</services:CustomDialogService.ViewTemplate>
-
 		</services:CustomDialogService>
 
-		<dxmvvm:EventToCommand EventName="Loaded" Command="{Binding RefreshFiltersCommand}" CommandParameter="{StaticResource TrueValue}" />
+		<dxmvvm:EventToCommand EventName="Loaded" Command="{Binding InitializationCommand}"/>
 		<dxmvvm:KeyToCommand KeyGesture="F5" Command="{Binding RefreshIssuesCommand}" />
 
 	</dxmvvm:Interaction.Behaviors>

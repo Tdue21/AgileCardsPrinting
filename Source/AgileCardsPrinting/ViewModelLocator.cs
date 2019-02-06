@@ -45,7 +45,7 @@ namespace AgileCardsPrinting
                       .RegisterPocoType<MainViewModel>()
                       .RegisterPocoType<PreviewViewModel>()
                       .RegisterPocoType<SettingsViewModel>()
-                      .RegisterSingleton(Messenger.Default);
+                      .RegisterInstance(Messenger.Default);
         }
 
         public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();
