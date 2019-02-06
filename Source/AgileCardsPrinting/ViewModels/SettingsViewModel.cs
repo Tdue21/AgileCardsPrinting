@@ -20,59 +20,37 @@
 //  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
-
-using System;
-using System.Windows.Input;
-using DevExpress.Mvvm;
-using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
+using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
 
 namespace AgileCardsPrinting.ViewModels
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class SettingsViewModel : ViewModelBase
-    {
-        private readonly IFileSystemService _fileSystem;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
-        /// </summary>
-        /// <param name="fileSystem"></param>
-        /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-        public SettingsViewModel(IFileSystemService fileSystem)
-        {
-            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-        }
-
-        protected virtual IFolderBrowserDialogService FolderBrowserDialogService => null;
+	/// <summary>
+	/// Defines the <see cref="SettingsViewModel" />
+	/// </summary>
+	[POCOViewModel]
+	public class SettingsViewModel
+	{
+		/// <summary>
+		/// Gets or sets the Settings
+		/// </summary>
+		public virtual SettingsModel Settings { get; set; }
 
 		/// <summary>
-		/// 
+		/// Gets the FolderBrowserDialogService
 		/// </summary>
-        public SettingsModel SettingsData
-        {
-	        get => GetProperty(() => SettingsData);
-	        set => SetProperty(() => SettingsData, value);
-        }
+		protected virtual IFolderBrowserDialogService FolderBrowserDialogService => null;
 
 		/// <summary>
-		/// 
+		/// The SelectFolder
 		/// </summary>
-		public ICommand SelectFolderCommand => new DelegateCommand(SelectFolder);
-
-        /// <summary>
-		/// 
-		/// </summary>
-        public void SelectFolder()
-        {
-	        FolderBrowserDialogService.StartPath = _fileSystem.GetFullPath("Reports");
-
+		public void SelectFolder()
+		{
 			if (FolderBrowserDialogService.ShowDialog())
-            {
-                SettingsData.ReportPath = FolderBrowserDialogService.ResultPath;
-            }
-        }
-    }
+			{
+				Settings.ReportPath = FolderBrowserDialogService.ResultPath;
+			}
+		}
+	}
 }

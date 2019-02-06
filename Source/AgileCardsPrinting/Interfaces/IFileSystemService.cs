@@ -26,52 +26,52 @@ using System.IO;
 
 namespace AgileCardsPrinting.Interfaces
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IFileSystemService
-    {
-        /// <summary>
-        /// Gets the full path.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        string GetFullPath(string path);
+	/// <summary>
+	/// 
+	/// </summary>
+	public interface IFileSystemService
+	{
+		/// <summary>
+		/// Gets the full path.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		string GetFullPath(string path);
 
-        /// <summary>
-        /// Files the exists.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        bool FileExists(string path);
+		/// <summary>
+		/// Files the exists.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		bool FileExists(string path);
 
-        /// <summary>
-        /// Opens the read stream.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        Stream OpenReadStream(string path);
+		/// <summary>
+		/// Opens the read stream.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		Stream OpenReadStream(string path);
 
-        /// <summary>
-        /// Opens the write stream.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        Stream OpenWriteStream(string path);
+		/// <summary>
+		/// Opens the write stream.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		Stream OpenWriteStream(string path);
 
-        /// <summary>
-        /// Gets the name of the file.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        string GetFileName(string path);
+		/// <summary>
+		/// Gets the name of the file.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		string GetFileName(string path);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-	    string GetFileNameWithoutExtension(string path);
+		string GetFileNameWithoutExtension(string path);
 
 		/// <summary>
 		/// 
@@ -79,6 +79,6 @@ namespace AgileCardsPrinting.Interfaces
 		/// <param name="reportPath"></param>
 		/// <param name="mask"></param>
 		/// <returns></returns>
-	    IEnumerable<string> GetFilesFrom(string reportPath, string mask);
-    }
+		IEnumerable<string> GetFilesFrom(string reportPath, string mask);
+	}
 }

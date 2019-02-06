@@ -29,18 +29,14 @@ using System.Windows.Markup;
 
 namespace AgileCardsPrinting.Common
 {
-	/// <summary>
-	/// A <see cref="MarkupExtension"/> descendant for converting a boolean value to a <see cref="Cursor"/> value.
-	/// </summary>
+	/// <summary>A <see cref="MarkupExtension"/> descendant for converting a boolean value to a <see cref="Cursor"/> value.</summary>
 	/// <seealso cref="MarkupExtension" />
 	/// <seealso cref="IValueConverter" />
 	public class BooleanToCursorConverter : MarkupExtension, IValueConverter
-    {
-        private static BooleanToCursorConverter _instance;
+	{
+		private static BooleanToCursorConverter _instance;
 
-		/// <summary>
-		/// Converts a <see cref="bool"/> value to a <see cref="Cursor"/> value.
-		/// </summary>
+		/// <summary>Converts a <see cref="bool"/> value to a <see cref="Cursor"/> value.</summary>
 		/// <remarks>
 		/// A <c>True</c> value corresponds to a <c>Cursor.Wait</c>, and 
 		/// a <c>False</c> value corresponds to a <c>Cursor.Arrow</c> value.
@@ -53,32 +49,22 @@ namespace AgileCardsPrinting.Common
 		/// A converted value. If the method returns null, the valid null value is used.
 		/// </returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => 
-	        value != null && (bool) value ? Cursors.Wait : Cursors.Arrow;
+			value != null && (bool) value ? Cursors.Wait : Cursors.Arrow;
 
-	    /// <summary>
-	    /// Converts a <see cref="Cursor"/> value to a <see cref="bool"/> value.
-	    /// </summary>
-	    /// <remarks>
-	    /// A <c>Cursor.Wait</c> will convert to a <c>True</c> all other will convert to <c>False</c>.
-	    /// </remarks>
-        /// <param name="value">The value that is produced by the binding target.</param>
+		/// <summary>Converts a <see cref="Cursor"/> value to a <see cref="bool"/> value.</summary>
+		/// <remarks>A <c>Cursor.Wait</c> will convert to a <c>True</c> all other will convert to <c>False</c>.</remarks>
+		/// <param name="value">The value that is produced by the binding target.</param>
 		/// <param name="targetType">The type to convert to.</param>
 		/// <param name="parameter">The converter parameter to use.</param>
 		/// <param name="culture">The culture to use in the converter.</param>
 		/// <returns>
 		/// A converted value. If the method returns null, the valid null value is used.
 		/// </returns>
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => 
-	        Cursors.Wait.Equals(value as Cursor ?? Cursors.Wait);
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Cursors.Wait.Equals(value as Cursor ?? Cursors.Wait);
 
-        /// <summary>
-        /// When implemented in a derived class, returns an object that is provided as the value of the target property for this markup extension.
-        /// </summary>
-        /// <param name="serviceProvider">A service provider helper that can provide services for the markup extension.</param>
-        /// <returns>
-        /// The object value to set on the property where the extension is applied.
-        /// </returns>
-        public override object ProvideValue(IServiceProvider serviceProvider) => 
-	        _instance ?? (_instance = new BooleanToCursorConverter());
-    }
+		/// <summary>When implemented in a derived class, returns an object that is provided as the value of the target property for this markup extension.</summary>
+		/// <param name="serviceProvider">A service provider helper that can provide services for the markup extension.</param>
+		/// <returns>The object value to set on the property where the extension is applied.</returns>
+		public override object ProvideValue(IServiceProvider serviceProvider) => _instance ?? (_instance = new BooleanToCursorConverter());
+	}
 }

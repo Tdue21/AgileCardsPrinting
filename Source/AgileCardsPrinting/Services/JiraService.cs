@@ -34,49 +34,48 @@ using AgileCardsPrinting.Properties.Annotations;
 
 namespace AgileCardsPrinting.Services
 {
-    public class JiraService : IJiraService
-    {
-        private static readonly Dictionary<string, byte[]> ImageList = new Dictionary<string, byte[]>();
-        private readonly ISettingsHandler _settingsHandler;
+	public class JiraService : IJiraService
+	{
+		private static readonly Dictionary<string, byte[]> ImageList = new Dictionary<string, byte[]>();
+		private readonly ISettingsHandler _settingsHandler;
 
-        public JiraService(ISettingsHandler settingsHandler)
-        {
-	        _settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
-        }
+		public JiraService(ISettingsHandler settingsHandler)
+		{
+			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+		}
 
-        public async Task<IList<FilterInformation>> GetFavoriteFiltersAsync()
-        {
-            var jira = GetJiraClient();
-            var filters = await jira.Filters.GetFavouritesAsync().ConfigureAwait(true);
-            var result = filters.Select(f => new FilterInformation {Id = f.Id, Name = f.Name}).ToList();
-            return result;
-        }
+		public async Task<IList<FilterInformation>> GetFavoriteFiltersAsync()
+		{
+			var jira = GetJiraClient();
+			var filters = await jira.Filters.GetFavouritesAsync().ConfigureAwait(true);
+			var result = filters.Select(f => new FilterInformation {Id = f.Id, Name = f.Name}).ToList();
+			return result;
+		}
 
-        public async Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter)
-        {
-            if (selectedFilter != null)
-            {
-                var jira = GetJiraClient();
+		public async Task<IEnumerable<JiraIssue>> GetIssuesFromFilterAsync(FilterInformation selectedFilter)
+		{
+			if (selectedFilter != null)
+			{
+				var jira = GetJiraClient();
+				var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name).ConfigureAwait(true);
+				return await TransformResultAsync(jira, issues).ConfigureAwait(true);
+			}
+			return null;
+		}
 
-                var issues = await jira.Filters.GetIssuesFromFavoriteAsync(selectedFilter.Name).ConfigureAwait(true);
-                return await TransformResultAsync(jira, issues).ConfigureAwait(true);
-            }
-            return null;
-        }
+		public async Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string query)
+		{
+			var jira = GetJiraClient();
+			var issues = await jira.Issues.GetIssuesFromJqlAsync(query).ConfigureAwait(true);
+			return await TransformResultAsync(jira, issues).ConfigureAwait(true);
+		}
 
-        public async Task<IEnumerable<JiraIssue>> GetIssuesFromQueryAsync(string query)
-        {
-            var jira = GetJiraClient();
-            var issues = await jira.Issues.GetIssuesFromJqlAsync(query).ConfigureAwait(true);
-            return await TransformResultAsync(jira, issues).ConfigureAwait(true);
-        }
-
-        public async Task<IEnumerable<JiraIssue>> GetIssuesFromKeyListAsync(IEnumerable<string> keyList)
-        {
-            var jira = GetJiraClient();
-            var issues = await jira.Issues.GetIssuesAsync(keyList).ConfigureAwait(true);
-            return await TransformResultAsync(jira, issues.Values).ConfigureAwait(true);
-        }
+		public async Task<IEnumerable<JiraIssue>> GetIssuesFromKeyListAsync(IEnumerable<string> keyList)
+		{
+			var jira = GetJiraClient();
+			var issues = await jira.Issues.GetIssuesAsync(keyList).ConfigureAwait(true);
+			return await TransformResultAsync(jira, issues.Values).ConfigureAwait(true);
+		}
 
 		private async Task<IEnumerable<JiraIssue>> TransformResultAsync(Jira jira, IEnumerable<Issue> issues)
 		{
@@ -132,49 +131,48 @@ namespace AgileCardsPrinting.Services
 			return list;
 		}
 		
-        private string GetCustomField(CustomFieldValueCollection issueCustomFields, string fieldName)
-        {
-            if (string.IsNullOrEmpty(fieldName))
-            {
-                return string.Empty;
-            }
+		private string GetCustomField(CustomFieldValueCollection issueCustomFields, string fieldName)
+		{
+			if (string.IsNullOrEmpty(fieldName))
+			{
+				return string.Empty;
+			}
 
-            var field = issueCustomFields.FirstOrDefault(i => string.Equals(i.Name, fieldName, StringComparison.InvariantCultureIgnoreCase));
-            return field != null ? field.Values.FirstOrDefault() : string.Empty;
-        }
+			var field = issueCustomFields.FirstOrDefault(i => string.Equals(i.Name, fieldName, StringComparison.InvariantCultureIgnoreCase));
+			return field != null ? field.Values.FirstOrDefault() : string.Empty;
+		}
 
-	    private Jira GetJiraClient()
-	    {
-		    var data = _settingsHandler.LoadSettings();
-		    if (string.IsNullOrEmpty(data.HostAddress))
-		    {
-			    throw new NullReferenceException("Host Address is not set.");
-		    }
-		    var settings = new JiraRestClientSettings { EnableRequestTrace = true};
-		    var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
-		    client.MaxIssuesPerRequest = data.MaxResult;
-
-		    return client;
-	    }
+		private Jira GetJiraClient()
+		{
+			var data = _settingsHandler.LoadSettings();
+			if (string.IsNullOrEmpty(data.HostAddress))
+			{
+				throw new NullReferenceException("Host Address is not set.");
+			}
+			var settings = new JiraRestClientSettings { EnableRequestTrace = true};
+			var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
+			client.MaxIssuesPerRequest = data.MaxResult;
+			return client;
+		}
 
 		private byte[] LoadImage([NotNull] string uri)
-        {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+		{
+			if (uri == null)
+			{
+				throw new ArgumentNullException(nameof(uri));
+			}
 
-            if (!ImageList.ContainsKey(uri))
-            {
-                using (var client = new WebClient())
-                {
-                    var bytes = client.DownloadData(uri);
-                    ImageList.Add(uri, bytes);
-                    return bytes;
-                }
-            }
+			if (!ImageList.ContainsKey(uri))
+			{
+				using (var client = new WebClient())
+				{
+					var bytes = client.DownloadData(uri);
+					ImageList.Add(uri, bytes);
+					return bytes;
+				}
+			}
 
-            return ImageList[uri];
-        }
-    }
+			return ImageList[uri];
+		}
+	}
 }

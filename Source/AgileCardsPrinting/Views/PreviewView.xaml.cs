@@ -32,46 +32,46 @@ namespace AgileCardsPrinting.Views
 	/// <summary>
 	/// 
 	/// </summary>
-    public partial class PreviewView
-    {
+	public partial class PreviewView
+	{
 		/// <summary>
 		/// 
 		/// </summary>
-        public PreviewView()
-        {
-            InitializeComponent();
-        }
+		public PreviewView()
+		{
+			InitializeComponent();
+		}
 
-        /// <summary>Called when the view is loaded. Necessary in order to bind the Winforms component.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void OnViewLoaded(object sender, RoutedEventArgs e)
-        {
-            // This is necessary, as the ReportViewer component does not support MVVM. 
-            // This does not however break MVVM as it is purely related to the UI, and 
-            // the ViewModel does not know the View. 
-	        if(DataContext is PreviewViewModel vm)
-            {
-                try
-                {
-                    var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
-	                IssuesReportViewer.ReportError += (o, args) => 
-	                                                  {
-		                                                  args.Handled = true;
-		                                                  throw args.Exception;
-	                                                  };
-                    IssuesReportViewer.LocalReport.EnableExternalImages = true;
-                    IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
-                    IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
-                    IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
-                    IssuesReportViewer.RefreshReport();
-                }
-                catch(Exception ex)
-                {
+		/// <summary>Called when the view is loaded. Necessary in order to bind the Winforms component.</summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+		private void OnViewLoaded(object sender, RoutedEventArgs e)
+		{
+			// This is necessary, as the ReportViewer component does not support MVVM. 
+			// This does not however break MVVM as it is purely related to the UI, and 
+			// the ViewModel does not know the View. 
+			if(DataContext is PreviewViewModel vm)
+			{
+				try
+				{
+					var reportDataSource = new ReportDataSource("Issues") { Value = vm.Issues };
+					IssuesReportViewer.ReportError += (o, args) => 
+													  {
+														  args.Handled = true;
+														  throw args.Exception;
+													  };
+					IssuesReportViewer.LocalReport.EnableExternalImages = true;
+					IssuesReportViewer.LocalReport.ReportPath = vm.ReportFile;
+					IssuesReportViewer.LocalReport.DataSources.Add(reportDataSource);
+					IssuesReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+					IssuesReportViewer.RefreshReport();
+				}
+				catch(Exception ex)
+				{
 					MessageBox.Show($"An error occurred during report processing.\nException: {ex.Message}.", 
-					                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-    }
+									"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				}
+			}
+		}
+	}
 }

@@ -30,51 +30,51 @@ using AgileCardsPrinting.Models;
 
 namespace AgileCardsPrinting.ViewModels
 {
-    /// <summary>ViewModel for the issue card preview view.</summary>
-    /// <seealso cref="DevExpress.Mvvm.ISupportParameter" />
-    [POCOViewModel]
-    public class PreviewViewModel : ISupportParameter
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
-        /// </summary>
-        /// <param name="settingsHandler">The settings handler.</param>
-        /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-        public PreviewViewModel(ISettingsHandler settingsHandler)
-        {
-            if (settingsHandler == null)
-            {
-                throw new ArgumentNullException(nameof(settingsHandler));
-            }
-            var data = settingsHandler.LoadSettings();
-            ReportFile = $"{data.ReportPath}\\{data.ReportName}.rdlc";
-        }
+	/// <summary>ViewModel for the issue card preview view.</summary>
+	/// <seealso cref="DevExpress.Mvvm.ISupportParameter" />
+	[POCOViewModel]
+	public class PreviewViewModel : ISupportParameter
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
+		/// </summary>
+		/// <param name="settingsHandler">The settings handler.</param>
+		/// <exception cref="System.ArgumentNullException">settingsHandler</exception>
+		public PreviewViewModel(ISettingsHandler settingsHandler)
+		{
+			if (settingsHandler == null)
+			{
+				throw new ArgumentNullException(nameof(settingsHandler));
+			}
+			var data = settingsHandler.LoadSettings();
+			ReportFile = $"{data.ReportPath}\\{data.ReportName}.rdlc";
+		}
 
-        /// <summary>Gets the current window service.</summary>
-        protected virtual ICurrentWindowService CurrentWindowService => null;
+		/// <summary>Gets the current window service.</summary>
+		protected virtual ICurrentWindowService CurrentWindowService => null;
 
-        /// <summary>Used to pass the list of issues to the view model.</summary>
-        [BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
-        public virtual object Parameter { get; set; }
+		/// <summary>Used to pass the list of issues to the view model.</summary>
+		[BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
+		public virtual object Parameter { get; set; }
 
-        /// <summary>Gets or sets the issue list. </summary>
-        [BindableProperty(false)]
-        public List<JiraIssue> Issues { get; protected set; }
+		/// <summary>Gets or sets the issue list. </summary>
+		[BindableProperty(false)]
+		public List<JiraIssue> Issues { get; protected set; }
 
-        /// <summary>Gets or sets the report file. </summary>
-        [BindableProperty(false)]
-        public string ReportFile { get; protected set; }
+		/// <summary>Gets or sets the report file. </summary>
+		[BindableProperty(false)]
+		public string ReportFile { get; protected set; }
 
-        /// <summary>Closes the view. </summary>
-        public void CloseView() => CurrentWindowService?.Close();
+		/// <summary>Closes the view. </summary>
+		public void CloseView() => CurrentWindowService?.Close();
 
-        /// <summary>Called when the <see cref="Parameter" /> property changes.</summary>
-        protected void OnParameterChanged()
-        {
-	        if (Parameter is IEnumerable<JiraIssue> issues)
-            {
-                Issues = new List<JiraIssue>(issues);
-            }
-        }
-    }
+		/// <summary>Called when the <see cref="Parameter" /> property changes.</summary>
+		protected void OnParameterChanged()
+		{
+			if (Parameter is IEnumerable<JiraIssue> issues)
+			{
+				Issues = new List<JiraIssue>(issues);
+			}
+		}
+	}
 }

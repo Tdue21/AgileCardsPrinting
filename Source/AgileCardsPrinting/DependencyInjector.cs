@@ -21,7 +21,6 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows;
 using DevExpress.Mvvm;
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
@@ -31,27 +30,28 @@ using SimpleInjector;
 
 namespace AgileCardsPrinting
 {
-    public class ViewModelLocator
-    {
-        private readonly Container _container;
+	public class DependencyInjector
+	{
+		private readonly Container _container;
 
-        public ViewModelLocator()
-        {
-            _container = new Container();
+		public DependencyInjector()
+		{
+			_container = new Container();
 
-            _container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
-                      .RegisterType<ISettingsHandler, SettingsHandler>(Lifestyle.Singleton)
-                      .RegisterType<IJiraService, JiraService>(Lifestyle.Singleton)
-                      .RegisterPocoType<MainViewModel>()
-                      .RegisterPocoType<PreviewViewModel>()
-                      .RegisterPocoType<SettingsViewModel>()
-                      .RegisterInstance(Messenger.Default);
-        }
+			_container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
+					  .RegisterType<ISettingsHandler, SettingsHandler>(Lifestyle.Singleton)
+					  .RegisterType<IJiraService, JiraService>(Lifestyle.Singleton)
+					  
+					  .RegisterPocoType<MainViewModel>()
+					  .RegisterPocoType<PreviewViewModel>()
+					  .RegisterPocoType<SettingsViewModel>()
+					  ;
+		}
 
-        public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();
+		public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();
 
-        public PreviewViewModel PreviewViewModel => _container.GetInstance<PreviewViewModel>();
+		public PreviewViewModel PreviewViewModel => _container.GetInstance<PreviewViewModel>();
 
-        public SettingsViewModel SettingsViewModel => _container.GetInstance<SettingsViewModel>();
-    }
+		public SettingsViewModel SettingsViewModel => _container.GetInstance<SettingsViewModel>();
+	}
 }

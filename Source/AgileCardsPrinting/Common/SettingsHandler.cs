@@ -32,69 +32,69 @@ using RestSharp.Extensions;
 
 namespace AgileCardsPrinting.Common
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="AgileCardsPrinting.Interfaces.ISettingsHandler" />
-    public class SettingsHandler : ISettingsHandler
-    {
-        private readonly IFileSystemService _fileSystem;
-        private readonly string _settingsFile;
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <seealso cref="AgileCardsPrinting.Interfaces.ISettingsHandler" />
+	public class SettingsHandler : ISettingsHandler
+	{
+		private readonly IFileSystemService _fileSystem;
+		private readonly string _settingsFile;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsHandler"/> class.
-        /// </summary>
-        /// <param name="fileSystem">The file system.</param>
-        /// <exception cref="System.ArgumentNullException">fileSystem</exception>
-        public SettingsHandler(IFileSystemService fileSystem)
-        {
-	        _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-            _settingsFile = _fileSystem.GetFullPath(".\\Settings.json");
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SettingsHandler"/> class.
+		/// </summary>
+		/// <param name="fileSystem">The file system.</param>
+		/// <exception cref="System.ArgumentNullException">fileSystem</exception>
+		public SettingsHandler(IFileSystemService fileSystem)
+		{
+			_fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+			_settingsFile = _fileSystem.GetFullPath(".\\Settings.json");
+		}
 
-        /// <summary>
-        /// Loads the settings.
-        /// </summary>
-        /// <returns></returns>
-        public SettingsModel LoadSettings()
-        {
-            var settings = new SettingsModel();
-            if (_fileSystem.FileExists(_settingsFile))
-            {
-                using (var stream = _fileSystem.OpenReadStream(_settingsFile))
-                {
-                    var text = Encoding.UTF8.GetString(stream.ReadAsBytes());
-                    settings = JsonConvert.DeserializeObject<SettingsModel>(text);
-                }
-            }
+		/// <summary>
+		/// Loads the settings.
+		/// </summary>
+		/// <returns></returns>
+		public SettingsModel LoadSettings()
+		{
+			var settings = new SettingsModel();
+			if (_fileSystem.FileExists(_settingsFile))
+			{
+				using (var stream = _fileSystem.OpenReadStream(_settingsFile))
+				{
+					var text = Encoding.UTF8.GetString(stream.ReadAsBytes());
+					settings = JsonConvert.DeserializeObject<SettingsModel>(text);
+				}
+			}
 
-            return settings;
-        }
+			return settings;
+		}
 
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        /// <param name="settings">The settings.</param>
-        public void SaveSettings(SettingsModel settings)
-        {
-            using (var stream = _fileSystem.OpenWriteStream(_settingsFile))
-            {
-                var text = JsonConvert.SerializeObject(settings);
-                var array = Encoding.UTF8.GetBytes(text);
-                stream.Write(array, 0, array.Length);
-            }
-        }
+		/// <summary>
+		/// Saves the settings.
+		/// </summary>
+		/// <param name="settings">The settings.</param>
+		public void SaveSettings(SettingsModel settings)
+		{
+			using (var stream = _fileSystem.OpenWriteStream(_settingsFile))
+			{
+				var text = JsonConvert.SerializeObject(settings);
+				var array = Encoding.UTF8.GetBytes(text);
+				stream.Write(array, 0, array.Length);
+			}
+		}
 
-	    public IEnumerable<ReportItem> GetReports()
-	    {
-		    var data = LoadSettings();
-		    var reports = _fileSystem.GetFilesFrom(data.ReportPath, "*.rdlc")
-		                             .Select(s => new ReportItem
-		                                          {
-			                                          Name = _fileSystem.GetFileNameWithoutExtension(s),
-			                                          Path = s
-		                                          });
-		    return reports;
-	    }
+		public IEnumerable<ReportItem> GetReports()
+		{
+			var data = LoadSettings();
+			var reports = _fileSystem.GetFilesFrom(data.ReportPath, "*.rdlc")
+									 .Select(s => new ReportItem
+												  {
+													  Name = _fileSystem.GetFileNameWithoutExtension(s),
+													  Path = s
+												  });
+			return reports;
+		}
 	}
 }

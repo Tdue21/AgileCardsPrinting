@@ -26,25 +26,25 @@ using AgileCardsPrinting.Models;
 
 namespace AgileCardsPrinting.Interfaces
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface ISettingsHandler
-    {
-        /// <summary>
-        /// Loads the settings.
-        /// </summary>
-        /// <returns></returns>
-        SettingsModel LoadSettings();
+	/// <summary>
+	/// 
+	/// </summary>
+	public interface ISettingsHandler
+	{
+		/// <summary>
+		/// Loads the settings.
+		/// </summary>
+		/// <returns></returns>
+		SettingsModel LoadSettings();
 
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        /// <param name="settings">The settings.</param>
-        void SaveSettings(SettingsModel settings);
+		/// <summary>
+		/// Saves the settings.
+		/// </summary>
+		/// <param name="settings">The settings.</param>
+		void SaveSettings(SettingsModel settings);
 	  
-	    /// <summary>Returns a list of <see cref="ReportItem"/> objects.</summary>
-	    /// <returns>List of objects</returns>
-	    IEnumerable<ReportItem> GetReports();
-    }
+		/// <summary>Returns a list of <see cref="ReportItem"/> objects.</summary>
+		/// <returns>List of objects</returns>
+		IEnumerable<ReportItem> GetReports();
+	}
 }

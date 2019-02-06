@@ -31,21 +31,15 @@ namespace AgileCardsPrinting.Services
 {
 	public class CustomDialogService : ViewServiceBase, IDialogService
 	{
-		public static readonly DependencyProperty DialogStartupLocationProperty =
-			DependencyProperty.Register("DialogStartupLocation", typeof(WindowStartupLocation), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty DialogStartupLocationProperty = DependencyProperty.Register("DialogStartupLocation", typeof(WindowStartupLocation), typeof(CustomDialogWindow), new PropertyMetadata(null));
 
-		public static readonly DependencyProperty OwnerWindowProperty =
-			DependencyProperty.Register("OwnerWindow", typeof(Window), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty OwnerWindowProperty = DependencyProperty.Register("OwnerWindow", typeof(Window), typeof(CustomDialogWindow), new PropertyMetadata(null));
 
-		public static readonly DependencyProperty HeightProperty =
-			DependencyProperty.Register("Height", typeof(double), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty HeightProperty = DependencyProperty.Register("Height", typeof(double), typeof(CustomDialogWindow), new PropertyMetadata(null));
 
-		public static readonly DependencyProperty WidthProperty =
-			DependencyProperty.Register("Width", typeof(double), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty WidthProperty = DependencyProperty.Register("Width", typeof(double), typeof(CustomDialogWindow), new PropertyMetadata(null));
 
-
-		public static readonly DependencyProperty ResizableProperty =
-			DependencyProperty.Register("Resizable", typeof(bool), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register("Resizable", typeof(bool), typeof(CustomDialogWindow), new PropertyMetadata(null));
 
 		public WindowStartupLocation DialogStartupLocation
 		{
@@ -76,7 +70,6 @@ namespace AgileCardsPrinting.Services
 			get => (bool)GetValue(ResizableProperty);
 			set => SetValue(ResizableProperty, value);
 		}
-
 
 		public UICommand ShowDialog(IEnumerable<UICommand> dialogCommands, string title, string documentType, object viewModel, object parameter, object parentViewModel)
 		{
