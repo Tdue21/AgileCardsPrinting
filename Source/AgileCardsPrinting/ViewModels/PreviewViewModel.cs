@@ -47,7 +47,7 @@ namespace AgileCardsPrinting.ViewModels
 				throw new ArgumentNullException(nameof(settingsHandler));
 			}
 			var data = settingsHandler.LoadSettings();
-			ReportFile = $"{data.ReportPath}\\{data.ReportName}.rdlc";
+			ReportFile = $"Reports\\{data.ReportName}.rdlc";
 		}
 
 		/// <summary>Gets the current window service.</summary>

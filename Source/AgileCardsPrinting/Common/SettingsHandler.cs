@@ -88,7 +88,7 @@ namespace AgileCardsPrinting.Common
 		public IEnumerable<ReportItem> GetReports()
 		{
 			var data = LoadSettings();
-			var reports = _fileSystem.GetFilesFrom(data.ReportPath, "*.rdlc")
+			var reports = _fileSystem.GetFilesFrom("Reports", "*.rdlc")
 									 .Select(s => new ReportItem
 												  {
 													  Name = _fileSystem.GetFileNameWithoutExtension(s),

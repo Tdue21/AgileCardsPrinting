@@ -23,13 +23,11 @@
 		<services:CustomDialogService x:Name="SettingsDialog"
 									  DialogStartupLocation="CenterOwner"
 									  OwnerWindow="{x:Reference MainViewWindow}"
-									  Height="300" Width="500" Resizable="False"
+									  Height="400" Width="600" Resizable="False"
 		                              >
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>
-					<views:SettingsWindow>
-						
-					</views:SettingsWindow>
+					<views:SettingsWindow  DataContext="{Binding Path=Settings}"/>
 				</DataTemplate>
 			</services:CustomDialogService.ViewTemplate>
 		</services:CustomDialogService>
@@ -213,7 +211,6 @@
 
 			<Button Grid.Column="0" Content="_Settings"
 			        Command="{Binding OpenSettingsCommand}"
-			        CommandParameter="{x:Type views:SettingsWindow}"
 			        Style="{StaticResource ButtonStyle}" />
 
 			<Grid Grid.Column="1">
@@ -235,10 +232,7 @@
 			        Style="{StaticResource ButtonStyle}"
 			        VerticalAlignment="Center" Command="{Binding RefreshIssuesCommand}" />
 
-			<Button Grid.Column="3" Content="_Execute"
-			        Command="{Binding PreparePrintCommand}"
-			        CommandParameter="{x:Type views:PreviewView}"
-			        Style="{StaticResource ButtonStyle}" />
+			<Button Grid.Column="3" Content="_Execute" Command="{Binding PreparePrintCommand}" Style="{StaticResource ButtonStyle}" />
 		</Grid>
 	</Grid>
 </Window>

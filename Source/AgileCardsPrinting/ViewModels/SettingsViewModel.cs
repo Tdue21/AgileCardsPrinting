@@ -20,37 +20,25 @@
 //  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
+
+using System.Windows.Input;
 using AgileCardsPrinting.Models;
 using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
 
 namespace AgileCardsPrinting.ViewModels
 {
 	/// <summary>
 	/// Defines the <see cref="SettingsViewModel" />
 	/// </summary>
-	[POCOViewModel]
-	public class SettingsViewModel
+	public class SettingsViewModel : ViewModelBase
 	{
 		/// <summary>
 		/// Gets or sets the Settings
 		/// </summary>
-		public virtual SettingsModel Settings { get; set; }
-
-		/// <summary>
-		/// Gets the FolderBrowserDialogService
-		/// </summary>
-		protected virtual IFolderBrowserDialogService FolderBrowserDialogService => null;
-
-		/// <summary>
-		/// The SelectFolder
-		/// </summary>
-		public void SelectFolder()
+		public SettingsModel Settings
 		{
-			if (FolderBrowserDialogService.ShowDialog())
-			{
-				Settings.ReportPath = FolderBrowserDialogService.ResultPath;
-			}
+			get => GetProperty(() => Settings);
+			set => SetProperty(() => Settings, value);
 		}
 	}
 }

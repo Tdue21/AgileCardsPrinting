@@ -26,162 +26,226 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
 
 namespace AgileCardsPrinting.ViewModels
 {
 	/// <summary>Main view model. This is the entry point of the view model.</summary>
-	[POCOViewModel]
-	public class MainViewModel
+	public class MainViewModel : ViewModelBase
 	{
 		private readonly IJiraService _jiraService;
 		private readonly ISettingsHandler _settingsHandler;
-		private readonly SettingsViewModel _settingsViewModel;
-		private SettingsModel _settingsData;
 
 		/// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
 		/// <param name="jiraHandler">The service for querying Jira.</param>
 		/// <param name="settingsHandler"></param>
 		/// <exception cref="System.ArgumentNullException">messenger</exception>
-		public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
+		public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler)
 		{
 			_jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
-			_settingsViewModel = settingsViewModel ?? throw new ArgumentNullException(nameof(settingsViewModel));
 		}
 
 		/// <summary>Gets the <see cref="IMessageBoxService"/> instance.</summary>
-		protected virtual IMessageBoxService MessageBoxService => null;
+		public IMessageBoxService MessageBoxService => GetService<IMessageBoxService>();
 
-		[ServiceProperty(Key = "SettingsDialog")]
-		public virtual IDialogService SettingsDialog => null;
+		public IDialogService SettingsDialog => GetService<IDialogService>("SettingsDialog");
 
-		[ServiceProperty(Key = "PreviewDialog")]
-		public virtual IDialogService PreviewDialog => null;
+		public IDialogService PreviewDialog => GetService<IDialogService>("PreviewDialog");
 
 		/// <summary>Gets or sets the index of the selected search view. </summary>
-		public virtual int SelectedSearchIndex { get; set; }
+		public int SelectedSearchIndex
+		{
+			get => GetProperty(() => SelectedSearchIndex);
+			set => SetProperty(() => SelectedSearchIndex, value);
+		}
 
 		/// <summary>Gets or sets the list of favorite filters. </summary>
-		public virtual ObservableCollection<FilterInformation> Filters { get; set; }
+		public ObservableCollection<FilterInformation> Filters
+		{
+			get => GetProperty(() => Filters);
+			set => SetProperty(() => Filters, value);
+		}
 
 		/// <summary>Gets or sets the list of reports available.</summary>
-		public virtual ObservableCollection<ReportItem> Reports { get; set; }
-		
+		public ObservableCollection<ReportItem> Reports
+		{
+			get => GetProperty(() => Reports);
+			set => SetProperty(() => Reports, value);
+		}
+
 		/// <summary>Gets or sets the selected filter.</summary>
-		public virtual FilterInformation SelectedFilter { get; set; }
-
+		public FilterInformation SelectedFilter
+		{
+			get => GetProperty(() => SelectedFilter);
+			set => SetProperty(() => SelectedFilter, value);
+		}
+		
 		/// <summary>Gets or sets the key list.</summary>
-		public virtual string KeyList { get; set; }
-
+		public string KeyList
+		{
+			get => GetProperty(() => KeyList);
+			set => SetProperty(() => KeyList, value);
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public SettingsModel Settings
+		{
+			get => GetProperty(() => Settings);
+			set => SetProperty(() => Settings, value);
+		}
+		
 		/// <summary>Gets or sets the JQL.</summary>
-		public virtual string Jql { get; set; }
-
+		public string Jql
+		{
+			get => GetProperty(() => Jql);
+			set => SetProperty(() => Jql, value);
+		}
+		
 		/// <summary>Gets or sets the preview issues.</summary>
-		public virtual ObservableCollection<JiraIssue> PreviewIssues { get; set; }
+		public ObservableCollection<JiraIssue> PreviewIssues
+		{
+			get => GetProperty(() => PreviewIssues);
+			set => SetProperty(() => PreviewIssues, value);
+		}
+
 
 		/// <summary>Gets or sets the selected issues.</summary>
-		public virtual IList SelectedIssues { get; set; }
+		public IList SelectedIssues
+		{
+			get => GetProperty(() => SelectedIssues);
+			set => SetProperty(() => SelectedIssues, value);
+		}
+
 
 		/// <summary>Gets or sets a value indicating whether this instance is busy.</summary>
-		public virtual bool IsBusy { get; set; }
+		public bool IsBusy
+		{
+			get => GetProperty(() => IsBusy);
+			set => SetProperty(() => IsBusy, value);
+		}
+
 
 		/// <summary>Gets or sets the selected report. </summary>
-		public virtual ReportItem SelectedReport { get; set; }
+		public ReportItem SelectedReport
+		{
+			get => GetProperty(() => SelectedReport);
+			set => SetProperty(() => SelectedReport, value, OnSelectedReportChanged);
+		}
+
 
 		/// <summary>Gets or sets the sorting information.</summary>
-		public virtual SortingInformation SortingInformation { get; set; }
+		public SortingInformation SortingInformation
+		{
+			get => GetProperty(() => SortingInformation);
+			set => SetProperty(() => SortingInformation, value);
+		}
 
-		/// <summary>Sortings the changed.</summary>
-		/// <param name="sortingInformation">The sorting information.</param>
-		public void SortingChanged(SortingInformation sortingInformation) => SortingInformation = sortingInformation;
+		public ICommand InitializationCommand => new AsyncCommand(async () =>
+		                                                             {
+			                                                             Settings = _settingsHandler.LoadSettings();
+			                                                             await RefreshFilters();
+		                                                             });
+
+		/// <summary>Sorts the issue list.</summary>
+		public ICommand<SortingInformation> SortingChangedCommand => new DelegateCommand<SortingInformation>(si => SortingInformation = si);
 
 		/// <summary>Refreshes the list of filters.</summary>
 		/// <remarks>Implementation of RefreshFilterListCommand.</remarks>
-		public async void RefreshFilters(bool refreshFilters = true)
+		private async Task RefreshFilters()
 		{
-			if (refreshFilters)
+			IsBusy = true;
+			try
 			{
-				IsBusy = true;
-				try
-				{
-					_settingsData = _settingsHandler.LoadSettings();
+				Settings = _settingsHandler.LoadSettings();
 
-					Reports = new ObservableCollection<ReportItem>(_settingsHandler.GetReports());
-					SelectedReport = Reports.FirstOrDefault(r => r.Name == _settingsData.ReportName);
+				Reports = new ObservableCollection<ReportItem>(_settingsHandler.GetReports());
+				SelectedReport = Reports.FirstOrDefault(r => r.Name == Settings.ReportName);
 
-					var filters = await _jiraService.GetFavoriteFiltersAsync().ConfigureAwait(true);
-					Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
-				}
-				catch (Exception e)
-				{
-					HandleJiraException(e);
-				}
-				IsBusy = false;
+				var filters = await _jiraService.GetFavoriteFiltersAsync().ConfigureAwait(true);
+				Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
 			}
+			catch (Exception e)
+			{
+				HandleJiraException(e);
+			}
+
+			IsBusy = false;
 		}
 
 		/// <summary>Refreshes the issues list.</summary>
 		/// <remarks>Implementation of RefreshIssuesListCommand.</remarks>
-		public async void RefreshIssues()
-		{
-			IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-													   .OrderBy(i => i);
-			IsBusy = true;
-			try
-			{
-				var issues = 
-					SelectedSearchIndex == 0 ? await _jiraService.GetIssuesFromFilterAsync(SelectedFilter) :
-					SelectedSearchIndex == 1 ? await _jiraService.GetIssuesFromKeyListAsync(GetKeyList()) :
-					SelectedSearchIndex == 2 ? await _jiraService.GetIssuesFromQueryAsync(Jql) :
-					throw new IndexOutOfRangeException();
+		public ICommand RefreshIssuesCommand => new AsyncCommand(async () =>
+		                                                         {
+			                                                         IEnumerable<string> GetKeyList() => KeyList
+			                                                                                             .Split(" ;,\n\r".ToCharArray(),
+			                                                                                                    StringSplitOptions.RemoveEmptyEntries)
+			                                                                                             .OrderBy(i => i);
 
-				PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
-			}
-			catch(Exception e)
-			{
-				HandleJiraException(e);
-			}
-			IsBusy = false;
-		}
+			                                                         IsBusy = true;
+			                                                         try
+			                                                         {
+				                                                         var issues =
+					                                                         SelectedSearchIndex == 0
+						                                                         ?
+						                                                         await _jiraService.GetIssuesFromFilterAsync(SelectedFilter)
+						                                                         :
+						                                                         SelectedSearchIndex == 1
+							                                                         ? await _jiraService.GetIssuesFromKeyListAsync(GetKeyList())
+							                                                         :
+							                                                         SelectedSearchIndex == 2
+								                                                         ? await _jiraService.GetIssuesFromQueryAsync(Jql)
+								                                                         :
+								                                                         throw new IndexOutOfRangeException();
+
+				                                                         PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
+			                                                         }
+			                                                         catch (Exception e)
+			                                                         {
+				                                                         HandleJiraException(e);
+			                                                         }
+
+			                                                         IsBusy = false;
+		                                                         }
+		);
 
 		/// <summary>Opens the settings dialog.</summary>
-		/// <param name="child">The child.</param>
 		/// <remarks>Implementation of OpenSettingsCommand.</remarks>
-		public void OpenSettings(Type child)
-		{
-			var commands = new List<UICommand>
-			{
-				new UICommand("APPLY", "Apply", null, true, false, MessageResult.None),
-				new UICommand("OK", "OK", null, true, false, MessageResult.OK),
-				new UICommand("CANCEL", "Cancel", null, false, true, MessageResult.Cancel)
-			};
+		public ICommand OpenSettingsCommand => new AsyncCommand(async () =>
+		                                                    {
+			                                                    var commands = new List<UICommand>
+			                                                                   {
+				                                                                   new UICommand("OK", "OK", null, true, false, MessageResult.OK),
+				                                                                   new UICommand("CANCEL", "Cancel", null, false, true, MessageResult.Cancel)
+			                                                                   };
 
-			_settingsViewModel.Settings = _settingsData.Clone();
-			var result = SettingsDialog.ShowDialog(commands, "Settings", child.Name, _settingsViewModel);
-			if ((MessageResult) result.Tag == MessageResult.OK)
-			{
-				_settingsHandler.SaveSettings(_settingsViewModel.Settings);
-				_settingsData = _settingsHandler.LoadSettings();
-				RefreshFilters();
-			}
-		}
+			                                                    var result = SettingsDialog.ShowDialog(commands, "Settings", "SettingsView", Settings);
+			                                                    if ((MessageResult) result.Tag == MessageResult.OK)
+			                                                    {
+				                                                    _settingsHandler.SaveSettings(Settings);
+				                                                    Settings = _settingsHandler.LoadSettings();
+				                                                    await RefreshFilters();
+			                                                    }
+		                                                    });
 
 		/// <summary>
 		/// Performs the search.
 		/// </summary>
-		/// <param name="child">The child.</param>
-		public void PreparePrint(Type child)
-		{
-			var list = SelectedIssues != null && SelectedIssues.Count > 0
-				? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
-				: new List<JiraIssue>(PreviewIssues);
+		public ICommand PreparePrintCommand => new DelegateCommand(() =>
+		                                                           {
+			                                                           var list = SelectedIssues != null && SelectedIssues.Count > 0
+				                                                                      ? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
+				                                                                      : new List<JiraIssue>(PreviewIssues);
 
-			PreviewDialog.ShowDialog(MessageButton.OK, "Preview", child.Name, list, this);
-		}
+			                                                           PreviewDialog.ShowDialog(MessageButton.OK, "Preview", "PreviewView", list, this);
+																   });
 
 		/// <summary>
 		/// 
