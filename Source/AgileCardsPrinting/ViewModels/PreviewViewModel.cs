@@ -33,7 +33,7 @@ namespace AgileCardsPrinting.ViewModels
 	/// <summary>ViewModel for the issue card preview view.</summary>
 	/// <seealso cref="DevExpress.Mvvm.ISupportParameter" />
 	[POCOViewModel]
-	public class PreviewViewModel : ISupportParameter
+	public class PreviewViewModel : ViewModelBase
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
@@ -53,9 +53,9 @@ namespace AgileCardsPrinting.ViewModels
 		/// <summary>Gets the current window service.</summary>
 		protected virtual ICurrentWindowService CurrentWindowService => null;
 
-		/// <summary>Used to pass the list of issues to the view model.</summary>
-		[BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
-		public virtual object Parameter { get; set; }
+		///// <summary>Used to pass the list of issues to the view model.</summary>
+		//[BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
+		//public virtual object Parameter { get; set; }
 
 		/// <summary>Gets or sets the issue list. </summary>
 		[BindableProperty(false)]
@@ -68,10 +68,11 @@ namespace AgileCardsPrinting.ViewModels
 		/// <summary>Closes the view. </summary>
 		public void CloseView() => CurrentWindowService?.Close();
 
-		/// <summary>Called when the <see cref="Parameter" /> property changes.</summary>
-		protected void OnParameterChanged()
-		{
-			if (Parameter is IEnumerable<JiraIssue> issues)
+        protected override void OnParameterChanged(object parameter)
+        {
+            base.OnParameterChanged(parameter);
+
+            if (parameter is IEnumerable<JiraIssue> issues)
 			{
 				Issues = new List<JiraIssue>(issues);
 			}

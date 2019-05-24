@@ -5,41 +5,41 @@
              xmlns:common="clr-namespace:AgileCardsPrinting.Common"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="Views/MainView.xaml">
-	<Application.Resources>
+    <Application.Resources>
 
-		<ResourceDictionary>
+        <ResourceDictionary>
 
-			<ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
 
-				<ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/aero2.normalcolor.xaml" />
+                <ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/aero2.normalcolor.xaml" />
 
-				<ResourceDictionary>
+                <ResourceDictionary>
 
-					<root:DependencyInjector x:Key="Locator" />
+                    <root:DependencyInjector x:Key="Locator" />
 
-					<common:BooleanToCursorConverter x:Key="BooleanToCursorConverter" />
+                    <common:BooleanToCursorConverter x:Key="BooleanToCursorConverter" />
 
-					<system:Boolean x:Key="TrueValue">True</system:Boolean>
-					<system:Boolean x:Key="FalseValue">False</system:Boolean>
+                    <system:Boolean x:Key="TrueValue">True</system:Boolean>
+                    <system:Boolean x:Key="FalseValue">False</system:Boolean>
 
-					<Style x:Key="GridStyle" TargetType="Grid">
-						<Setter Property="Margin" Value="8" />
-					</Style>
+                    <Style x:Key="GridStyle" TargetType="Grid">
+                        <Setter Property="Margin" Value="8" />
+                    </Style>
 
-					<Style x:Key="ButtonStyle" TargetType="ButtonBase">
-						<Setter Property="Padding" Value="4" />
-						<Setter Property="Margin" Value="4,0" />
-						<Setter Property="MinWidth" Value="100" />
-					</Style>
+                    <Style x:Key="ButtonStyle" TargetType="ButtonBase">
+                        <Setter Property="Padding" Value="4" />
+                        <Setter Property="Margin" Value="4,0" />
+                        <Setter Property="MinWidth" Value="100" />
+                    </Style>
 
-					<Style x:Key="TextBoxStyle" TargetType="TextBox">
-						<Setter Property="Margin" Value="0,4" />
-					</Style>
+                    <Style x:Key="TextBoxStyle" TargetType="TextBox">
+                        <Setter Property="Margin" Value="0,4" />
+                    </Style>
 
-				</ResourceDictionary>
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
-	</Application.Resources>
+    </Application.Resources>
 </Application>
 

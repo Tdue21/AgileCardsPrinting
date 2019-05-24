@@ -26,7 +26,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DevExpress.Mvvm;
@@ -157,29 +156,6 @@ namespace AgileCardsPrinting.ViewModels
 		/// <summary>Sorts the issue list.</summary>
 		public ICommand<SortingInformation> SortingChangedCommand => new DelegateCommand<SortingInformation>(si => SortingInformation = si);
 
-		/// <summary>Refreshes the list of filters.</summary>
-		/// <remarks>Implementation of RefreshFilterListCommand.</remarks>
-		private async Task RefreshFilters()
-		{
-			IsBusy = true;
-			try
-			{
-				Settings = _settingsHandler.LoadSettings();
-
-				Reports = new ObservableCollection<ReportItem>(_settingsHandler.GetReports());
-				SelectedReport = Reports.FirstOrDefault(r => r.Name == Settings.ReportName);
-
-				var filters = await _jiraService.GetFavoriteFiltersAsync().ConfigureAwait(true);
-				Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
-			}
-			catch (Exception e)
-			{
-				HandleJiraException(e);
-			}
-
-			IsBusy = false;
-		}
-
 		/// <summary>Refreshes the issues list.</summary>
 		/// <remarks>Implementation of RefreshIssuesListCommand.</remarks>
 		public ICommand RefreshIssuesCommand => new AsyncCommand(async () =>
@@ -192,19 +168,13 @@ namespace AgileCardsPrinting.ViewModels
 			                                                         IsBusy = true;
 			                                                         try
 			                                                         {
-				                                                         var issues =
-					                                                         SelectedSearchIndex == 0
-						                                                         ?
-						                                                         await _jiraService.GetIssuesFromFilterAsync(SelectedFilter)
-						                                                         :
-						                                                         SelectedSearchIndex == 1
+				                                                         var issues = SelectedSearchIndex == 0
+						                                                         ? await _jiraService.GetIssuesFromFilterAsync(SelectedFilter)
+						                                                         : SelectedSearchIndex == 1
 							                                                         ? await _jiraService.GetIssuesFromKeyListAsync(GetKeyList())
-							                                                         :
-							                                                         SelectedSearchIndex == 2
+							                                                         : SelectedSearchIndex == 2
 								                                                         ? await _jiraService.GetIssuesFromQueryAsync(Jql)
-								                                                         :
-								                                                         throw new IndexOutOfRangeException();
-
+								                                                         : throw new IndexOutOfRangeException();
 				                                                         PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
 			                                                         }
 			                                                         catch (Exception e)
@@ -247,28 +217,46 @@ namespace AgileCardsPrinting.ViewModels
 			                                                           PreviewDialog.ShowDialog(MessageButton.OK, "Preview", "PreviewView", list, this);
 																   });
 
-		/// <summary>
-		/// 
-		/// </summary>
-		protected void OnSelectedReportChanged()
+
+		/// <summary>Refreshes the list of filters.</summary>
+		/// <remarks>Implementation of RefreshFilterListCommand.</remarks>
+		private async Task RefreshFilters()
 		{
-			var data = _settingsHandler.LoadSettings();
-			if (data.ReportName != SelectedReport.Name)
+			IsBusy = true;
+			try
 			{
-				data.ReportName = SelectedReport.Name;
-				_settingsHandler.SaveSettings(data);
+				Settings = _settingsHandler.LoadSettings();
+
+				Reports = new ObservableCollection<ReportItem>(_settingsHandler.GetReports());
+				SelectedReport = Reports.FirstOrDefault(r => r.Name == Settings.ReportName);
+
+				var filters = await _jiraService.GetFavoriteFiltersAsync().ConfigureAwait(true);
+				Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
+			}
+			catch (Exception e)
+			{
+				HandleJiraException(e);
+			}
+
+			IsBusy = false;
+		}
+
+		/// <summary>
+		/// </summary>
+		private void OnSelectedReportChanged()
+		{
+			if (Settings.ReportName != SelectedReport.Name)
+			{
+				Settings.ReportName = SelectedReport.Name;
+				_settingsHandler.SaveSettings(Settings);
 			}
 		}
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="ex"></param>
-		private void HandleJiraException(Exception ex)
-		{
-			MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {ex.Message}",
-				"Error", MessageButton.OK, MessageIcon.Error);
-
-		}
+		private void HandleJiraException(Exception ex) => 
+			MessageBoxService.ShowMessage($"It was not possible to connect to Jira. Check your settings.\nException: {ex.Message}", 
+			                              "Error", MessageButton.OK, MessageIcon.Error);
 	}
 }

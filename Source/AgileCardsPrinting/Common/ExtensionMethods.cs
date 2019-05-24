@@ -25,7 +25,6 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using DevExpress.Mvvm;
 using DevExpress.Mvvm.POCO;
 
 namespace AgileCardsPrinting.Common
@@ -80,15 +79,10 @@ namespace AgileCardsPrinting.Common
             return securePassword;
         }
 
-        /// <summary>
-        /// Registers the type of the poco.
-        /// </summary>
-        /// <typeparam name="TType">The type of the type.</typeparam>
-        /// <param name="container">The container.</param>
-        /// <returns></returns>
-        public static SimpleInjector.Container RegisterPocoType<TType>(this SimpleInjector.Container container)
+        public static SimpleInjector.Container RegisterType<TType>(this SimpleInjector.Container container) 
+            where TType : class
         {
-            container.Register(typeof(TType), ViewModelSource.GetPOCOType(typeof(TType)));
+            container.Register<TType>();
             return container;
         }
 
