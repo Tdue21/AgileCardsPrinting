@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{4CE9F6E8-C486-440B-8EA9-3A8194C84DEE}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,10 +22,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCardsPrinting", "AgileCardsPrinting\AgileCardsPrinting.csproj", "{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCardsPrinting.Tests", "AgileCardsPrinting.Tests\AgileCardsPrinting.Tests.csproj", "{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "AgileCardsPrinting.Setup", "AgileCardsPrinting.Setup\AgileCardsPrinting.Setup.wixproj", "{962CE144-AA18-480C-867F-6D8103E34E91}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "AgileCardsPrinting.BootStrapper", "AgileCardsPrinting.BootStrapper\AgileCardsPrinting.BootStrapper.wixproj", "{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,18 +47,6 @@ Global
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|x86.Build.0 = Release|Any CPU
-		{962CE144-AA18-480C-867F-6D8103E34E91}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{962CE144-AA18-480C-867F-6D8103E34E91}.Debug|x86.ActiveCfg = Debug|x86
-		{962CE144-AA18-480C-867F-6D8103E34E91}.Debug|x86.Build.0 = Debug|x86
-		{962CE144-AA18-480C-867F-6D8103E34E91}.Release|Any CPU.ActiveCfg = Release|x86
-		{962CE144-AA18-480C-867F-6D8103E34E91}.Release|x86.ActiveCfg = Release|x86
-		{962CE144-AA18-480C-867F-6D8103E34E91}.Release|x86.Build.0 = Release|x86
-		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Debug|x86.ActiveCfg = Debug|x86
-		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Debug|x86.Build.0 = Debug|x86
-		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|Any CPU.ActiveCfg = Release|x86
-		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|x86.ActiveCfg = Release|x86
-		{4EFFA245-E10B-4BDD-B9AE-1D5FBDFD693A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

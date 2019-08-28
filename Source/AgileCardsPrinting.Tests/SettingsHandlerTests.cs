@@ -23,13 +23,18 @@
 
 using System.IO;
 using System.Text;
-using FluentAssertions;
-using Moq;
-using Newtonsoft.Json;
-using NUnit.Framework;
+
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
+
+using FluentAssertions;
+
+using Moq;
+
+using Newtonsoft.Json;
+
+using NUnit.Framework;
 
 namespace AgileCardsPrinting.Tests
 {

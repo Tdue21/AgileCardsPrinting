@@ -25,9 +25,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
+
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
+
+using Newtonsoft.Json;
+
 using RestSharp.Extensions;
 
 namespace AgileCardsPrinting.Common

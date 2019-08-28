@@ -23,10 +23,13 @@
 
 using System;
 using System.Collections.Generic;
-using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
+using System.Windows.Input;
+
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
+
+using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
 
 namespace AgileCardsPrinting.ViewModels
 {
@@ -51,22 +54,20 @@ namespace AgileCardsPrinting.ViewModels
 		}
 
 		/// <summary>Gets the current window service.</summary>
-		protected virtual ICurrentWindowService CurrentWindowService => null;
+		public ICurrentWindowService CurrentWindowService => GetService<ICurrentWindowService>();
 
 		///// <summary>Used to pass the list of issues to the view model.</summary>
 		//[BindableProperty(OnPropertyChangedMethodName = "OnParameterChanged")]
 		//public virtual object Parameter { get; set; }
 
 		/// <summary>Gets or sets the issue list. </summary>
-		[BindableProperty(false)]
 		public List<JiraIssue> Issues { get; protected set; }
 
 		/// <summary>Gets or sets the report file. </summary>
-		[BindableProperty(false)]
 		public string ReportFile { get; protected set; }
 
 		/// <summary>Closes the view. </summary>
-		public void CloseView() => CurrentWindowService?.Close();
+		public ICommand CloseViewCommand => new DelegateCommand( () => CurrentWindowService?.Close());
 
         protected override void OnParameterChanged(object parameter)
         {

@@ -23,7 +23,9 @@
 
 using System.Collections.Generic;
 using System.Windows;
+
 using AgileCardsPrinting.Views;
+
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.UI;
 
@@ -31,15 +33,35 @@ namespace AgileCardsPrinting.Services
 {
 	public class CustomDialogService : ViewServiceBase, IDialogService
 	{
-		public static readonly DependencyProperty DialogStartupLocationProperty = DependencyProperty.Register("DialogStartupLocation", typeof(WindowStartupLocation), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty DialogStartupLocationProperty = 
+			DependencyProperty.Register("DialogStartupLocation", 
+				typeof(WindowStartupLocation), 
+				typeof(CustomDialogWindow), 
+				new PropertyMetadata(null));
 
-		public static readonly DependencyProperty OwnerWindowProperty = DependencyProperty.Register("OwnerWindow", typeof(Window), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty OwnerWindowProperty = 
+			DependencyProperty.Register("OwnerWindow", 
+				typeof(Window), 
+				typeof(CustomDialogWindow), 
+				new PropertyMetadata(null));
 
-		public static readonly DependencyProperty HeightProperty = DependencyProperty.Register("Height", typeof(double), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty HeightProperty = 
+			DependencyProperty.Register("Height", 
+				typeof(double), 
+				typeof(CustomDialogWindow), 
+				new PropertyMetadata(null));
 
-		public static readonly DependencyProperty WidthProperty = DependencyProperty.Register("Width", typeof(double), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty WidthProperty = 
+			DependencyProperty.Register("Width", 
+				typeof(double), 
+				typeof(CustomDialogWindow), 
+				new PropertyMetadata(null));
 
-		public static readonly DependencyProperty ResizableProperty = DependencyProperty.Register("Resizable", typeof(bool), typeof(CustomDialogWindow), new PropertyMetadata(null));
+		public static readonly DependencyProperty ResizableProperty = 
+			DependencyProperty.Register("Resizable", 
+				typeof(bool), 
+				typeof(CustomDialogWindow), 
+				new PropertyMetadata(null));
 
 		public WindowStartupLocation DialogStartupLocation
 		{

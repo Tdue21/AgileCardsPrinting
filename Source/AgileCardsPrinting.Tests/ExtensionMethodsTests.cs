@@ -21,9 +21,11 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using FluentAssertions;
-using NUnit.Framework;
 using AgileCardsPrinting.Common;
+
+using FluentAssertions;
+
+using NUnit.Framework;
 
 namespace AgileCardsPrinting.Tests
 {
@@ -35,7 +37,7 @@ namespace AgileCardsPrinting.Tests
         {
             var password = "TestPassword";
             var secured = password.ConvertToSecureString();
-            var unsecured = secured.ConvertToUnsecureString();
+            var unsecured = secured.ConvertToInsecureString();
 
             unsecured.Should().Be(password);
         }

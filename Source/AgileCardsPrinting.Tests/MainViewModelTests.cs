@@ -22,13 +22,18 @@
 //  ****************************************************************************
 
 using System;
-using DevExpress.Mvvm;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
+
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.ViewModels;
+
+using DevExpress.Mvvm;
+
+using FluentAssertions;
+
+using Moq;
+
+using NUnit.Framework;
 
 namespace AgileCardsPrinting.Tests
 {

@@ -21,12 +21,15 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Security;
-using Newtonsoft.Json;
-using AgileCardsPrinting.Common;
 using System;
 using System.Runtime.Serialization;
+using System.Security;
+
+using AgileCardsPrinting.Common;
+
 using DevExpress.Mvvm;
+
+using Newtonsoft.Json;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 

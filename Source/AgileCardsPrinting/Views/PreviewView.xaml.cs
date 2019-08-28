@@ -23,9 +23,10 @@
 
 using System;
 using System.Windows;
-using Microsoft.Reporting.WinForms;
+
 using AgileCardsPrinting.ViewModels;
-using DevExpress.Mvvm;
+
+using Microsoft.Reporting.WinForms;
 
 namespace AgileCardsPrinting.Views
 {

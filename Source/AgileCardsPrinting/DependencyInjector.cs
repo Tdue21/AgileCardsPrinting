@@ -21,10 +21,12 @@
 // * IN THE SOFTWARE.
 // ****************************************************************************
 
+
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Services;
 using AgileCardsPrinting.ViewModels;
+
 using SimpleInjector;
 
 namespace AgileCardsPrinting

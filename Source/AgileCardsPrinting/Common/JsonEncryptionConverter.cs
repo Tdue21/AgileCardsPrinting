@@ -1,9 +1,9 @@
-//  ****************************************************************************
+ï»¿//  ****************************************************************************
 //  * The MIT License(MIT)
-//  * Copyright © 2017 Thomas Due
+//  * Copyright ï¿½ 2017 Thomas Due
 //  * 
 //  * Permission is hereby granted, free of charge, to any person obtaining a 
-//  * copy of this software and associated documentation files (the “Software”), 
+//  * copy of this software and associated documentation files (the ï¿½Softwareï¿½), 
 //  * to deal in the Software without restriction, including without limitation 
 //  * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 //  * and/or sell copies of the Software, and to permit persons to whom the  
@@ -12,7 +12,7 @@
 //  * The above copyright notice and this permission notice shall be included in  
 //  * all copies or substantial portions of the Software.
 //  * 
-//  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+//  * THE SOFTWARE IS PROVIDED ï¿½AS ISï¿½, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
 //  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
 //  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL  
 //  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -23,6 +23,7 @@
 
 using System;
 using System.Security;
+
 using Newtonsoft.Json;
 
 namespace AgileCardsPrinting.Common
@@ -40,7 +41,7 @@ namespace AgileCardsPrinting.Common
 		/// <param name="value">The value.</param>
 		/// <param name="serializer">The calling serializer.</param>
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => 
-			writer.WriteValue(EncryptionHelper.Encrypt(( value as SecureString )?.ConvertToUnsecureString() ?? string.Empty));
+			writer.WriteValue(EncryptionHelper.Encrypt(( value as SecureString )?.ConvertToInsecureString() ?? string.Empty));
 
 		/// <summary>
 		/// Reads the JSON representation of the object.

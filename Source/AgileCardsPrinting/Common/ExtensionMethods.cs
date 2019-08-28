@@ -1,9 +1,9 @@
-//  ****************************************************************************
+ï»¿//  ****************************************************************************
 //  * The MIT License(MIT)
-//  * Copyright © 2017 Thomas Due
+//  * Copyright ï¿½ 2017 Thomas Due
 //  * 
 //  * Permission is hereby granted, free of charge, to any person obtaining a 
-//  * copy of this software and associated documentation files (the “Software”), 
+//  * copy of this software and associated documentation files (the ï¿½Softwareï¿½), 
 //  * to deal in the Software without restriction, including without limitation 
 //  * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
 //  * and/or sell copies of the Software, and to permit persons to whom the  
@@ -12,7 +12,7 @@
 //  * The above copyright notice and this permission notice shall be included in  
 //  * all copies or substantial portions of the Software.
 //  * 
-//  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
+//  * THE SOFTWARE IS PROVIDED ï¿½AS ISï¿½, WITHOUT WARRANTY OF ANY KIND, EXPRESS  
 //  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
 //  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL  
 //  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -25,22 +25,17 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using DevExpress.Mvvm.POCO;
 
 namespace AgileCardsPrinting.Common
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <summary>Static class for various extension methods.</summary>
     public static class ExtensionMethods
     {
-        /// <summary>
-        /// Converts to unsecure string.
-        /// </summary>
+        /// <summary>Converts to insecure string.</summary>
         /// <param name="securePassword">The secure password.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">securePassword</exception>
-        public static string ConvertToUnsecureString(this SecureString securePassword)
+        public static string ConvertToInsecureString(this SecureString securePassword)
         {
             if (securePassword == null)
             {
@@ -59,9 +54,7 @@ namespace AgileCardsPrinting.Common
             }
         }
 
-        /// <summary>
-        /// Converts to secure string.
-        /// </summary>
+        /// <summary>Converts to secure string.</summary>
         /// <param name="password">The password.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">password</exception>
@@ -79,6 +72,10 @@ namespace AgileCardsPrinting.Common
             return securePassword;
         }
 
+        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the <see cref="SimpleInjector.Container.Register{TConcrete}"/> method.</summary>
+        /// <param name="container"></param>
+        /// <typeparam name="TType"></typeparam>
+        /// <returns></returns>
         public static SimpleInjector.Container RegisterType<TType>(this SimpleInjector.Container container) 
             where TType : class
         {
@@ -86,6 +83,12 @@ namespace AgileCardsPrinting.Common
             return container;
         }
 
+        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the <see cref="SimpleInjector.Container.Register{TService, TImplementation}"/> method.</summary>
+        /// <param name="container"></param>
+        /// <param name="lifestyle"></param>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TImplementation"></typeparam>
+        /// <returns></returns>
         public static SimpleInjector.Container RegisterType<TSource, TImplementation>(this SimpleInjector.Container container, SimpleInjector.Lifestyle lifestyle)
             where TSource : class
             where TImplementation : class, TSource

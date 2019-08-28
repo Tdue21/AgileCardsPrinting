@@ -63,7 +63,7 @@ namespace AgileCardsPrinting.Views
 		{
 			if (DataContext is SettingsViewModel vm && vm.Settings?.Password != null)
 			{
-				PasswordTextBox.Password = vm.Settings.Password.ConvertToUnsecureString();
+				PasswordTextBox.Password = vm.Settings.Password.ConvertToInsecureString();
 			}
 		}
 	}

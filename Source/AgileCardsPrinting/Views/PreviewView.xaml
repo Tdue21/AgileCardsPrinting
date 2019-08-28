@@ -7,14 +7,15 @@
         DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
         FontSize="12">
 
-	<dxmvvm:Interaction.Behaviors>
-		<dxmvvm:CurrentWindowService />
-		<dxmvvm:KeyToCommand KeyGesture="Esc" Command="{Binding CloseViewCommand}" />
-	</dxmvvm:Interaction.Behaviors>
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService />
+        
+        <dxmvvm:KeyToCommand KeyGesture="Esc" Command="{Binding CloseViewCommand}" />
+    </dxmvvm:Interaction.Behaviors>
 
-	<DockPanel>
-		<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-			<winForms:ReportViewer x:Name="IssuesReportViewer"
+    <DockPanel>
+        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <winForms:ReportViewer x:Name="IssuesReportViewer"
                                    ShowBackButton="False"
                                    ShowContextMenu="False"
                                    ShowCredentialPrompts="False"
@@ -26,8 +27,8 @@
                                    ZoomMode="FullPage"
                                    Dock="Fill" 
                                    ProcessingMode="Local" />
-		</WindowsFormsHost>
-	</DockPanel>
+        </WindowsFormsHost>
+    </DockPanel>
 </UserControl>
 
 

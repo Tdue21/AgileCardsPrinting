@@ -26,11 +26,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Atlassian.Jira;
+
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
 using AgileCardsPrinting.Properties.Annotations;
+
+using Atlassian.Jira;
 
 namespace AgileCardsPrinting.Services
 {
@@ -150,7 +152,7 @@ namespace AgileCardsPrinting.Services
 				throw new NullReferenceException("Host Address is not set.");
 			}
 			var settings = new JiraRestClientSettings { EnableRequestTrace = true};
-			var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToUnsecureString(), settings);
+			var client = Jira.CreateRestClient(data.HostAddress, data.UserId, data.Password.ConvertToInsecureString(), settings);
 			client.MaxIssuesPerRequest = data.MaxResult;
 			return client;
 		}
