@@ -1,13 +1,4 @@
-if (Get-Module -ListAvailable -Name VSSetup) {
-    "Importing module VSSetup"
-    Import-Module VSSetup
-} else {
-    "Installing module VSSetup"
-    Install-Module VSSetup -Scope CurrentUser -Force
-}
-
-$vsInstance     = Get-VSSetupInstance | Select-VSSetupInstance -Version '[15.0,16.0)' -Latest
-$msbuild        =$vsInstance.InstallationPath+"\MsBuild\15.0\Bin\MSBuild.exe"
+$vswhere        ="..\Source\packages\vswhere.2.7.1\tools\vswhere.exe"
 $openCover      ="..\Source\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
 $reportGenerator="..\Source\packages\ReportGenerator.2.5.10\tools\ReportGenerator.exe" 
 $nunitConsole   ="..\Source\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" 
@@ -20,10 +11,11 @@ $token          ="6b363d7c-f86e-4ad2-b806-75c3bf5420e4"
 & .\nuget.exe restore ..\Source\AgileCardsPrinting.sln
 
 "$(Get-Date -f o) Starting MSBuild."
+$msbuild = & $vswhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MsBuild.exe
 
 if(Test-Path -Path "env:APPVEYOR")
 {
-    & $msbuild "..\Source\AgileCardsPrinting.sln"  /nologo /v:n /ds /p:UseSharedCompilation=false `
+    & $msbuild "..\Source\AgileCardsPrinting.sln" /nologo /v:n /ds /p:UseSharedCompilation=false `
              /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 }
 else 
