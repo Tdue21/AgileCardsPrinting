@@ -6,10 +6,12 @@ $codecov        ="..\Source\packages\Codecov.1.0.3\tools\codecov.exe"
 $coverTarget    ="..\Source\AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrinting.Tests.dll"
 $token          ="6b363d7c-f86e-4ad2-b806-75c3bf5420e4"
 
+"=================================================="
 "$(Get-Date -f o) Restoring nuget packages."
 
 & .\nuget.exe restore ..\Source\AgileCardsPrinting.sln
 
+"=================================================="
 "$(Get-Date -f o) Starting MSBuild."
 $msbuild = & $vswhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MsBuild.exe
 
@@ -28,14 +30,17 @@ else
 
 if($LASTEXITCODE -eq 0) {
 
+    "=================================================="
     "$(Get-Date -f o) Starting OpenCover."
-    & $openCover -register:user -returntargetcode "-filter:+[AgileCardsPrinting]* -[*Test]* -[AgileCardsPrinting]*Annotations.*" -target:$nunitConsole -targetargs:$coverTarget
+    & $openCover -register:user -returntargetcode "-output:CoverageResult.xml" "-filter:+[AgileCardsPrinting]* -[*Test]* -[AgileCardsPrinting]*Annotations.*" -target:$nunitConsole -targetargs:$coverTarget
 
+    "=================================================="
     "$(Get-Date -f o) Starting ReportGenerator."
-    & $reportGenerator "-reports:results.xml" "-targetdir:.\coverage" "-reporttypes:HtmlSummary"
+    & $reportGenerator "-reports:CoverageResult.xml" "-targetdir:.\coverage" "-reporttypes:HtmlSummary"
     
+    "=================================================="
     "$(Get-Date -f o) Uploading result to Codecov.io"
-    & $codecov -f .\results.xml -t $token
+    & $codecov -f .\CoverageResult.xml -t $token
 }
 
 "$(Get-Date -f o) All done."

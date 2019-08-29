@@ -35,7 +35,7 @@
 		<services:CustomDialogService x:Name="PreviewDialog"
 		                              DialogStartupLocation="CenterOwner"
 		                              OwnerWindow="{x:Reference MainViewWindow}"
-		                              Width="600" Height="800" Resizable="True"
+		                              Width="900" Height="1200" Resizable="True"
 		                              >
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>

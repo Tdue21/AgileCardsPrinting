@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-        Height="800" Width="600"  Loaded="OnViewLoaded"
+        Height="1200" Width="900"  Loaded="OnViewLoaded"
         DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
         FontSize="12">
 

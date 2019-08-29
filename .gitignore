@@ -7,6 +7,6 @@ Wiki\
 \coverage
 results.xml
 TestResult.xml
+CoverageResult.xml
 *.user
 *.log
-/Build/ReservedProperties01.proj
