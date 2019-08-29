@@ -3,7 +3,6 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:dxBinding="clr-namespace:DevExpress.Xpf.DXBinding;assembly=DevExpress.Mvvm.UI"
 		mc:Ignorable="d"
 		Title="CustomDialogWindow"
 		Height="300"
@@ -20,7 +19,7 @@
 						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 
-					<ItemsControl Grid.Column="1" ItemsSource="{dxBinding:DXBinding '@a($Window).CommandsSource'}">
+					<ItemsControl Grid.Column="1" ItemsSource="{DXBinding '@a($Window).CommandsSource'}">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
 								<StackPanel Orientation="Horizontal" Height="35" />
@@ -36,7 +35,7 @@
 										Margin="6"
 										IsDefault="{Binding IsDefault}"
 										IsCancel="{Binding IsCancel}"
-										Click="{dxBinding:DXEvent '@a($Window).OnDialogCommand(@sender, @args)'}">
+										Click="{DXEvent '@a($Window).OnDialogCommand(@sender, @args)'}">
 								</Button>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>

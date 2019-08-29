@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT8M25.3480631S" SolutionTotalViewTime="PT20M58.2037419S" SolutionTotalDebugTime="PT1M49.8902304S">
+  <FileVersion>
+    <Major>1</Major>
+    <Minor>0</Minor>
+  </FileVersion>
+  <SolutionFolder>C:\Development\Private\AgileCardsPrinting\Source</SolutionFolder>
+  <SolutionCreattionDate>2019-05-06T10:51:10.6998465+02:00</SolutionCreattionDate>
+  <ProjectsCreatedDateList>
+    <ProjectCreated>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2018-02-24T16:32:41.5864376+01:00</CreatedDate>
+    </ProjectCreated>
+    <ProjectCreated>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting.Tests\AgileCardsPrinting.Tests.csproj</ProjectName>
+      <CreatedDate>2018-02-24T16:32:41.5774316+01:00</CreatedDate>
+    </ProjectCreated>
+    <ProjectCreated>
+      <ProjectName>AgileCardsPrinting.Setup.wixproj</ProjectName>
+      <CreatedDate>1601-01-01T01:00:00+01:00</CreatedDate>
+    </ProjectCreated>
+    <ProjectCreated>
+      <ProjectName>AgileCardsPrinting.BootStrapper.wixproj</ProjectName>
+      <CreatedDate>1601-01-01T01:00:00+01:00</CreatedDate>
+    </ProjectCreated>
+  </ProjectsCreatedDateList>
+  <SessionTimeList />
+  <LastSessionTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT4M25.6187218S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-08T11:17:22.333668+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+  </LastSessionTimeList>
+  <TotalTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT7M0.5733943S" EditActiveTime="PT1M50.5297272S">
+      <ModifiedDate>2019-05-06T11:04:37.8328718+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\App.xaml</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T10:51:33.4682364+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT34.9510621S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\thdu\AppData\Local\Temp\MetadataAsSource\bec5207425824cf885042f3399d1d20d\2e72f44e354b4e4fb1203761aca7e7be\Container.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T11:08:24.3981708+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M49.8902304S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>Debug Mode</Item>
+      <ItemType>DebugModeItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T10:53:02.6950708+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M52.882319S" EditActiveTime="PT2M31.5166075S">
+      <ModifiedDate>2019-05-06T11:21:46.5013519+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\DependencyInjector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:04:43.6560045+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT44.6510824S" EditActiveTime="PT2M49.989458S">
+      <ModifiedDate>2019-05-06T11:25:41.1697735+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\Common\ExtensionMethods.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:07:30.7641931+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1.8789026S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\Interfaces\IFileSystemService.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:25:14.8268078+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT15.6463735S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\thdu\AppData\Local\Temp\MetadataAsSource\bec5207425824cf885042f3399d1d20d\7c39f834d3934c819ab95176e1d4354e\Lifestyle.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T11:22:25.9522154+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M18.4580137S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\Views\MainView.xaml</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:12:24.2197322+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT7M22.9724837S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>5</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:06:29.2633015+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT39.1524725S" EditActiveTime="PT1M13.3122704S">
+      <ModifiedDate>2019-05-06T11:11:36.0236925+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\PreviewViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:09:53.4285152+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3.4129112S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\SettingsViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:09:48.0968391+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3.6247269S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\thdu\AppData\Local\Temp\MetadataAsSource\bec5207425824cf885042f3399d1d20d\df45d59770204fda940dd59ef76dcddc\ViewModelBase.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T11:10:07.4633514+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+  </TotalTimeList>
+  <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT4M25.6187218S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-08T11:17:22.333668+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT24.3779523S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-08T11:15:49.1471963+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT47.9824764S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-08T11:14:41.3586433+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT49.3083815S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-08T10:37:58.1115821+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1.8789026S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\Interfaces\IFileSystemService.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:25:14.8268078+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT15.6463735S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\thdu\AppData\Local\Temp\MetadataAsSource\bec5207425824cf885042f3399d1d20d\7c39f834d3934c819ab95176e1d4354e\Lifestyle.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T11:22:25.9522154+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M18.4580137S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\Views\MainView.xaml</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:12:24.2197322+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3.6247269S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\thdu\AppData\Local\Temp\MetadataAsSource\bec5207425824cf885042f3399d1d20d\df45d59770204fda940dd59ef76dcddc\ViewModelBase.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T11:10:07.4633514+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT39.1524725S" EditActiveTime="PT1M13.3122704S">
+      <ModifiedDate>2019-05-06T11:11:36.0236925+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\PreviewViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:09:53.4285152+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3.4129112S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\SettingsViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:09:48.0968391+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT34.9510621S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\thdu\AppData\Local\Temp\MetadataAsSource\bec5207425824cf885042f3399d1d20d\2e72f44e354b4e4fb1203761aca7e7be\Container.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T11:08:24.3981708+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT44.6510824S" EditActiveTime="PT2M49.989458S">
+      <ModifiedDate>2019-05-06T11:25:41.1697735+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\Common\ExtensionMethods.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:07:30.7641931+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT55.6869481S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\ViewModels\MainViewModel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:06:29.2633015+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M52.882319S" EditActiveTime="PT2M31.5166075S">
+      <ModifiedDate>2019-05-06T11:21:46.5013519+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\DependencyInjector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T11:04:43.6560045+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M49.8902304S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>Debug Mode</Item>
+      <ItemType>DebugModeItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-05-06T10:53:02.6950708+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT7M0.5733943S" EditActiveTime="PT1M50.5297272S">
+      <ModifiedDate>2019-05-06T11:04:37.8328718+02:00</ModifiedDate>
+      <ModifiedBy>THDU</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\App.xaml</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Development\Private\AgileCardsPrinting\Source\AgileCardsPrinting\AgileCardsPrinting.csproj</ProjectName>
+      <CreatedDate>2019-05-06T10:51:33.4682364+02:00</CreatedDate>
+      <ViewedBy>THDU</ViewedBy>
+    </DevTrackerDataItem>
+  </HistoryTimeList>
+</DevTrackerData>
