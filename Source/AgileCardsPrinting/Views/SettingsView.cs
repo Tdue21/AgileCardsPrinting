@@ -24,46 +24,48 @@
 namespace AgileCardsPrinting.Views
 {
 	using AgileCardsPrinting.Common;
-	using AgileCardsPrinting.ViewModels;
+    using AgileCardsPrinting.Models;
 	using System.Security;
 	using System.Windows;
 
 	/// <summary>
-	/// Defines the <see cref="SettingsWindow" />
+	/// Defines the <see cref="SettingsView" />
 	/// </summary>
-	public partial class SettingsWindow
+	public partial class SettingsView
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SettingsWindow"/> class.
+		/// Initializes a new instance of the <see cref="SettingsView"/> class.
 		/// </summary>
-		public SettingsWindow()
+		public SettingsView()
 		{
 			InitializeComponent();
 		}
 
 		/// <summary>
-		/// The OnPasswordChanged
+		/// On load the <seealso cref="SecureString"/> password is converted into an insecure string and input into the PasswordTextBox. 
+		/// The <seealso cref="PasswordBox"/> will store the password internally in a SecureString. 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnWindowLoaded(object sender, RoutedEventArgs e)
+		{
+			if (DataContext is SettingsModel vm && vm.Password != null)
+			{
+				PasswordTextBox.Password = vm.Password.ConvertToInsecureString();
+			}
+		}
+
+		/// <summary>
+		/// As it is not possible to bind to the Password property of a <seealso cref="PasswordBox"/> for security reasons, the PasswordChanged event is bound instead. 
+		/// When triggered the password is stored securely in the <see cref="SecureString" /> Password property on the view model.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
 		private void OnPasswordChanged(object sender, RoutedEventArgs e)
 		{
-			if (DataContext is SettingsViewModel vm && vm.Settings != null)
+			if (DataContext is SettingsModel vm)
 			{
-				vm.Settings.Password = PasswordTextBox.SecurePassword;
-			}
-		}
-
-		/// <summary>
-		/// <seealso cref="SecureString"/> property <see cref="SettingsViewModel.Password"/>
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-		private void OnWindowLoaded(object sender, RoutedEventArgs e)
-		{
-			if (DataContext is SettingsViewModel vm && vm.Settings?.Password != null)
-			{
-				PasswordTextBox.Password = vm.Settings.Password.ConvertToInsecureString();
+				vm.Password = PasswordTextBox.SecurePassword;
 			}
 		}
 	}

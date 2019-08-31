@@ -3,11 +3,10 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:vm="clr-namespace:AgileCardsPrinting.ViewModels"
 			 xmlns:models="clr-namespace:AgileCardsPrinting.Models"
-			 x:Class="AgileCardsPrinting.Views.SettingsWindow"
-			 Background="White" Width="480"
-			 Height="270" FontSize="12" Loaded="OnWindowLoaded"
+			 x:Class="AgileCardsPrinting.Views.SettingsView"
+			 Background="White" Width="480" FontSize="12"
+			 Height="250" Loaded="OnWindowLoaded"
 			 d:DataContext="{d:DesignInstance {x:Type models:SettingsModel}, IsDesignTimeCreatable=False}"
 			 >
 

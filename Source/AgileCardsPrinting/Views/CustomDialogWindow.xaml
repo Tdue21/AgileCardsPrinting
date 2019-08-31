@@ -22,7 +22,7 @@
 					<ItemsControl Grid.Column="1" ItemsSource="{DXBinding '@a($Window).CommandsSource'}">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
-								<StackPanel Orientation="Horizontal" Height="35" />
+								<StackPanel Orientation="Horizontal" Height="40" />
 							</ItemsPanelTemplate>
 						</ItemsControl.ItemsPanel>
 

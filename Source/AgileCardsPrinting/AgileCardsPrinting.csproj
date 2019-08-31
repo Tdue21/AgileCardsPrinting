@@ -114,7 +114,7 @@
     <Compile Include="Interfaces\IFileSystemService.cs" />
     <Compile Include="Interfaces\IJiraService.cs" />
     <Compile Include="Interfaces\ISettingsHandler.cs" />
-    <Compile Include="Common\SettingsHandler.cs" />
+    <Compile Include="Common\JsonFileSettingsHandler.cs" />
     <Compile Include="Models\FilterInformation.cs" />
     <Compile Include="Models\JiraIssue.cs" />
     <Compile Include="Models\SettingsModel.cs" />
@@ -127,8 +127,8 @@
     <Compile Include="Views\PreviewView.xaml.cs">
       <DependentUpon>PreviewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    <Compile Include="Views\SettingsView.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CustomDialogWindow.xaml">
       <SubType>Designer</SubType>
@@ -152,7 +152,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsWindow.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

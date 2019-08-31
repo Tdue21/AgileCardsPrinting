@@ -10,3 +10,5 @@ TestResult.xml
 *.user
 *.log
 /Build/ReservedProperties01.proj
+/Build/tools/Cake
+/Build/tools

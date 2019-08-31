@@ -25,12 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Models;
-
 using Newtonsoft.Json;
-
 using RestSharp.Extensions;
 
 namespace AgileCardsPrinting.Common
@@ -38,27 +35,25 @@ namespace AgileCardsPrinting.Common
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="AgileCardsPrinting.Interfaces.ISettingsHandler" />
-	public class SettingsHandler : ISettingsHandler
+	/// <seealso cref="ISettingsHandler" />
+	public class JsonFileSettingsHandler : ISettingsHandler
 	{
 		private readonly IFileSystemService _fileSystem;
 		private readonly string _settingsFile;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SettingsHandler"/> class.
+		/// Initializes a new instance of the <see cref="JsonFileSettingsHandler"/> class.
 		/// </summary>
 		/// <param name="fileSystem">The file system.</param>
 		/// <exception cref="System.ArgumentNullException">fileSystem</exception>
-		public SettingsHandler(IFileSystemService fileSystem)
+		public JsonFileSettingsHandler(IFileSystemService fileSystem)
 		{
 			_fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
 			_settingsFile = _fileSystem.GetFullPath(".\\Settings.json");
 		}
 
-		/// <summary>
-		/// Loads the settings.
-		/// </summary>
-		/// <returns></returns>
+		/// <summary>Loads the settings from a Json file.</summary>
+		/// <returns>A <see cref="SettingsModel"/> object containing the application settings.</returns>
 		public SettingsModel LoadSettings()
 		{
 			var settings = new SettingsModel();
@@ -74,10 +69,8 @@ namespace AgileCardsPrinting.Common
 			return settings;
 		}
 
-		/// <summary>
-		/// Saves the settings.
-		/// </summary>
-		/// <param name="settings">The settings.</param>
+		/// <summary>Saves the settings to a json file.</summary>
+		/// <param name="settings">A <see cref="SettingsModel"/> object containing the application settings.</param>
 		public void SaveSettings(SettingsModel settings)
 		{
 			using (var stream = _fileSystem.OpenWriteStream(_settingsFile))
@@ -88,9 +81,10 @@ namespace AgileCardsPrinting.Common
 			}
 		}
 
+		/// <summary>Retrieves the reports available.</summary>
+		/// <returns>A list of <see cref="ReportItem"/> objects.</returns>
 		public IEnumerable<ReportItem> GetReports()
 		{
-			var data = LoadSettings();
 			var reports = _fileSystem.GetFilesFrom("Reports", "*.rdlc")
 									 .Select(s => new ReportItem
 												  {

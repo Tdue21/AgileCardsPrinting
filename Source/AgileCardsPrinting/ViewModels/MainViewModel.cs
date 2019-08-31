@@ -41,15 +41,18 @@ namespace AgileCardsPrinting.ViewModels
 	{
 		private readonly IJiraService _jiraService;
 		private readonly ISettingsHandler _settingsHandler;
+		private readonly SettingsViewModel _settingsViewModel;
 
 		/// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
 		/// <param name="jiraHandler">The service for querying Jira.</param>
 		/// <param name="settingsHandler"></param>
 		/// <exception cref="System.ArgumentNullException">messenger</exception>
-		public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler)
+		public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
 		{
 			_jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+			_settingsViewModel = settingsViewModel ?? throw new ArgumentNullException(nameof(settingsViewModel));
+			((ISupportParentViewModel)_settingsViewModel).ParentViewModel = this;
 		}
 
 		/// <summary>
@@ -219,7 +222,8 @@ namespace AgileCardsPrinting.ViewModels
 										new UICommand("CANCEL", "Cancel", null, false, true, MessageResult.Cancel)
 									};
 
-					var result = SettingsDialog.ShowDialog(commands, "Settings", "SettingsView", Settings);
+					_settingsViewModel.Settings = Settings;
+					var result = SettingsDialog.ShowDialog(commands, "Settings", _settingsViewModel);
 					if ((MessageResult)result.Tag == MessageResult.OK)
 					{
 						_settingsHandler.SaveSettings(Settings);
@@ -269,7 +273,7 @@ namespace AgileCardsPrinting.ViewModels
 		/// </summary>
 		private void OnSelectedReportChanged()
 		{
-			if (Settings.ReportName != SelectedReport.Name)
+			if (SelectedReport != null && Settings.ReportName != SelectedReport.Name)
 			{
 				Settings.ReportName = SelectedReport.Name;
 				_settingsHandler.SaveSettings(Settings);

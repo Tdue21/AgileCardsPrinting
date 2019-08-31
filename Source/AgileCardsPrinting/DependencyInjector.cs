@@ -40,7 +40,7 @@ namespace AgileCardsPrinting
 			_container = new Container();
 
 			_container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
-			          .RegisterType<ISettingsHandler, SettingsHandler>(Lifestyle.Singleton)
+			          .RegisterType<ISettingsHandler, JsonFileSettingsHandler>(Lifestyle.Singleton)
 			          .RegisterType<IJiraService, JiraService>(Lifestyle.Singleton)
 			          .RegisterType<MainViewModel>()
 			          .RegisterType<PreviewViewModel>()

@@ -28,20 +28,59 @@ using AgileCardsPrinting.Interfaces;
 
 namespace AgileCardsPrinting.Services
 {
+	/// <summary>
+	/// An abstraction layer class for the local file system.  
+	/// </summary>
 	public class FileSystemService : IFileSystemService
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public string GetFullPath(string path) => Path.GetFullPath(path);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public bool FileExists(string path) => File.Exists(path);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public string GetFileName(string path) => Path.GetFileName(path);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reportPath"></param>
+		/// <param name="mask"></param>
+		/// <returns></returns>
 		public IEnumerable<string> GetFilesFrom(string reportPath, string mask) => Directory.GetFiles(reportPath, mask, SearchOption.TopDirectoryOnly);
 	}
 }

@@ -49,7 +49,7 @@ namespace AgileCardsPrinting.Tests
         {
             _fileSystem = new Mock<IFileSystemService>();
             _fileSystem.Setup(f => f.GetFullPath(It.IsAny<string>())).Returns(@"C:\Temp\Settings.json");
-            _handler = new SettingsHandler(_fileSystem.Object);
+            _handler = new JsonFileSettingsHandler(_fileSystem.Object);
         }
 
         [Test]

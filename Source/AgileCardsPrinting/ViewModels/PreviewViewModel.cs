@@ -38,19 +38,21 @@ namespace AgileCardsPrinting.ViewModels
 	[POCOViewModel]
 	public class PreviewViewModel : ViewModelBase
 	{
+		private readonly IFileSystemService _fileSystemService;
+		private readonly ISettingsHandler _settingsHandler;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
 		/// </summary>
 		/// <param name="settingsHandler">The settings handler.</param>
 		/// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-		public PreviewViewModel(ISettingsHandler settingsHandler)
+		public PreviewViewModel(IFileSystemService fileSystemService, ISettingsHandler settingsHandler)
 		{
-			if (settingsHandler == null)
-			{
-				throw new ArgumentNullException(nameof(settingsHandler));
-			}
-			var data = settingsHandler.LoadSettings();
-			ReportFile = $"Reports\\{data.ReportName}.rdlc";
+			_fileSystemService = fileSystemService ?? throw new ArgumentNullException(nameof(fileSystemService));
+			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+
+			var data = _settingsHandler.LoadSettings();
+			ReportFile =  _fileSystemService.GetFullPath($"Reports\\{data.ReportName}.rdlc");
 		}
 
 		/// <summary>Gets the current window service.</summary>

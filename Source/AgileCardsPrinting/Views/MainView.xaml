@@ -20,22 +20,26 @@
 
 		<dxmvvm:MessageBoxService />
 
+		<!-- XAML for setting up the settings dialog, using the CustomDialogService class 
+		and attaching the SettingsWindow view -->
 		<services:CustomDialogService x:Name="SettingsDialog"
 									  DialogStartupLocation="CenterOwner"
 									  OwnerWindow="{x:Reference MainViewWindow}"
-									  Height="400" Width="600" Resizable="False"
+									  Height="300" Width="500" Resizable="False"
 		                              >
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>
-					<views:SettingsWindow  DataContext="{Binding Path=Settings}"/>
+					<views:SettingsView DataContext="{Binding Path=Settings}"/>
 				</DataTemplate>
 			</services:CustomDialogService.ViewTemplate>
 		</services:CustomDialogService>
-		
+
+		<!-- XAML for setting up the preview report dialog, using the CustomDialogService class 
+		and attaching the PreviewView view -->
 		<services:CustomDialogService x:Name="PreviewDialog"
 		                              DialogStartupLocation="CenterOwner"
 		                              OwnerWindow="{x:Reference MainViewWindow}"
-		                              Width="600" Height="800" Resizable="True"
+		                              Width="640" Height="900" Resizable="True"
 		                              >
 			<services:CustomDialogService.ViewTemplate>
 				<DataTemplate>
