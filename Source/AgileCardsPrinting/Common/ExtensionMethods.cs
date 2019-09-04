@@ -72,7 +72,8 @@ namespace AgileCardsPrinting.Common
             return securePassword;
         }
 
-        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the <see cref="SimpleInjector.Container.Register{TConcrete}"/> method.</summary>
+        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the
+        /// <see cref="SimpleInjector.Container.Register{TConcrete}"/> method.</summary>
         /// <param name="container"></param>
         /// <typeparam name="TType"></typeparam>
         /// <returns></returns>
@@ -83,7 +84,8 @@ namespace AgileCardsPrinting.Common
             return container;
         }
 
-        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the <see cref="SimpleInjector.Container.Register{TService, TImplementation}"/> method.</summary>
+        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the
+        /// <see cref="SimpleInjector.Container.Register{TService, TImplementation}"/> method.</summary>
         /// <param name="container"></param>
         /// <param name="lifestyle"></param>
         /// <typeparam name="TSource"></typeparam>

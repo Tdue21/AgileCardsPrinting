@@ -38,7 +38,12 @@ namespace AgileCardsPrinting.Common
 	/// <seealso cref="ISettingsHandler" />
 	public class JsonFileSettingsHandler : ISettingsHandler
 	{
+		/// <summary>
+		/// </summary>
 		private readonly IFileSystemService _fileSystem;
+
+		/// <summary>
+		/// </summary>
 		private readonly string _settingsFile;
 
 		/// <summary>
