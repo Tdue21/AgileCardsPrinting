@@ -21,10 +21,22 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
+using System;
+using System.Windows;
+
 namespace AgileCardsPrinting
 {
-    /// <summary>
-    ///     Interaction logic for App.xaml
-    /// </summary>
-    public partial class App {}
+	/// <summary>
+	///     Interaction logic for App.xaml
+	/// </summary>
+	public partial class App
+	{
+		/// <inheritdoc />
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			base.OnStartup(e);
+
+			SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+		}
+	}
 }

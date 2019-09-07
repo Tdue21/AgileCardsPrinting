@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{4CE9F6E8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3C7ED2C3-143B-4AA5-9490-60829ECA8C45}"
 	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\Build\Build.cake = ..\Build\Build.cake
 		..\Build\build.ps1 = ..\Build\build.ps1
 		..\Build\nuget.exe = ..\Build\nuget.exe

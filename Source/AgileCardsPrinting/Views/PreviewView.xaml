@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-        Height="900" Width="640"  Loaded="OnViewLoaded"
         DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
-        FontSize="12">
+        Loaded="OnViewLoaded" FontSize="12">
 
 	<dxmvvm:Interaction.Behaviors>
 		<dxmvvm:CurrentWindowService />

@@ -3,16 +3,20 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d"
-		Title="CustomDialogWindow"
-		Height="300"
-		Width="300">
+		mc:Ignorable="d" Title="CustomDialogWindow" d:DesignHeight="300" d:DesignWidth="300">
 
 	<Window.ContentTemplate>
 		<DataTemplate>
-			<DockPanel>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 
-				<Grid DockPanel.Dock="Bottom">
+				<ContentPresenter Grid.Row="0" 
+				                  Content="{Binding}" />
+
+				<Grid Grid.Row="1">
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
@@ -41,12 +45,7 @@
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
 				</Grid>
-
-				<ContentPresenter Content="{Binding}"
-								  HorizontalAlignment="Stretch"
-								  VerticalAlignment="Stretch" />
-
-			</DockPanel>
+			</Grid>
 		</DataTemplate>
 	</Window.ContentTemplate>
 </Window>
