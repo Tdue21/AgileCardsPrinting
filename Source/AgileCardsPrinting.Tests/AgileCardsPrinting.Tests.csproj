@@ -89,6 +89,12 @@
       <Name>AgileCardsPrinting</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\packages\NUnit3TestAdapter.3.15.1\build\net35\NUnit3.TestAdapter.dll">
+      <Link>NUnit3.TestAdapter.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

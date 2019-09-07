@@ -37,4 +37,3 @@ steps:
       !**\obj\** 
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    pathtoCustomTestAdapters: **\NUnit3.TestAdapter.dll    
