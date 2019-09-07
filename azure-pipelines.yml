@@ -32,5 +32,5 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    pathtoCustomTestAdapters: 'Source\packages\NUnit3TestAdapter.3.15.1\NUnit3TestAdapter.3.15.1.nupkg\build\net35\NUnit3.TestAdapter.dll'
+    pathtoCustomTestAdapters: 'Source\packages\NUnit3TestAdapter.3.15.1\NUnit3TestAdapter.3.15.1.nupkg\build\net35\'
     
