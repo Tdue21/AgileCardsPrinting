@@ -30,7 +30,11 @@ steps:
 
 - task: VSTest@2
   inputs:
+    testSelector: 'testAssemblies' 
+    testAssemblyVer2: | 
+      **\*.Tests.dll
+      !**\*TestAdapter.dll
+      !**\obj\** 
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    pathtoCustomTestAdapters: 'Source\packages\NUnit3TestAdapter.3.15.1\NUnit3TestAdapter.3.15.1.nupkg\build\net35\'
-    
+    pathtoCustomTestAdapters: **\NUnit3.TestAdapter.dll    
