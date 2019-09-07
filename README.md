@@ -1,4 +1,4 @@
-[![Build status][![Build Status](https://dev.azure.com/duenet/AgileCardPrint/_apis/build/status/AgileCardPrint?branchName=master)](https://dev.azure.com/duenet/AgileCardPrint/_build/latest?definitionId=1&branchName=master)
+[![Build status](https://dev.azure.com/duenet/AgileCardPrint/_apis/build/status/AgileCardPrint?branchName=master)](https://dev.azure.com/duenet/AgileCardPrint/_build/latest?definitionId=1&branchName=master)
 
 [![codecov](https://codecov.io/gh/DoveSoftConsult/AgileCardsPrinting/branch/master/graph/badge.svg)](https://codecov.io/gh/DoveSoftConsult/AgileCardsPrinting)
 
