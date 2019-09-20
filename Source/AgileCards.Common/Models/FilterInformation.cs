@@ -21,25 +21,27 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows.Input;
-using AgileCards.Common.Models;
-using AgileCardsPrinting.Models;
-using DevExpress.Mvvm;
-
-namespace AgileCardsPrinting.ViewModels
+namespace AgileCards.Common.Models
 {
-	/// <summary>
-	/// Defines the <see cref="SettingsViewModel" />
-	/// </summary>
-	public class SettingsViewModel : ViewModelBase
-	{
-		/// <summary>
-		/// Gets or sets the Settings
-		/// </summary>
-		public SettingsModel Settings
-		{
-			get => GetProperty(() => Settings);
-			set => SetProperty(() => Settings, value);
-		}
-	}
+    /// <summary>
+    /// 
+    /// </summary>
+    public class FilterInformation
+    {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
+    }
 }

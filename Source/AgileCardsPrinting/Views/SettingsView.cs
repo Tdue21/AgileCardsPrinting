@@ -21,6 +21,10 @@
 // * IN THE SOFTWARE.
 // ****************************************************************************
 
+using System.Windows.Controls;
+using AgileCards.Common;
+using AgileCards.Common.Models;
+
 namespace AgileCardsPrinting.Views
 {
 	using AgileCardsPrinting.Common;

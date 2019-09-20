@@ -25,8 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AgileCardsPrinting.Interfaces;
-using AgileCardsPrinting.Models;
+using AgileCards.Common.Interfaces;
+using AgileCards.Common.Models;
 using Newtonsoft.Json;
 using RestSharp.Extensions;
 
@@ -74,7 +74,7 @@ namespace AgileCardsPrinting.Common
 			return settings;
 		}
 
-		/// <summary>Saves the settings to a json file.</summary>
+		/// <summary>Saves the <paramref name="settings"/> to a json file.</summary>
 		/// <param name="settings">A <see cref="SettingsModel"/> object containing the application settings.</param>
 		public void SaveSettings(SettingsModel settings)
 		{

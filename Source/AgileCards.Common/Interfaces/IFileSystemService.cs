@@ -23,56 +23,53 @@
 
 using System.Collections.Generic;
 using System.IO;
-using AgileCards.Common.Interfaces;
 
-namespace AgileCardsPrinting.Services
+namespace AgileCards.Common.Interfaces
 {
-	/// <summary>
-	/// An abstraction layer class for the local file system.  
-	/// </summary>
-	public class FileSystemService : IFileSystemService
+	/// <summary>An <see langword="interface"/> for wrapping the file system.</summary>
+	public interface IFileSystemService
 	{
 		/// <summary>
-		/// 
+		/// Gets the full path.
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="path">The path.</param>
 		/// <returns></returns>
-		public string GetFullPath(string path) => Path.GetFullPath(path);
+		string GetFullPath(string path);
+
+		/// <summary>
+		/// Files the exists.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		bool FileExists(string path);
+
+		/// <summary>
+		/// Opens the read stream.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		Stream OpenReadStream(string path);
+
+		/// <summary>
+		/// Opens the write stream.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		Stream OpenWriteStream(string path);
+
+		/// <summary>
+		/// Gets the name of the file.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns></returns>
+		string GetFileName(string path);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		public bool FileExists(string path) => File.Exists(path);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public string GetFileName(string path) => Path.GetFileName(path);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
+		string GetFileNameWithoutExtension(string path);
 
 		/// <summary>
 		/// 
@@ -80,6 +77,6 @@ namespace AgileCardsPrinting.Services
 		/// <param name="reportPath"></param>
 		/// <param name="mask"></param>
 		/// <returns></returns>
-		public IEnumerable<string> GetFilesFrom(string reportPath, string mask) => Directory.GetFiles(reportPath, mask, SearchOption.TopDirectoryOnly);
+		IEnumerable<string> GetFilesFrom(string reportPath, string mask);
 	}
 }

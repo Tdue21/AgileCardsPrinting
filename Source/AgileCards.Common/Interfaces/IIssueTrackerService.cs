@@ -21,25 +21,42 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System.Windows.Input;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AgileCards.Common.Models;
-using AgileCardsPrinting.Models;
-using DevExpress.Mvvm;
 
-namespace AgileCardsPrinting.ViewModels
+namespace AgileCards.Common.Interfaces
 {
-	/// <summary>
-	/// Defines the <see cref="SettingsViewModel" />
-	/// </summary>
-	public class SettingsViewModel : ViewModelBase
-	{
-		/// <summary>
-		/// Gets or sets the Settings
-		/// </summary>
-		public SettingsModel Settings
-		{
-			get => GetProperty(() => Settings);
-			set => SetProperty(() => Settings, value);
-		}
-	}
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IIssueTrackerService
+    {
+        /// <summary>
+        /// Gets the favorite filters asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<FilterInformation>> GetFavoriteFiltersAsync();
+
+        /// <summary>
+        /// Gets the issues from filter asynchronous.
+        /// </summary>
+        /// <param name="selectedFilter">The selected filter.</param>
+        /// <returns></returns>
+        Task<IEnumerable<IssueCard>> GetIssuesFromFilterAsync(FilterInformation selectedFilter);
+
+        /// <summary>
+        /// Gets the issues from query asynchronous.
+        /// </summary>
+        /// <param name="query">The get key list.</param>
+        /// <returns></returns>
+        Task<IEnumerable<IssueCard>> GetIssuesFromQueryAsync(string query);
+
+        /// <summary>
+        /// Gets the issues from key list asynchronous.
+        /// </summary>
+        /// <param name="keyList">The key list.</param>
+        /// <returns></returns>
+        Task<IEnumerable<IssueCard>> GetIssuesFromKeyListAsync(IEnumerable<string> keyList);
+    }
 }

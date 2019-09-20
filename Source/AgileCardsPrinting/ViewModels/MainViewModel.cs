@@ -28,10 +28,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
-using AgileCardsPrinting.Interfaces;
+using AgileCards.Common.Interfaces;
+using AgileCards.Common.Models;
+using AgileCards.JiraIntegration;
 using AgileCardsPrinting.Models;
-
 using DevExpress.Mvvm;
 
 namespace AgileCardsPrinting.ViewModels
@@ -39,7 +39,7 @@ namespace AgileCardsPrinting.ViewModels
 	/// <summary>Main view model. This is the entry point of the view model.</summary>
 	public class MainViewModel : ViewModelBase
 	{
-		private readonly IJiraService _jiraService;
+		private readonly IIssueTrackerService _jiraService;
 		private readonly ISettingsHandler _settingsHandler;
 		private readonly SettingsViewModel _settingsViewModel;
 
@@ -47,7 +47,7 @@ namespace AgileCardsPrinting.ViewModels
 		/// <param name="jiraHandler">The service for querying Jira.</param>
 		/// <param name="settingsHandler"></param>
 		/// <exception cref="System.ArgumentNullException">messenger</exception>
-		public MainViewModel(IJiraService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
+		public MainViewModel(IIssueTrackerService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
 		{
 			_jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
@@ -132,7 +132,7 @@ namespace AgileCardsPrinting.ViewModels
 		}
 
 		/// <summary>Gets or sets the preview issues.</summary>
-		public ObservableCollection<JiraIssue> PreviewIssues
+		public ObservableCollection<IssueCard> PreviewIssues
 		{
 			get => GetProperty(() => PreviewIssues);
 			set => SetProperty(() => PreviewIssues, value);
@@ -201,7 +201,8 @@ namespace AgileCardsPrinting.ViewModels
 									: SelectedSearchIndex == 2
 										? await _jiraService.GetIssuesFromQueryAsync(Jql)
 										: throw new IndexOutOfRangeException();
-						PreviewIssues = new ObservableCollection<JiraIssue>(issues ?? new List<JiraIssue>());
+
+						PreviewIssues = new ObservableCollection<IssueCard>(issues ?? new List<IssueCard>());
 					}
 					catch (Exception e)
 					{
@@ -239,8 +240,8 @@ namespace AgileCardsPrinting.ViewModels
 			new DelegateCommand(() =>
 				{
 					var list = SelectedIssues != null && SelectedIssues.Count > 0
-									? new List<JiraIssue>(SelectedIssues.OfType<JiraIssue>())
-									: new List<JiraIssue>(PreviewIssues);
+									? new List<IssueCard>(SelectedIssues.OfType<IssueCard>())
+									: new List<IssueCard>(PreviewIssues);
 
 					PreviewDialog.ShowDialog(MessageButton.OK, "Preview", "PreviewView", list, this);
 				});

@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCardsPrinting", "Agile
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCardsPrinting.Tests", "AgileCardsPrinting.Tests\AgileCardsPrinting.Tests.csproj", "{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCards.Common", "AgileCards.Common\AgileCards.Common.csproj", "{A4F0BFD3-C139-4536-AA95-720981AA7C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCards.JiraIntegration", "AgileCards.JiraIntegration\AgileCards.JiraIntegration.csproj", "{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,22 @@ Global
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|x86.Build.0 = Release|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Debug|x86.Build.0 = Debug|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Release|x86.ActiveCfg = Release|Any CPU
+		{A4F0BFD3-C139-4536-AA95-720981AA7C38}.Release|x86.Build.0 = Release|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Debug|x86.Build.0 = Debug|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|x86.ActiveCfg = Release|Any CPU
+		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

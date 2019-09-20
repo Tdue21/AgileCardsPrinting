@@ -1,6 +1,6 @@
 ﻿// ****************************************************************************
 // * The MIT License(MIT)
-// * Copyright © 2019 Thomas Due
+// * Copyright © 2018 Thomas Due
 // * 
 // * Permission is hereby granted, free of charge, to any person obtaining a 
 // * copy of this software and associated documentation files (the “Software”), 
@@ -21,48 +21,14 @@
 // * IN THE SOFTWARE.
 // ****************************************************************************
 
-
-using AgileCards.Common.Interfaces;
-using AgileCards.JiraIntegration;
-using AgileCardsPrinting.Common;
-using AgileCardsPrinting.Services;
-using AgileCardsPrinting.ViewModels;
-
-using SimpleInjector;
-
-namespace AgileCardsPrinting
+namespace AgileCards.Common.Models
 {
-	/// <summary>
-	/// </summary>
-	public class DependencyInjector
+	public class ReportItem
 	{
-		private readonly Container _container;
+		/// <summary>Gets or sets the name of the report item.</summary>
+		public string Name { get; set; }
 
-		/// <summary>
-		/// </summary>
-		public DependencyInjector()
-		{
-			_container = new Container();
-
-			_container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
-			          .RegisterType<ISettingsHandler, JsonFileSettingsHandler>(Lifestyle.Singleton)
-			          .RegisterType<IIssueTrackerService, JiraService>(Lifestyle.Singleton)
-			          .RegisterType<MainViewModel>()
-			          .RegisterType<PreviewViewModel>()
-			          .RegisterType<SettingsViewModel>()
-				;
-		}
-
-		/// <summary>
-		/// </summary>
-		public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();
-
-		/// <summary>
-		/// </summary>
-		public PreviewViewModel PreviewViewModel => _container.GetInstance<PreviewViewModel>();
-
-		/// <summary>
-		/// </summary>
-		public SettingsViewModel SettingsViewModel => _container.GetInstance<SettingsViewModel>();
+		/// <summary>Gets or sets the path of the report.</summary>
+		public string Path { get; set; }
 	}
 }
