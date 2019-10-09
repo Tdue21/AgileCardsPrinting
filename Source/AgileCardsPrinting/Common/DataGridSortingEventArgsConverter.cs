@@ -35,8 +35,8 @@ namespace AgileCardsPrinting.Common
 	/// <seealso cref="DevExpress.Mvvm.UI.EventArgsConverterBase{DataGridSortingEventArgs}" />
 	public class DataGridSortingEventArgsConverter : EventArgsConverterBase<DataGridSortingEventArgs>
 	{
-		/// <summary>Converts the specified sender.</summary>
-		/// <param name="sender">The sender.</param>
+		/// <summary>Converts the specified <paramref name="sender"/>.</summary>
+		/// <param name="sender">Object reference of the sender.</param>
 		/// <param name="args">The <see cref="DataGridSortingEventArgs"/> instance containing the event data.</param>
 		protected override object Convert(object sender, DataGridSortingEventArgs args)
 		{

@@ -38,20 +38,31 @@ using NUnit.Framework;
 
 namespace AgileCardsPrinting.Tests
 {
-    [TestFixture]
+	/// <summary>
+	/// </summary>
+	[TestFixture]
     public class SettingsHandlerTests
     {
-        private ISettingsHandler _handler;
+	    /// <summary>
+	    /// </summary>
+	    private ISettingsHandler _handler;
+
+        /// <summary>
+        /// </summary>
         private Mock<IFileSystemService> _fileSystem;
 
+        /// <summary>
+        /// </summary>
         [SetUp]
         public void SetUpTest()
         {
             _fileSystem = new Mock<IFileSystemService>();
             _fileSystem.Setup(f => f.GetFullPath(It.IsAny<string>())).Returns(@"C:\Temp\Settings.json");
-            _handler = new SettingsHandler(_fileSystem.Object);
+            _handler = new JsonFileSettingsHandler(_fileSystem.Object);
         }
 
+        /// <summary>
+        /// </summary>
         [Test]
         public void LoadSettings_Settings_File_Does_Not_Exist_Return_Empty_Settings_Test()
         {
@@ -69,6 +80,8 @@ namespace AgileCardsPrinting.Tests
                   .Be(expected);
         }
 
+        /// <summary>
+        /// </summary>
         [Test]
         public void LoadSettings_Settings_File_Exists_Return_Valid_Settings_Test()
         {
@@ -89,6 +102,8 @@ namespace AgileCardsPrinting.Tests
         }
 
         [Test]
+        /// <summary>
+        /// </summary>
         public void SaveSettings_Test()
         {
             string actual = null;
@@ -114,23 +129,22 @@ namespace AgileCardsPrinting.Tests
                   .BeEquivalentTo(expected);
         }
 
-        private static string GetSettingsString()
-        {
-            return JsonConvert.SerializeObject(GetSettingsModel());
-        }
-        
-        private static SettingsModel GetSettingsModel()
-        {
-            return new SettingsModel
-                   {
-                       HostAddress = "https://bugs.mojang.com",
-                       MaxResult = 100,
-                       CustomField1 = "ThisIsATest",
-                       ReportName = "SimpleReport.rdlc",
-                       UserId = "user",
-                       Password = string.Empty.ConvertToSecureString()
-                   };
-        }
+		/// <summary>
+		/// </summary>
+        private static string GetSettingsString() => JsonConvert.SerializeObject(GetSettingsModel());
+
+		/// <summary>
+		/// </summary>
+        private static SettingsModel GetSettingsModel() =>
+			new SettingsModel
+			{
+				HostAddress  = "https://bugs.mojang.com",
+				MaxResult    = 100,
+				CustomField1 = @"ThisIsATest",
+				ReportName   = @"SimpleReport.rdlc",
+				UserId       = "user",
+				Password     = string.Empty.ConvertToSecureString()
+			};
     }
 }
 

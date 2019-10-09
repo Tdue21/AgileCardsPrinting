@@ -10,3 +10,6 @@ TestResult.xml
 CoverageResult.xml
 *.user
 *.log
+/Build/ReservedProperties01.proj
+/Build/tools/Cake
+/Build/tools

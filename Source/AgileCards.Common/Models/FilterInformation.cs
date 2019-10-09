@@ -21,22 +21,27 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System;
-using System.Windows;
-
-namespace AgileCardsPrinting
+namespace AgileCards.Common.Models
 {
-	/// <summary>
-	///     Interaction logic for App.xaml
-	/// </summary>
-	public partial class App
-	{
-		/// <inheritdoc />
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			base.OnStartup(e);
+    /// <summary>
+    /// 
+    /// </summary>
+    public class FilterInformation
+    {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public string Id { get; set; }
 
-			SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
-		}
-	}
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
+    }
 }

@@ -21,50 +21,14 @@
 // * IN THE SOFTWARE.
 // ****************************************************************************
 
-namespace AgileCardsPrinting.Views
+namespace AgileCards.Common.Models
 {
-	using AgileCardsPrinting.Common;
-	using AgileCardsPrinting.ViewModels;
-	using System.Security;
-	using System.Windows;
-
-	/// <summary>
-	/// Defines the <see cref="SettingsWindow" />
-	/// </summary>
-	public partial class SettingsWindow
+	public class ReportItem
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SettingsWindow"/> class.
-		/// </summary>
-		public SettingsWindow()
-		{
-			InitializeComponent();
-		}
+		/// <summary>Gets or sets the name of the report item.</summary>
+		public string Name { get; set; }
 
-		/// <summary>
-		/// The OnPasswordChanged
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-		private void OnPasswordChanged(object sender, RoutedEventArgs e)
-		{
-			if (DataContext is SettingsViewModel vm && vm.Settings != null)
-			{
-				vm.Settings.Password = PasswordTextBox.SecurePassword;
-			}
-		}
-
-		/// <summary>
-		/// <seealso cref="SecureString"/> property <see cref="SettingsViewModel.Password"/>
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-		private void OnWindowLoaded(object sender, RoutedEventArgs e)
-		{
-			if (DataContext is SettingsViewModel vm && vm.Settings?.Password != null)
-			{
-				PasswordTextBox.Password = vm.Settings.Password.ConvertToInsecureString();
-			}
-		}
+		/// <summary>Gets or sets the path of the report.</summary>
+		public string Path { get; set; }
 	}
 }

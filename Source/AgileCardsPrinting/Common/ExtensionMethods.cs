@@ -31,48 +31,49 @@ namespace AgileCardsPrinting.Common
     /// <summary>Static class for various extension methods.</summary>
     public static class ExtensionMethods
     {
-        /// <summary>Converts to insecure string.</summary>
-        /// <param name="securePassword">The secure password.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">securePassword</exception>
-        public static string ConvertToInsecureString(this SecureString securePassword)
-        {
-            if (securePassword == null)
-            {
-                throw new ArgumentNullException(nameof(securePassword));
-            }
+        ///// <summary>Converts to insecure string.</summary>
+        ///// <param name="securePassword">The secure password.</param>
+        ///// <returns></returns>
+        ///// <exception cref="System.ArgumentNullException">securePassword</exception>
+        //public static string ConvertToInsecureString(this SecureString securePassword)
+        //{
+        //    if (securePassword == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(securePassword));
+        //    }
 
-            var unmanagedString = IntPtr.Zero;
-            try
-            {
-                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
-                return Marshal.PtrToStringUni(unmanagedString);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
-            }
-        }
+        //    var unmanagedString = IntPtr.Zero;
+        //    try
+        //    {
+        //        unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+        //        return Marshal.PtrToStringUni(unmanagedString);
+        //    }
+        //    finally
+        //    {
+        //        Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+        //    }
+        //}
 
-        /// <summary>Converts to secure string.</summary>
-        /// <param name="password">The password.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">password</exception>
-        public static SecureString ConvertToSecureString(this string password)
-        {
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+        ///// <summary>Converts to secure string.</summary>
+        ///// <param name="password">The password.</param>
+        ///// <returns></returns>
+        ///// <exception cref="System.ArgumentNullException">password</exception>
+        //public static SecureString ConvertToSecureString(this string password)
+        //{
+        //    if (password == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(password));
+        //    }
 
-            var securePassword = new SecureString();
-            password.ToList().ForEach(c => securePassword.AppendChar(c));
-            securePassword.MakeReadOnly();
+        //    var securePassword = new SecureString();
+        //    password.ToList().ForEach(c => securePassword.AppendChar(c));
+        //    securePassword.MakeReadOnly();
 
-            return securePassword;
-        }
+        //    return securePassword;
+        //}
 
-        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the <see cref="SimpleInjector.Container.Register{TConcrete}"/> method.</summary>
+        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the
+        /// <see cref="SimpleInjector.Container.Register{TConcrete}"/> method.</summary>
         /// <param name="container"></param>
         /// <typeparam name="TType"></typeparam>
         /// <returns></returns>
@@ -83,7 +84,8 @@ namespace AgileCardsPrinting.Common
             return container;
         }
 
-        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the <see cref="SimpleInjector.Container.Register{TService, TImplementation}"/> method.</summary>
+        /// <summary>Extension method for SimpleInjector to enable Fluent API. Used in place of the
+        /// <see cref="SimpleInjector.Container.Register{TService, TImplementation}"/> method.</summary>
         /// <param name="container"></param>
         /// <param name="lifestyle"></param>
         /// <typeparam name="TSource"></typeparam>

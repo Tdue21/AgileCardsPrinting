@@ -22,6 +22,7 @@
 //  ****************************************************************************
 
 using System.Windows.Input;
+using AgileCards.Common.Models;
 using AgileCardsPrinting.Models;
 using DevExpress.Mvvm;
 

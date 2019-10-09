@@ -21,12 +21,30 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using NUnit.Framework;
+using System.Collections.Generic;
+using AgileCards.Common.Models;
 
-namespace AgileCardsPrinting.Tests
+namespace AgileCards.Common.Interfaces
 {
-    [TestFixture]
-    public class SettingsViewModelTests
-    {
-    }
+	/// <summary>
+	/// 
+	/// </summary>
+	public interface ISettingsHandler
+	{
+		/// <summary>
+		/// Loads the settings.
+		/// </summary>
+		/// <returns></returns>
+		SettingsModel LoadSettings();
+
+		/// <summary>
+		/// Saves the settings.
+		/// </summary>
+		/// <param name="settings">The settings.</param>
+		void SaveSettings(SettingsModel settings);
+	  
+		/// <summary>Returns a list of <see cref="ReportItem"/> objects.</summary>
+		/// <returns>List of objects</returns>
+		IEnumerable<ReportItem> GetReports();
+	}
 }

@@ -3,19 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:winForms="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-        Height="1200" Width="900"  Loaded="OnViewLoaded"
+        Height="1200" Width="900"  
         DataContext="{Binding PreviewViewModel, Source={StaticResource Locator}}" 
-        FontSize="12">
+        Loaded="OnViewLoaded" FontSize="12">
 
-    <dxmvvm:Interaction.Behaviors>
-        <dxmvvm:CurrentWindowService />
-        
-        <dxmvvm:KeyToCommand KeyGesture="Esc" Command="{Binding CloseViewCommand}" />
-    </dxmvvm:Interaction.Behaviors>
+	<dxmvvm:Interaction.Behaviors>
+		<dxmvvm:CurrentWindowService />
 
-    <DockPanel>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <winForms:ReportViewer x:Name="IssuesReportViewer"
+		<dxmvvm:KeyToCommand KeyGesture="Esc" Command="{Binding CloseViewCommand}" />
+	</dxmvvm:Interaction.Behaviors>
+
+	<Grid>
+		<WindowsFormsHost>
+			<WindowsFormsHost.Child>
+				<winForms:ReportViewer x:Name="IssuesReportViewer"
                                    ShowBackButton="False"
                                    ShowContextMenu="False"
                                    ShowCredentialPrompts="False"
@@ -27,8 +28,9 @@
                                    ZoomMode="FullPage"
                                    Dock="Fill" 
                                    ProcessingMode="Local" />
-        </WindowsFormsHost>
-    </DockPanel>
+			</WindowsFormsHost.Child>
+		</WindowsFormsHost>
+	</Grid>
 </UserControl>
 
 

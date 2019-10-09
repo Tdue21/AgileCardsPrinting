@@ -29,10 +29,14 @@ using NUnit.Framework;
 
 namespace AgileCardsPrinting.Tests
 {
-    [TestFixture]
+	/// <summary>
+	/// </summary>
+	[TestFixture]
     public class ExtensionMethodsTests
     {
-        [Test]
+	    /// <summary>
+	    /// </summary>
+	    [Test]
         public void Convert_Between_SecureString_And_String_Test()
         {
             var password = "TestPassword";

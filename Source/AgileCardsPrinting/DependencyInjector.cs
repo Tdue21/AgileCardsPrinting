@@ -22,8 +22,9 @@
 // ****************************************************************************
 
 
+using AgileCards.Common.Interfaces;
+using AgileCards.JiraIntegration;
 using AgileCardsPrinting.Common;
-using AgileCardsPrinting.Interfaces;
 using AgileCardsPrinting.Services;
 using AgileCardsPrinting.ViewModels;
 
@@ -31,27 +32,37 @@ using SimpleInjector;
 
 namespace AgileCardsPrinting
 {
+	/// <summary>
+	/// </summary>
 	public class DependencyInjector
 	{
 		private readonly Container _container;
 
+		/// <summary>
+		/// </summary>
 		public DependencyInjector()
 		{
 			_container = new Container();
 
 			_container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
-			          .RegisterType<ISettingsHandler, SettingsHandler>(Lifestyle.Singleton)
-			          .RegisterType<IJiraService, JiraService>(Lifestyle.Singleton)
+			          .RegisterType<ISettingsHandler, JsonFileSettingsHandler>(Lifestyle.Singleton)
+			          .RegisterType<IIssueTrackerService, JiraService>(Lifestyle.Singleton)
 			          .RegisterType<MainViewModel>()
 			          .RegisterType<PreviewViewModel>()
 			          .RegisterType<SettingsViewModel>()
 				;
 		}
 
+		/// <summary>
+		/// </summary>
 		public MainViewModel MainViewModel => _container.GetInstance<MainViewModel>();
 
+		/// <summary>
+		/// </summary>
 		public PreviewViewModel PreviewViewModel => _container.GetInstance<PreviewViewModel>();
 
+		/// <summary>
+		/// </summary>
 		public SettingsViewModel SettingsViewModel => _container.GetInstance<SettingsViewModel>();
 	}
 }

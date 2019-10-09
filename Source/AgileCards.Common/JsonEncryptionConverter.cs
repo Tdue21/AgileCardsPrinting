@@ -23,10 +23,9 @@
 
 using System;
 using System.Security;
-
 using Newtonsoft.Json;
 
-namespace AgileCardsPrinting.Common
+namespace AgileCards.Common
 {
 	/// <summary>
 	/// 
