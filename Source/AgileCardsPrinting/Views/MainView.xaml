@@ -226,8 +226,8 @@
 				<Label Grid.Column="0" Content="Select Report" />
 				<ComboBox Grid.Column="1" 
 				          IsEditable="False" 
-				          DisplayMemberPath="Name" 
-				          SelectedValuePath="Path" 
+				          DisplayMemberPath="Key" 
+				          SelectedValuePath="Value" 
 				          ItemsSource="{Binding Reports}" 
 				          SelectedItem="{Binding SelectedReport}"/>
 			</Grid>

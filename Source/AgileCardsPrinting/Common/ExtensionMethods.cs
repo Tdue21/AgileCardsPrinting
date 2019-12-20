@@ -21,11 +21,6 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-
 namespace AgileCardsPrinting.Common
 {
     /// <summary>Static class for various extension methods.</summary>

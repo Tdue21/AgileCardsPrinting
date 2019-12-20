@@ -22,29 +22,64 @@
 //  ****************************************************************************
 
 using System.Collections.Generic;
-using AgileCards.Common.Models;
+using System.IO;
+using AgileCards.Common.Interfaces;
 
-namespace AgileCards.Common.Interfaces
+namespace AgileCards.Common.Services
 {
 	/// <summary>
-	/// 
+	/// An abstraction layer class for the local file system.  
 	/// </summary>
-	public interface ISettingsHandler
+	public class FileSystemService : IFileSystemService
 	{
 		/// <summary>
-		/// Loads the settings.
+		/// 
 		/// </summary>
+		/// <param name="path"></param>
 		/// <returns></returns>
-		SettingsModel LoadSettings();
+		public string GetFullPath(string path) => Path.GetFullPath(path);
 
 		/// <summary>
-		/// Saves the settings.
+		/// 
 		/// </summary>
-		/// <param name="settings">The settings.</param>
-		void SaveSettings(SettingsModel settings);
-	  
-		/// <summary>Returns a list of <see cref="KeyValuePair{TKey,TValue}"/> objects.</summary>
-		/// <returns>List of objects</returns>
-		IEnumerable<KeyValuePair<string,string>> GetReports();
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public bool FileExists(string path) => File.Exists(path);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public Stream OpenReadStream(string path) => File.Open(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public Stream OpenWriteStream(string path) => File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public string GetFileName(string path) => Path.GetFileName(path);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="reportPath"></param>
+		/// <param name="mask"></param>
+		/// <returns></returns>
+		public IEnumerable<string> GetFilesFrom(string reportPath, string mask) => Directory.GetFiles(reportPath, mask, SearchOption.TopDirectoryOnly);
 	}
 }

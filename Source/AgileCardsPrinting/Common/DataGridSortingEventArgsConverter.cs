@@ -23,9 +23,7 @@
 
 using System.ComponentModel;
 using System.Windows.Controls;
-
-using AgileCardsPrinting.Models;
-
+using AgileCards.Common.Models;
 using DevExpress.Mvvm.UI;
 
 namespace AgileCardsPrinting.Common

@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using AgileCards.Common.Interfaces;
 using AgileCards.Common.Models;
-using AgileCards.JiraIntegration;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 
@@ -37,21 +36,26 @@ namespace AgileCardsPrinting.ViewModels
 	[POCOViewModel]
 	public class PreviewViewModel : ViewModelBase
 	{
-		private readonly IFileSystemService _fileSystemService;
-		private readonly ISettingsHandler _settingsHandler;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
-		/// </summary>
-		/// <param name="settingsHandler">The settings handler.</param>
-		/// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-		public PreviewViewModel(IFileSystemService fileSystemService, ISettingsHandler settingsHandler)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewViewModel"/> class.
+        /// </summary>
+        /// <param name="fileSystemService"></param>
+        /// <param name="settingsHandler">The settings handler.</param>
+        /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
+        public PreviewViewModel(IFileSystemService fileSystemService, ISettingsHandler settingsHandler)
 		{
-			_fileSystemService = fileSystemService ?? throw new ArgumentNullException(nameof(fileSystemService));
-			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
+            if (fileSystemService == null)
+            {
+                throw new ArgumentNullException(nameof(fileSystemService));
+            }
 
-			var data = _settingsHandler.LoadSettings();
-			ReportFile =  _fileSystemService.GetFullPath($"Reports\\{data.ReportName}.rdlc");
+            if (settingsHandler == null)
+            {
+                throw new ArgumentNullException(nameof(settingsHandler));
+            }
+
+            var data = settingsHandler.LoadSettings();
+			ReportFile =  fileSystemService.GetFullPath($"Reports\\{data.ReportName}.rdlc");
 		}
 
 		/// <summary>Gets the current window service.</summary>

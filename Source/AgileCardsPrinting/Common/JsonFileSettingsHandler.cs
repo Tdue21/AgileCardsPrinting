@@ -87,15 +87,11 @@ namespace AgileCardsPrinting.Common
 		}
 
 		/// <summary>Retrieves the reports available.</summary>
-		/// <returns>A list of <see cref="ReportItem"/> objects.</returns>
-		public IEnumerable<ReportItem> GetReports()
+		/// <returns>A list of <see cref="KeyValuePair{TKey,TValue}"/> objects.</returns>
+		public IEnumerable<KeyValuePair<string,string>> GetReports()
 		{
 			var reports = _fileSystem.GetFilesFrom("Reports", "*.rdlc")
-									 .Select(s => new ReportItem
-												  {
-													  Name = _fileSystem.GetFileNameWithoutExtension(s),
-													  Path = s
-												  });
+									 .Select(s => new KeyValuePair<string, string>(_fileSystem.GetFileNameWithoutExtension(s), s));
 			return reports;
 		}
 	}

@@ -23,9 +23,9 @@
 
 
 using AgileCards.Common.Interfaces;
+using AgileCards.Common.Services;
 using AgileCards.JiraIntegration;
 using AgileCardsPrinting.Common;
-using AgileCardsPrinting.Services;
 using AgileCardsPrinting.ViewModels;
 
 using SimpleInjector;

@@ -3,7 +3,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:models="clr-namespace:AgileCardsPrinting.Models"
+			 xmlns:models="clr-namespace:AgileCards.Common.Models;assembly=AgileCards.Common"
 			 x:Class="AgileCardsPrinting.Views.SettingsView"
 			 Background="White" Width="480" FontSize="12"
 			 Height="250" Loaded="OnWindowLoaded"

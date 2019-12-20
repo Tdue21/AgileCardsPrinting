@@ -22,16 +22,13 @@
 // ****************************************************************************
 
 using System.Windows.Controls;
+using System.Security;
+using System.Windows;
 using AgileCards.Common;
 using AgileCards.Common.Models;
 
 namespace AgileCardsPrinting.Views
 {
-	using AgileCardsPrinting.Common;
-    using AgileCardsPrinting.Models;
-	using System.Security;
-	using System.Windows;
-
 	/// <summary>
 	/// Defines the <see cref="SettingsView" />
 	/// </summary>

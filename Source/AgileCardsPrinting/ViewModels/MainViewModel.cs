@@ -30,8 +30,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AgileCards.Common.Interfaces;
 using AgileCards.Common.Models;
-using AgileCards.JiraIntegration;
-using AgileCardsPrinting.Models;
 using DevExpress.Mvvm;
 
 namespace AgileCardsPrinting.ViewModels
@@ -43,11 +41,12 @@ namespace AgileCardsPrinting.ViewModels
 		private readonly ISettingsHandler _settingsHandler;
 		private readonly SettingsViewModel _settingsViewModel;
 
-		/// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
-		/// <param name="jiraHandler">The service for querying Jira.</param>
-		/// <param name="settingsHandler"></param>
-		/// <exception cref="System.ArgumentNullException">messenger</exception>
-		public MainViewModel(IIssueTrackerService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
+        /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
+        /// <param name="jiraHandler">The service for querying Jira.</param>
+        /// <param name="settingsHandler"></param>
+        /// <param name="settingsViewModel"></param>
+        /// <exception cref="System.ArgumentNullException">messenger</exception>
+        public MainViewModel(IIssueTrackerService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
 		{
 			_jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
@@ -91,7 +90,7 @@ namespace AgileCardsPrinting.ViewModels
 		/// <summary>
 		/// Gets or sets the list of reports available.
 		/// </summary>
-		public ObservableCollection<ReportItem> Reports
+		public ObservableCollection<KeyValuePair<string,string>> Reports
 		{
 			get => GetProperty(() => Reports);
 			set => SetProperty(() => Reports, value);
@@ -156,7 +155,7 @@ namespace AgileCardsPrinting.ViewModels
 
 
 		/// <summary>Gets or sets the selected report. </summary>
-		public ReportItem SelectedReport
+		public KeyValuePair<string,string> SelectedReport
 		{
 			get => GetProperty(() => SelectedReport);
 			set => SetProperty(() => SelectedReport, value, OnSelectedReportChanged);
@@ -186,10 +185,8 @@ namespace AgileCardsPrinting.ViewModels
 		public ICommand RefreshIssuesCommand => 
 			new AsyncCommand(async () =>
 				{
-					IEnumerable<string> GetKeyList() => KeyList
-														.Split(" ;,\n\r".ToCharArray(),
-															StringSplitOptions.RemoveEmptyEntries)
-														.OrderBy(i => i);
+					IEnumerable<string> GetKeyList() => KeyList.Split(" ;,\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                                                               .OrderBy(i => i);
 
 					IsBusy = true;
 					try
@@ -256,8 +253,8 @@ namespace AgileCardsPrinting.ViewModels
 			{
 				Settings = _settingsHandler.LoadSettings();
 
-				Reports = new ObservableCollection<ReportItem>(_settingsHandler.GetReports());
-				SelectedReport = Reports.FirstOrDefault(r => r.Name == Settings.ReportName);
+				Reports = new ObservableCollection<KeyValuePair<string,string>>(_settingsHandler.GetReports());
+				SelectedReport = Reports.FirstOrDefault(r => r.Key == Settings.ReportName);
 
 				var filters = await _jiraService.GetFavoriteFiltersAsync().ConfigureAwait(true);
 				Filters = filters != null && filters.Any() ? new ObservableCollection<FilterInformation>(filters) : null;
@@ -274,9 +271,9 @@ namespace AgileCardsPrinting.ViewModels
 		/// </summary>
 		private void OnSelectedReportChanged()
 		{
-			if (SelectedReport != null && Settings.ReportName != SelectedReport.Name)
+			if (Settings.ReportName != SelectedReport.Key)
 			{
-				Settings.ReportName = SelectedReport.Name;
+				Settings.ReportName = SelectedReport.Key;
 				_settingsHandler.SaveSettings(Settings);
 			}
 		}
