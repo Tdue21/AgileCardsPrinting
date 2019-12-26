@@ -1,5 +1,8 @@
 [![Build status](https://dev.azure.com/duenet/AgileCardPrint/_apis/build/status/AgileCardPrint?branchName=master)](https://dev.azure.com/duenet/AgileCardPrint/_build/latest?definitionId=1&branchName=master)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/1h11leogfgrj17a6?svg=true)](https://ci.appveyor.com/project/tdue21/agilecardsprinting)
+
+
 # README
 
 PrintIssueCards is a simple application for creating issue cards for a scrum or kanban like board. 
