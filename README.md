@@ -1,5 +1,4 @@
-[![Build status](https://dev.azure.com/duenet/AgileCardPrint/_apis/build/status/AgileCardPrint?branchName=master)](https://dev.azure.com/duenet/AgileCardPrint/_build/latest?definitionId=1&branchName=master)
-
+[![Build Status](https://duenet.visualstudio.com/AgileCardPrint/_apis/build/status/Tdue21.AgileCardsPrinting?branchName=master)](https://duenet.visualstudio.com/AgileCardPrint/_build/latest?definitionId=2&branchName=master)
 [![Build status](https://ci.appveyor.com/api/projects/status/1h11leogfgrj17a6?svg=true)](https://ci.appveyor.com/project/tdue21/agilecardsprinting)
 
 
