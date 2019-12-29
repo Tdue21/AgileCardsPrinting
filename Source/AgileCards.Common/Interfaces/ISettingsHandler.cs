@@ -29,7 +29,7 @@ namespace AgileCards.Common.Interfaces
 	/// <summary>
 	/// 
 	/// </summary>
-	public interface ISettingsHandler
+	public interface ISettingsService
 	{
 		/// <summary>
 		/// Loads the settings.

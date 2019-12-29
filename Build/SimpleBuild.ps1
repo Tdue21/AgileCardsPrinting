@@ -1,15 +1,32 @@
-$vswhere        ="..\Source\packages\vswhere.2.7.1\tools\vswhere.exe"
-$openCover      ="..\Source\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
-$reportGenerator="..\Source\packages\ReportGenerator.3.1.2\tools\ReportGenerator.exe" 
-$nunitConsole   ="..\Source\packages\NUnit.ConsoleRunner.3.9.0\tools\nunit3-console.exe" 
-$codecov        ="..\Source\packages\Codecov.1.0.3\tools\codecov.exe"
-$coverTarget    ="..\Source\AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrinting.Tests.dll"
-$token          ="6b363d7c-f86e-4ad2-b806-75c3bf5420e4"
+function Invoke-InstallTool {
+    Param(
+     [string]$nugetId,
+     [string]$version
+	)
+    & .\tools\nuget.exe install $nugetId -version $version -outputdirectory tools -directdownload -excludeversion
+}
+$nuget           = "tools\nuget.exe"  
+$vswhere         = "tools\vswhere\tools\vswhere.exe"  
+$openCover       = "tools\OpenCover\tools\OpenCover.Console.exe"
+$reportGenerator = "tools\ReportGenerator\tools\netcoreapp3.0\ReportGenerator.exe" 
+$nunitConsole    = "tools\NUnit.ConsoleRunner\tools\nunit3-console.exe" 
+$codecov         = "tools\Codecov\tools\codecov.exe"
+
+$coverTarget     = "..\Source\AgileCardsPrinting.Tests\bin\Debug\AgileCardsPrinting.Tests.dll"
+$token           = "6b363d7c-f86e-4ad2-b806-75c3bf5420e4"
+
+"=================================================="
+"$(Get-Date -f o) Downloading tools"
+Invoke-InstallTool vswhere 2.8.4
+Invoke-InstallTool OpenCover 4.6.519
+Invoke-InstallTool ReportGenerator 4.4.0
+Invoke-InstallTool NUnit.ConsoleRunner 3.10.0
+Invoke-InstallTool Codecov 1.9.0
 
 "=================================================="
 "$(Get-Date -f o) Restoring nuget packages."
 
-& .\nuget.exe restore ..\Source\AgileCardsPrinting.sln
+& $nuget restore ..\Source\AgileCardsPrinting.sln
 
 "=================================================="
 "$(Get-Date -f o) Starting MSBuild."

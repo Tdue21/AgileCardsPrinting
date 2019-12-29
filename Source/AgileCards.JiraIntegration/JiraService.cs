@@ -44,12 +44,12 @@ namespace AgileCards.JiraIntegration
 
 		/// <summary>
 		/// </summary>
-		private readonly ISettingsHandler _settingsHandler;
+		private readonly ISettingsService _settingsHandler;
 
 		/// <summary>
 		/// </summary>
 		/// <param name="settingsHandler"></param>
-		public JiraService(ISettingsHandler settingsHandler)
+		public JiraService(ISettingsService settingsHandler)
 		{
 			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));
 		}

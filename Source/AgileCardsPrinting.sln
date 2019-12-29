@@ -16,7 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3C7ED2C3
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\Build\Build.cake = ..\Build\Build.cake
 		..\Build\build.ps1 = ..\Build\build.ps1
-		..\Build\nuget.exe = ..\Build\nuget.exe
 		..\Build\SimpleBuild.ps1 = ..\Build\SimpleBuild.ps1
 	EndProjectSection
 EndProject
@@ -27,6 +26,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileCards.Common", "AgileCards.Common\AgileCards.Common.csproj", "{A4F0BFD3-C139-4536-AA95-720981AA7C38}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileCards.JiraIntegration", "AgileCards.JiraIntegration\AgileCards.JiraIntegration.csproj", "{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileCards.GithubIntegration", "AgileCards.GithubIntegration\AgileCards.GithubIntegration.csproj", "{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileCards.YouTrackIntegration", "AgileCards.YouTrackIntegration\AgileCards.YouTrackIntegration.csproj", "{1D0C046A-3899-4975-8A8F-2BB1DAC92742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +48,7 @@ Global
 		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.ActiveCfg = Release|Any CPU
 		{D15B95E8-D39F-4126-B459-A0E2ECDD9E3D}.Release|x86.Build.0 = Release|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Debug|x86.Build.0 = Debug|Any CPU
 		{9A6D415D-6D59-479D-ABDE-0F9D0BC2995E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,6 +71,22 @@ Global
 		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|x86.ActiveCfg = Release|Any CPU
 		{0D1D0A0F-3A04-41A2-88A2-15AB78A0E28A}.Release|x86.Build.0 = Release|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Debug|x86.Build.0 = Debug|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Release|x86.ActiveCfg = Release|Any CPU
+		{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}.Release|x86.Build.0 = Release|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Debug|x86.Build.0 = Debug|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D0C046A-3899-4975-8A8F-2BB1DAC92742}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

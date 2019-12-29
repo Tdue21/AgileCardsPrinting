@@ -21,22 +21,19 @@
 //  * IN THE SOFTWARE.
 //  ****************************************************************************
 
-using AgileCardsPrinting.Common;
-
+using AgileCards.Common;
 using FluentAssertions;
-
-using NUnit.Framework;
+using Xunit;
 
 namespace AgileCardsPrinting.Tests
 {
 	/// <summary>
 	/// </summary>
-	[TestFixture]
     public class ExtensionMethodsTests
     {
 	    /// <summary>
 	    /// </summary>
-	    [Test]
+	    [Fact]
         public void Convert_Between_SecureString_And_String_Test()
         {
             var password = "TestPassword";

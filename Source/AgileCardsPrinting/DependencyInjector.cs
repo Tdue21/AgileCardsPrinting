@@ -24,6 +24,7 @@
 
 using AgileCards.Common.Interfaces;
 using AgileCards.Common.Services;
+using AgileCards.GithubIntegration;
 using AgileCards.JiraIntegration;
 using AgileCardsPrinting.Common;
 using AgileCardsPrinting.ViewModels;
@@ -45,7 +46,7 @@ namespace AgileCardsPrinting
 			_container = new Container();
 
 			_container.RegisterType<IFileSystemService, FileSystemService>(Lifestyle.Singleton)
-			          .RegisterType<ISettingsHandler, JsonFileSettingsHandler>(Lifestyle.Singleton)
+			          .RegisterType<ISettingsService, JsonFileSettingsService>(Lifestyle.Singleton)
 			          .RegisterType<IIssueTrackerService, JiraService>(Lifestyle.Singleton)
 			          .RegisterType<MainViewModel>()
 			          .RegisterType<PreviewViewModel>()

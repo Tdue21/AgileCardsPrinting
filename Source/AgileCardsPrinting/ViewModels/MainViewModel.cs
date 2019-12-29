@@ -38,7 +38,7 @@ namespace AgileCardsPrinting.ViewModels
 	public class MainViewModel : ViewModelBase
 	{
 		private readonly IIssueTrackerService _jiraService;
-		private readonly ISettingsHandler _settingsHandler;
+		private readonly ISettingsService _settingsHandler;
 		private readonly SettingsViewModel _settingsViewModel;
 
         /// <summary>Initializes a new instance of the <see cref="MainViewModel"/> class.</summary>
@@ -46,7 +46,7 @@ namespace AgileCardsPrinting.ViewModels
         /// <param name="settingsHandler"></param>
         /// <param name="settingsViewModel"></param>
         /// <exception cref="System.ArgumentNullException">messenger</exception>
-        public MainViewModel(IIssueTrackerService jiraHandler, ISettingsHandler settingsHandler, SettingsViewModel settingsViewModel)
+        public MainViewModel(IIssueTrackerService jiraHandler, ISettingsService settingsHandler, SettingsViewModel settingsViewModel)
 		{
 			_jiraService = jiraHandler ?? throw new ArgumentNullException(nameof(jiraHandler));
 			_settingsHandler = settingsHandler ?? throw new ArgumentNullException(nameof(settingsHandler));

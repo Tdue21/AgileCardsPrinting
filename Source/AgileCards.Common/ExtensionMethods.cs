@@ -22,54 +22,72 @@
 //  ****************************************************************************
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 
 namespace AgileCards.Common
 {
-    /// <summary>Static class for various extension methods.</summary>
-    public static class ExtensionMethods
-    {
-        /// <summary>Converts to insecure string.</summary>
-        /// <param name="securePassword">The secure password.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">securePassword</exception>
-        public static string ConvertToInsecureString(this SecureString securePassword)
-        {
-            if (securePassword == null)
-            {
-                throw new ArgumentNullException(nameof(securePassword));
-            }
+	/// <summary>Static class for various extension methods.</summary>
+	public static class ExtensionMethods
+	{
+		/// <summary>Converts to insecure string.</summary>
+		/// <param name="securePassword">The secure password.</param>
+		/// <returns></returns>
+		/// <exception cref="System.ArgumentNullException">securePassword</exception>
+		public static string ConvertToInsecureString(this SecureString securePassword)
+		{
+			if (securePassword == null)
+			{
+				throw new ArgumentNullException(nameof(securePassword));
+			}
 
-            var unmanagedString = IntPtr.Zero;
-            try
-            {
-                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
-                return Marshal.PtrToStringUni(unmanagedString);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
-            }
-        }
+			var unmanagedString = IntPtr.Zero;
+			try
+			{
+				unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+				return Marshal.PtrToStringUni(unmanagedString);
+			}
+			finally
+			{
+				Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+			}
+		}
 
-        /// <summary>Converts to secure string.</summary>
-        /// <param name="password">The password.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">password</exception>
-        public static SecureString ConvertToSecureString(this string password)
-        {
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+		/// <summary>Converts to secure string.</summary>
+		/// <param name="password">The password.</param>
+		/// <returns></returns>
+		/// <exception cref="System.ArgumentNullException">password</exception>
+		public static SecureString ConvertToSecureString(this string password)
+		{
+			if (password == null)
+			{
+				throw new ArgumentNullException(nameof(password));
+			}
 
-            var securePassword = new SecureString();
-            password.ToList().ForEach(c => securePassword.AppendChar(c));
-            securePassword.MakeReadOnly();
+			var securePassword = new SecureString();
+			password.ToList().ForEach(c => securePassword.AppendChar(c));
+			securePassword.MakeReadOnly();
 
-            return securePassword;
-        }
-    }
+			return securePassword;
+		}
+
+		public static byte[] ReadAsBytes(this Stream input)
+		{
+			var buffer = new byte[16 * 1024];
+
+			using (var ms = new MemoryStream())
+			{
+				int read;
+
+				while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+				{
+					ms.Write(buffer, 0, read);
+				}
+
+				return ms.ToArray();
+			}
+		}
+	}
 }

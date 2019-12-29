@@ -42,7 +42,7 @@ namespace AgileCardsPrinting.ViewModels
         /// <param name="fileSystemService"></param>
         /// <param name="settingsHandler">The settings handler.</param>
         /// <exception cref="System.ArgumentNullException">settingsHandler</exception>
-        public PreviewViewModel(IFileSystemService fileSystemService, ISettingsHandler settingsHandler)
+        public PreviewViewModel(IFileSystemService fileSystemService, ISettingsService settingsHandler)
 		{
             if (fileSystemService == null)
             {

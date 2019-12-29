@@ -23,47 +23,34 @@
 
 using System.IO;
 using System.Text;
-
-using AgileCardsPrinting.Common;
-using AgileCardsPrinting.Interfaces;
-using AgileCardsPrinting.Models;
-
+using AgileCards.Common;
+using AgileCards.Common.Interfaces;
+using AgileCards.Common.Models;
+using AgileCards.Common.Services;
 using FluentAssertions;
-
 using Moq;
-
 using Newtonsoft.Json;
-
-using NUnit.Framework;
+using Xunit;
 
 namespace AgileCardsPrinting.Tests
 {
 	/// <summary>
 	/// </summary>
-	[TestFixture]
     public class SettingsHandlerTests
     {
-	    /// <summary>
-	    /// </summary>
-	    private ISettingsHandler _handler;
+	    private readonly ISettingsService _handler;
+        private readonly Mock<IFileSystemService> _fileSystem;
 
-        /// <summary>
-        /// </summary>
-        private Mock<IFileSystemService> _fileSystem;
-
-        /// <summary>
-        /// </summary>
-        [SetUp]
-        public void SetUpTest()
+        public SettingsHandlerTests()
         {
             _fileSystem = new Mock<IFileSystemService>();
             _fileSystem.Setup(f => f.GetFullPath(It.IsAny<string>())).Returns(@"C:\Temp\Settings.json");
-            _handler = new JsonFileSettingsHandler(_fileSystem.Object);
+            _handler = new JsonFileSettingsService(_fileSystem.Object);
         }
 
         /// <summary>
         /// </summary>
-        [Test]
+        [Fact]
         public void LoadSettings_Settings_File_Does_Not_Exist_Return_Empty_Settings_Test()
         {
             // Arrange
@@ -82,7 +69,7 @@ namespace AgileCardsPrinting.Tests
 
         /// <summary>
         /// </summary>
-        [Test]
+        [Fact]
         public void LoadSettings_Settings_File_Exists_Return_Valid_Settings_Test()
         {
             // Arrange
@@ -101,7 +88,7 @@ namespace AgileCardsPrinting.Tests
                   .Be(expected);
         }
 
-        [Test]
+        [Fact]
         /// <summary>
         /// </summary>
         public void SaveSettings_Test()

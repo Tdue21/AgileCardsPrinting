@@ -23,7 +23,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Output\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -68,9 +68,8 @@
     </ApplicationDefinition>
     <Compile Include="Common\BooleanToCursorConverter.cs" />
     <Compile Include="Common\DataGridSortingEventArgsConverter.cs" />
-    <Compile Include="Common\ExtensionMethods.cs" />
+    <Compile Include="Common\SimpleInjectorExtensions.cs" />
     <Compile Include="Services\CustomDialogService.cs" />
-    <Compile Include="Common\JsonFileSettingsHandler.cs" />
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="DependencyInjector.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -151,6 +150,10 @@
     <ProjectReference Include="..\AgileCards.Common\AgileCards.Common.csproj">
       <Project>{a4f0bfd3-c139-4536-aa95-720981aa7c38}</Project>
       <Name>AgileCards.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AgileCards.GithubIntegration\AgileCards.GithubIntegration.csproj">
+      <Project>{45EDDD71-1CCC-4A20-89E9-41897ECC8CF1}</Project>
+      <Name>AgileCards.GithubIntegration</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgileCards.JiraIntegration\AgileCards.JiraIntegration.csproj">
       <Project>{0d1d0a0f-3a04-41a2-88a2-15ab78a0e28a}</Project>
