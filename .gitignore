@@ -1,4 +1,4 @@
-Wiki\
+Wiki/
 \obj
 \bin
 \packages
@@ -10,5 +10,5 @@ TestResult.xml
 CoverageResult.xml
 *.user
 *.log
-\Build\tools
-\Output
+Build/tools/
+/Output
